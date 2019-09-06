@@ -1,0 +1,34 @@
+{
+  "name": "web-game-accessibility",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Explorations around providing accessibility information from games compiled for the web to players' assistive technologies",
+  "keywords": [
+    "accessibility",
+    "game",
+    "web"
+  ],
+  "homepage": "https://github.com/matatk/web-game-accessibility#readme",
+  "bugs": {
+    "url": "https://github.com/matatk/web-game-accessibility/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matatk/web-game-accessibility.git"
+  },
+  "license": "MIT",
+  "author": "Matthew Tylee Atkinson",
+  "main": "index.js",
+  "scripts": {
+    "test": "eclint check"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
+  "devDependencies": {
+    "eclint": "~2.8",
+    "husky": "~3.0"
+  }
+}
