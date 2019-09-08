@@ -20,7 +20,7 @@
   "author": "Matthew Tylee Atkinson",
   "main": "index.js",
   "scripts": {
-    "test": "eclint check"
+    "test": "eclint check && cppcheck **/*.{c,cpp}"
   },
   "husky": {
     "hooks": {
