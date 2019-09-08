@@ -3,4 +3,7 @@ node_modules
 *.swp
 *.js
 *.wasm
+*.html
 emtest
+emtestsdl1
+emtestsdl2
