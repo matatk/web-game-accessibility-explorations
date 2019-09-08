@@ -6,8 +6,15 @@ Unfortunately, the SDL 1.2 one doesn't work natively on the Mac (Mojave deprecat
 
 Inversely, the SDL 2.x version works fine natively on the Mac, but not in Emscripten. I'm specifically interested in using SDL 1.2 though, because Emscripten has its own implementation of that API, which should keep things simple.
 
-Build both the native and HTML formats with `make`.
+**Install:**
 
-Run the native formats as `./emtestsdl1` and `./emtestsdl2`.
+ * `brew install sdl sdl2`
 
-To try the HTML versions, run `make serve`, open the given URL and view "emtestsdl[12].html".
+**Build:**
+
+ * `make`
+
+**Run:**
+
+ * **Native:** `./emtestsdl1` and `./emtestsdl2`
+ * **Web:** `make serve`, open the given URL and view "emtestsdl[12].html"
