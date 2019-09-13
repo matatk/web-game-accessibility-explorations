@@ -7,19 +7,19 @@
 
 const int MAX_ITEM_NAME_SIZE = 22;
 
-typedef struct item {
+typedef struct MenuItem {
 	char name[MAX_ITEM_NAME_SIZE];
-	Menu *link;
-} Item;
+	Menu *sub_menu;
+} MenuItem;
 
-typedef struct menu {
+typedef struct Menu {
 	int length;
 	int current;
-	Item **items;
+	MenuItem **items;
 } Menu;
 
-Item *new_item(const char *name, Menu *link) {
-	Item *new = malloc(sizeof(Item));
+MenuItem *new_menu_item(const char *name, Menu *sub_menu) {
+	MenuItem *new = malloc(sizeof(MenuItem));
 	size_t name_len = strnlen(name, MAX_ITEM_NAME_SIZE);
 	if (name_len >= MAX_ITEM_NAME_SIZE) {
 		printf("Warning: menu item '%s' is too long (>=%d); truncating.\n",
@@ -27,7 +27,7 @@ Item *new_item(const char *name, Menu *link) {
 		// TODO return nowt, or something with error?
 	}
 	strncpy(new->name, name, MAX_ITEM_NAME_SIZE);
-	new->link = link;
+	new->sub_menu = sub_menu;
 	return new;
 }
 
@@ -37,11 +37,11 @@ Menu *new_menu(int length, ...) {
 	Menu *new = malloc(sizeof(Menu));
 	new->length = length;
 	new->current = 0;
-	new->items = malloc(length * sizeof(Item *));
+	new->items = malloc(length * sizeof(MenuItem *));
 
 	va_start(list, length);
 	for (int i = 0; i < length; i++) {
-		new->items[i] = va_arg(list, Item *);
+		new->items[i] = va_arg(list, MenuItem *);
 	}
 	va_end(list);
 
@@ -52,9 +52,9 @@ void _print_menu_tree(Menu *menu, int depth) {
 	for (int i = 0; i < menu->length; i++) {
 		for (int d = 0; d < depth; d++) printf("\t");
 		printf("%d: %s -> %p\n",
-			i, menu->items[i]->name, menu->items[i]->link);
-		if (menu->items[i]->link != NULL) {
-			_print_menu_tree(menu->items[i]->link, depth + 1);
+			i, menu->items[i]->name, menu->items[i]->sub_menu);
+		if (menu->items[i]->sub_menu != NULL) {
+			_print_menu_tree(menu->items[i]->sub_menu, depth + 1);
 		}
 	}
 }
@@ -68,31 +68,31 @@ void print_menu(Menu *menu) {
 		printf(" %s %s %s\n",
 			i == menu->current ? "+" : " ",
 			menu->items[i]->name,
-			menu->items[i]->link != NULL ? ">>" : "");
+			menu->items[i]->sub_menu != NULL ? ">>" : "");
 	}
 }
 
 Menu *make_menus() {
 	Menu *episode_menu = new_menu(3,
-		new_item("Big pile of great dread", NULL),
-		new_item("The floors look swell", NULL),
-		new_item("Some Pearnod", NULL));
+		new_menu_item("Big pile of great dread", NULL),
+		new_menu_item("The floors look swell", NULL),
+		new_menu_item("Some Pearnod", NULL));
 
 	Menu *player_options_menu = new_menu(2,
-		new_item("Name", NULL),
-		new_item("Colour", NULL));
+		new_menu_item("Name", NULL),
+		new_menu_item("Colour", NULL));
 
 	Menu *options_menu = new_menu(5,
-		new_item("Player", player_options_menu),
-		new_item("Controls", NULL),
-		new_item("Gameplay", NULL),
-		new_item("Sound", NULL),
-		new_item("Video", NULL));
+		new_menu_item("Player", player_options_menu),
+		new_menu_item("Controls", NULL),
+		new_menu_item("Gameplay", NULL),
+		new_menu_item("Sound", NULL),
+		new_menu_item("Video", NULL));
 
 	Menu *main_menu = new_menu(3,
-		new_item("New game", episode_menu),
-		new_item("Options", options_menu),
-		new_item("Exit", NULL));
+		new_menu_item("New game", episode_menu),
+		new_menu_item("Options", options_menu),
+		new_menu_item("Exit", NULL));
 
 	return main_menu;
 }
@@ -108,8 +108,8 @@ void menu_up(Menu *menu) {
 }
 
 Menu *menu_activate(Menu *menu) {
-	if (menu->items[menu->current]->link != NULL) {
-		return menu->items[menu->current]->link;
+	if (menu->items[menu->current]->sub_menu != NULL) {
+		return menu->items[menu->current]->sub_menu;
 	} else {
 		return menu;
 	}

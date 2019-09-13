@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+
 #include "menu.h"
 
 bool is(char input, const char *str) {
