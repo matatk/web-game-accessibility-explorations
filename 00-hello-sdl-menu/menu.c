@@ -103,7 +103,7 @@ void menu_down(Menu *menu) {
 
 void menu_up(Menu *menu) {
 	menu->current = menu->current == 0
-		? 0
+		? menu->length - 1
 		: menu->current - 1;
 }
 
