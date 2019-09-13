@@ -21,6 +21,8 @@ You can also issue `./emsdk help` for more info. It's recommended to put the "em
  * `npm install`
  * `brew install cppcheck`
 
+The individual examples have differing dependencies; info can be found in each of their READMEs.
+
 Tests/Support
 -------------
 
