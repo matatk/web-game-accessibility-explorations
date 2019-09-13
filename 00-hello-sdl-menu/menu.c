@@ -46,14 +46,24 @@ Menu *new_menu(int length, ...) {
 	return new;
 }
 
-void print_menu(Menu *menu, int depth) {
+void _print_menu_tree(Menu *menu, int depth) {
 	for (int i = 0; i < menu->length; i++) {
 		for (int d = 0; d < depth; d++) printf("\t");
 		printf("%d: %s -> %p\n",
 			i, menu->items[i]->name, menu->items[i]->link);
 		if (menu->items[i]->link != NULL) {
-			print_menu(menu->items[i]->link, depth + 1);
+			_print_menu_tree(menu->items[i]->link, depth + 1);
 		}
+	}
+}
+
+void print_menu_tree(Menu *menu) {
+	_print_menu_tree(menu, 0);
+}
+
+void print_menu(Menu *menu) {
+	for (int i = 0; i < menu->length; i++) {
+		printf("%d: %s -> %p\n", i, menu->items[i]->name, menu->items[i]->link);
 	}
 }
 
