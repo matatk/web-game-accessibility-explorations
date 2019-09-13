@@ -14,6 +14,7 @@ typedef struct item {
 
 typedef struct menu {
 	int length;
+	int current;
 	Item **items;
 } Menu;
 
@@ -35,6 +36,7 @@ Menu *new_menu(int length, ...) {
 
 	Menu *new = malloc(sizeof(Menu));
 	new->length = length;
+	new->current = 0;
 	new->items = malloc(length * sizeof(Item *));
 
 	va_start(list, length);
@@ -63,7 +65,10 @@ void print_menu_tree(Menu *menu) {
 
 void print_menu(Menu *menu) {
 	for (int i = 0; i < menu->length; i++) {
-		printf("%d: %s -> %p\n", i, menu->items[i]->name, menu->items[i]->link);
+		printf(" %s %s %s\n",
+			i == menu->current ? "+" : " ",
+			menu->items[i]->name,
+			menu->items[i]->link != NULL ? ">>" : "");
 	}
 }
 
@@ -90,4 +95,22 @@ Menu *make_menus() {
 		new_item("Exit", NULL));
 
 	return main_menu;
+}
+
+void menu_down(Menu *menu) {
+	menu->current = (menu->current + 1) % menu->length;
+}
+
+void menu_up(Menu *menu) {
+	menu->current = menu->current == 0
+		? 0
+		: menu->current - 1;
+}
+
+Menu *menu_activate(Menu *menu) {
+	if (menu->items[menu->current]->link != NULL) {
+		return menu->items[menu->current]->link;
+	} else {
+		return menu;
+	}
 }
