@@ -2,8 +2,10 @@ node_modules
 .DS_Store
 *.swp
 *.js
+!*.library.js
 *.wasm
 *.html
 emtest
 emtestsdl1
 emtestsdl2
+live-region
