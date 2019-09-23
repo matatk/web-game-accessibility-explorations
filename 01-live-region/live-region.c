@@ -1,14 +1,18 @@
 #include <stdio.h>
 #include <time.h>
 
-const int NUM_MESSAGES = 5;
+#define NUM_MESSAGES 5
+#define PAUSE_SECONDS 2
 
 #ifdef __EMSCRIPTEN__
+#define PAUSE_TIME (PAUSE_SECONDS * 1000)
 #include <emscripten.h>
 
 // Our custom JavaScript library functions
 extern void screen_reader_setup(void);
 extern void screen_reader_announce(const char *);
+#else
+#define PAUSE_TIME PAUSE_SECONDS
 #endif
 
 int main() {
