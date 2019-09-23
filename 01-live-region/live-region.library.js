@@ -11,11 +11,11 @@ mergeInto(LibraryManager.library, {
 		liveRegion.style.margin = '0.5rem'
 		liveRegion.style.padding = '0.5rem'
 		liveRegion.style.border = '0.1rem solid black'
-		liveRegion.setAttribute('aria-live', 'polite')
+		liveRegion.setAttribute('aria-live', 'assertive')
 		document.body.appendChild(liveRegion)
 	},
 
 	screen_reader_announce: function(message) {
-		liveRegion.innerText = message
+		liveRegion.innerText = UTF8ToString(message, 128)
 	},
 })

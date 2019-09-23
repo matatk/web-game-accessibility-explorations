@@ -6,7 +6,7 @@ live-region: live-region.c
 	cc $< -o $@
 
 live-region.html: live-region.c live-region.library.js
-	emcc $< -o $@ --js-library live-region.library.js
+	emcc $< -s ASYNCIFY -O3 -o $@ --js-library live-region.library.js
 
 run-native: live-region
 	@./live-region
