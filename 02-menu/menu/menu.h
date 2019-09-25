@@ -4,8 +4,7 @@
 #include "menu_p.h"
 
 Menu *make_menus();
-void print_menu_tree(Menu *);
-void print_menu(Menu *);
+void debug_print_menu_tree(Menu *);
 
 void menu_down(Menu *);
 void menu_up(Menu *);

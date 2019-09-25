@@ -5,19 +5,6 @@
 
 #include "menu.h"
 
-const int MAX_ITEM_NAME_SIZE = 22;
-
-typedef struct MenuItem {
-	char name[MAX_ITEM_NAME_SIZE];
-	Menu *sub_menu;
-} MenuItem;
-
-typedef struct Menu {
-	int length;
-	int current;
-	MenuItem **items;
-} Menu;
-
 MenuItem *new_menu_item(const char *name, Menu *sub_menu) {
 	MenuItem *new = malloc(sizeof(MenuItem));
 	size_t name_len = strnlen(name, MAX_ITEM_NAME_SIZE);
@@ -48,28 +35,19 @@ Menu *new_menu(int length, ...) {
 	return new;
 }
 
-void _print_menu_tree(Menu *menu, int depth) {
+void _debug_print_menu_tree(Menu *menu, int depth) {
 	for (int i = 0; i < menu->length; i++) {
 		for (int d = 0; d < depth; d++) printf("\t");
 		printf("%d: %s -> %p\n",
 			i, menu->items[i]->name, menu->items[i]->sub_menu);
 		if (menu->items[i]->sub_menu != NULL) {
-			_print_menu_tree(menu->items[i]->sub_menu, depth + 1);
+			_debug_print_menu_tree(menu->items[i]->sub_menu, depth + 1);
 		}
 	}
 }
 
-void print_menu_tree(Menu *menu) {
-	_print_menu_tree(menu, 0);
-}
-
-void print_menu(Menu *menu) {
-	for (int i = 0; i < menu->length; i++) {
-		printf(" %s %s %s\n",
-			i == menu->current ? "+" : " ",
-			menu->items[i]->name,
-			menu->items[i]->sub_menu != NULL ? ">>" : "");
-	}
+void debug_print_menu_tree(Menu *menu) {
+	_debug_print_menu_tree(menu, 0);
 }
 
 Menu *make_menus() {

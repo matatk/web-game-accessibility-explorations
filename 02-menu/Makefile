@@ -1,10 +1,12 @@
 .PHONY: run-native clean
 
-main: menu.h menu.c main.c
-	cc menu.c main.c -o main
+UNIVERSAL_DEPS :=  menu/menu.h menu/menu_p.h menu/menu.c render/render.h
 
-run-native: main
-	@./main
+cli: $(UNIVERSAL_DEPS) render/render_print.c cli.c
+	cc menu/menu.c render/render_print.c cli.c -o cli
+
+run-native: cli
+	@./cli
 
 clean:
-	-rm main
+	-rm cli

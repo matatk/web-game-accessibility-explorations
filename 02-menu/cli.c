@@ -2,7 +2,8 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "menu.h"
+#include "menu/menu.h"
+#include "render/render.h"
 
 bool is(char input, const char *str) {
 	return strncmp(&input, str, 1) == 0;
@@ -13,10 +14,11 @@ int main() {
 	Menu *current = root;
 	bool quit = false;
 
-	print_menu_tree(current);
+	debug_print_menu_tree(current);
 	printf("\nUse j/k as arrow keys; e to enter; q to quit\n");
 
-	print_menu(current);
+	render_menu(current);
+
 	while (!quit) {
 		char input;
 		scanf(" %c", &input);
@@ -37,7 +39,8 @@ int main() {
 			} else {
 				printf("<unhandled input>\n");
 			}
-			print_menu(current);
+
+			render_menu(current);
 		}
 	}
 
