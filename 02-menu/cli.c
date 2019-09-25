@@ -25,6 +25,7 @@ int main() {
 		getchar();
 
 		if (is(input, "q")) {
+			printf("<Quitting...>\n");
 			quit = true;
 		} else {
 			if (is(input, "j")) {
