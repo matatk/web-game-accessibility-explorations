@@ -1,7 +1,7 @@
-Web Game Accessibility
-======================
+Web Game Accessibility Explorations
+===================================
 
-This repo contains some explorations around providing accessibility information from games compiled for the web (with WebAssembly) to players' assistive technologies (such as screen readers, screen magnifiers and so on).
+Exploring the possibilities for providing semantic information from games compiled for the web to players' assistive technologies.
 
 Pre-requisites
 --------------
