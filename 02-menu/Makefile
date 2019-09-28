@@ -1,4 +1,4 @@
-.PHONY: build-all run-native clean
+.PHONY: build-all clean
 
 UNIVERSAL_DEPS :=  menu/menu.h menu/menu_p.h menu/menu.c render/render.h
 
@@ -24,9 +24,5 @@ serve: sdl.html
 	@echo 'serving on http://0.0.0.0:8080/$<'
 	@python -m SimpleHTTPServer 8080
 
-run-native: cli cli-fancy
-	./cli
-	./cli-fancy
-
 clean:
-	-rm cli cli-fancy
+	-rm cli cli-fancy sdl sdl.js sdl.wasm sdl.html
