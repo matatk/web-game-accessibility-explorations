@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <SDL.h>
 
-const int WIDTH = 640;
-const int HEIGHT = 480;
+const int WIDTH = 320;
+const int HEIGHT = 240;
 
-extern "C" int main(int argc, char** argv) {
+int main() {
 	printf("Hello, world!\n");
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -12,18 +13,14 @@ extern "C" int main(int argc, char** argv) {
 		return 42;
 	}
 
-	SDL_Window* window = NULL;
-	SDL_Surface* surface = NULL;
-
-	window = SDL_CreateWindow("Hello, SDL2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
-	if (window == NULL) {
-		printf("SDL window creation error: %s\n", SDL_GetError());
+	SDL_Surface *screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_SWSURFACE);
+	if (screen == NULL) {
+		printf("SDL screen initialisation error: %s\n", SDL_GetError());
 		return 43;
 	}
 
-	surface = SDL_GetWindowSurface(window);
-	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0x80, 0));
-	SDL_UpdateWindowSurface(window);
+	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0x80, 0));
+	SDL_Flip(screen);
 
 #ifndef __EMSCRIPTEN__
 	// macOS requires an event loop to display anything
@@ -45,8 +42,6 @@ extern "C" int main(int argc, char** argv) {
 	}
 #endif
 
-	// TODO what happens if this isn't called?
-	//SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;
 }

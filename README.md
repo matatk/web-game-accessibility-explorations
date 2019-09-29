@@ -10,9 +10,9 @@ Pre-requisites
 
  * `git clone https://github.com/emscripten-core/emsdk`
  * `cd emsdk`
- * `./emsdk install latest-upstream`
- * `./emsdk activate latest-upstream`
- * Restart your shell
+ * `./emsdk install 1.38.46-upstream`
+ * `./emsdk activate 1.38.46-upstream`
+ * Add `/directory/where/you/cloned/emsdk/emsdk_env.sh > /dev/null` to your shell start-up script and restart your shell.
 
 You can also issue `./emsdk help` for more info. It's recommended to put the "emsdk" checked-out repo directory on your PATH.
 

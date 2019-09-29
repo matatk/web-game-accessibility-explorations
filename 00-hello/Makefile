@@ -2,20 +2,20 @@
 
 all: build run
 
-build: emtest emtest.js
+build: hello hello.js
 
-emtest: emtest.c
+hello: hello.c
 	cc $< -o $@
 
-emtest.js: emtest.c
+hello.js: hello.c
 	emcc $< -o $@
 
 run: build
 	@echo '--- Native C version ---'
-	@./emtest
+	@./hello
 	@echo
 	@echo '--- WebAssembly version ---'
-	@node emtest.js
+	@node hello.js
 
 clean:
-	-rm -v emtest emtest.js emtest.wasm
+	-rm -v hello hello.js hello.wasm

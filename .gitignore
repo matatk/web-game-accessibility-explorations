@@ -5,7 +5,7 @@ node_modules
 !*.library.js
 *.wasm
 *.html
-emtest
-emtestsdl1
-emtestsdl2
+hello
+hello-sdl1
+hello-sdl2
 live-region
