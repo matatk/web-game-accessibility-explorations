@@ -17,10 +17,11 @@ int main() {
 	debug_print_menu_tree(current);
 	printf("\nUse j/k as arrow keys; e to enter; q to quit\n");
 
-	render_menu(current);
-
 	while (!quit) {
 		char input;
+
+		render_menu(current, NULL);
+
 		scanf(" %c", &input);
 		getchar();
 
@@ -40,8 +41,6 @@ int main() {
 			} else {
 				printf("<unhandled input>\n");
 			}
-
-			render_menu(current);
 		}
 	}
 

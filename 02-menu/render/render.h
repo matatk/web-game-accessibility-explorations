@@ -3,6 +3,6 @@
 
 #include "../menu/menu.h"
 
-void render_menu(Menu *);
+void render_menu(Menu *, void *);
 
 #endif
