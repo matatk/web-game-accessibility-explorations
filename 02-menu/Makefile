@@ -14,8 +14,8 @@ cli-fancy: $(CLI_COMMON_DEPS) render/render_print_fancy.c
 	cc $(CLI_COMMON_CODE) render/render_print_fancy.c -o $@
 
 sdl: sdl.c $(UNIVERSAL_DEPS) render/render_print.c
-	cc `sdl-config --cflags --libs` \
-		menu/menu.c render/render_print.c sdl.c -o $@
+	cc menu/menu.c render/render_print.c sdl.c \
+		`sdl-config --cflags --libs` -o $@
 
 sdl.html: sdl.c $(UNIVERSAL_DEPS) render/render_print.c
 	emcc menu/menu.c render/render_print.c sdl.c -o $@
