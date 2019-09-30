@@ -17,12 +17,11 @@ Install
 
 ### Mac
 
- * `brew install sdl`
- * `brew install sdl_ttf`
+`brew install sdl sdl_ttf`
 
 ### Ubuntu
 
- * `sudo apt-get install libsdl1.2-dev`
+`sudo apt-get install libsdl1.2-dev libsdl-ttf2.0-dev`
 
 Build
 -----
