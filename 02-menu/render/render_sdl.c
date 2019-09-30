@@ -22,18 +22,17 @@ void render_menu(Menu *menu, void *thingy) {
 		return;
 	}
 
-	SDL_Color fg = { 255, 255, 255 };
 	SDL_Color bg = {   0,   0,   0 };
 
 	for (int i = 0; i < menu->length; i++) {
 		char *string;
-		asprintf(&string, "%s %s\n",
+		asprintf(&string, "%s %s",
 				menu->items[i]->name,
 				menu->items[i]->sub_menu != NULL ? ">>" : "");
 
 		SDL_Color fg = (i == menu->current)
 			? (SDL_Color){ 255, 255, 255 }
-		: (SDL_Color){ 255, 0, 255 };
+			: (SDL_Color){ 255, 0, 255 };
 
 		SDL_Surface *text = TTF_RenderText_Shaded(font, string, fg, bg);
 		SDL_Rect pos = { 10, size + (i * size * 1.5), 0, 0 };
