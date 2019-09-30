@@ -21,7 +21,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "git clean -fdx -e node_modules/",
-    "test": "eclint check && cppcheck **/*.{c,cpp}"
+    "test": "eclint check && cppcheck **/*.c"
   },
   "husky": {
     "hooks": {
