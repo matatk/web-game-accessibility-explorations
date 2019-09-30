@@ -8,7 +8,11 @@
 #ifdef __EMSCRIPTEN__
 #define FONT "ARIAL.TTF"
 #else
+#ifdef __APPLE__
+#define FONT "/Library/Fonts/Comic Sans MS.ttf"
+#else
 #define FONT "/usr/share/fonts/truetype/freefont/FreeSans.ttf"
+#endif
 #endif
 
 const int size = 24;
@@ -22,8 +26,6 @@ void render_menu(Menu *menu, void *thingy) {
 		return;
 	}
 
-	SDL_Color bg = {   0,   0,   0 };
-
 	for (int i = 0; i < menu->length; i++) {
 		char *string;
 		asprintf(&string, "%s %s",
@@ -34,7 +36,7 @@ void render_menu(Menu *menu, void *thingy) {
 			? (SDL_Color){ 255, 255, 255 }
 			: (SDL_Color){ 255, 0, 255 };
 
-		SDL_Surface *text = TTF_RenderText_Shaded(font, string, fg, bg);
+		SDL_Surface *text = TTF_RenderText_Blended(font, string, fg);
 		SDL_Rect pos = { 10, size + (i * size * 1.5), 0, 0 };
 		SDL_BlitSurface(text, NULL, screen, &pos);
 		SDL_FreeSurface(text);
