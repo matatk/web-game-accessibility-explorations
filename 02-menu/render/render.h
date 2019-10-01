@@ -5,4 +5,8 @@
 
 void render_menu(Menu *, void *);
 
+// Accessibility stuff
+void expose_menu(Menu *);
+void expose_current_item(Menu *);
+
 #endif

@@ -17,6 +17,7 @@
 
 const int size = 24;
 
+// This requires that TTF_Init() has already been called
 void render_menu(Menu *menu, void *thingy) {
 	SDL_Surface *screen = (SDL_Surface *)thingy;
 
@@ -29,8 +30,8 @@ void render_menu(Menu *menu, void *thingy) {
 	for (int i = 0; i < menu->length; i++) {
 		char *string;
 		asprintf(&string, "%s %s",
-				menu->items[i]->name,
-				menu->items[i]->sub_menu != NULL ? ">>" : "");
+			menu->items[i]->name,
+			menu->items[i]->sub_menu != NULL ? ">>" : "");
 
 		SDL_Color fg = (i == menu->current)
 			? (SDL_Color){ 255, 255, 255 }

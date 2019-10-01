@@ -43,6 +43,10 @@ void display_current_menu() {
 	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0x80));
 	render_menu(current, screen);
 	SDL_Flip(screen);
+#ifdef __EMSCRIPTEN__
+	expose_menu(current);
+	expose_current_item(current);
+#endif
 }
 
 void one_iter() {
