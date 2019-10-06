@@ -15,7 +15,7 @@ int main() {
 	bool quit = false;
 
 	debug_print_menu_tree(current);
-	printf("\nUse j/k as arrow keys; e to enter; q to quit\n");
+	printf("\nUse j/k as arrow keys; e to enter; b to go back; q to quit\n");
 
 	while (!quit) {
 		char input;
@@ -38,6 +38,9 @@ int main() {
 			} else if (is(input, "e")) {
 				printf("<ENTER>\n");
 				current = menu_activate(current);
+			} else if (is(input, "b")) {
+				printf("<BACK>\n");
+				current = menu_back(current);
 			} else {
 				printf("<unhandled input>\n");
 			}

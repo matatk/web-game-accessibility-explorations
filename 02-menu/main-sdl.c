@@ -69,6 +69,10 @@ void one_iter() {
 					current = menu_activate(current);
 					break;
 
+				case SDLK_LEFT:
+					current = menu_back(current);
+					break;
+
 				default:
 					break;
 			}
@@ -84,7 +88,7 @@ int main() {
 
 	if (init() < 0) return -1;
 
-	printf("\nUse up/down arrow keys; right to enter a menu\n");
+	printf("\nUse up/down arrows; right to enter submenu; left to go back\n");
 	display_current_menu();
 
 #ifdef __EMSCRIPTEN__

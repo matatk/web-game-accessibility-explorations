@@ -14,9 +14,10 @@ typedef struct Menu {
 	int length;
 	int current;
 	MenuItem **items;
+	Menu *parent_menu;
 } Menu;
 
-MenuItem *new_menu_item(const char *, Menu *);
 Menu *new_menu(int, ...);
+MenuItem *new_menu_item(const char *, Menu *);
 
 #endif

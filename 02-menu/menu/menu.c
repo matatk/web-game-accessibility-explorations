@@ -2,8 +2,31 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <assert.h>
 
 #include "menu.h"
+
+Menu *new_menu(int length, ...) {
+	va_list list;
+
+	Menu *new = malloc(sizeof(Menu));
+	new->parent_menu = NULL;
+	new->length = length;
+	new->current = 0;
+	new->items = malloc(length * sizeof(MenuItem *));
+
+	va_start(list, length);
+	for (int i = 0; i < length; i++) {
+		new->items[i] = va_arg(list, MenuItem *);
+
+		if (new->items[i]->sub_menu) {
+			new->items[i]->sub_menu->parent_menu = new;
+		}
+	}
+	va_end(list);
+
+	return new;
+}
 
 MenuItem *new_menu_item(const char *name, Menu *sub_menu) {
 	MenuItem *new = malloc(sizeof(MenuItem));
@@ -18,24 +41,10 @@ MenuItem *new_menu_item(const char *name, Menu *sub_menu) {
 	return new;
 }
 
-Menu *new_menu(int length, ...) {
-	va_list list;
-
-	Menu *new = malloc(sizeof(Menu));
-	new->length = length;
-	new->current = 0;
-	new->items = malloc(length * sizeof(MenuItem *));
-
-	va_start(list, length);
-	for (int i = 0; i < length; i++) {
-		new->items[i] = va_arg(list, MenuItem *);
-	}
-	va_end(list);
-
-	return new;
-}
-
 void _debug_print_menu_tree(Menu *menu, int depth) {
+	for (int d = 0; d < depth; d++) printf("\t");
+	printf("Menu: %p; Parent: %p\n", menu, menu->parent_menu);
+
 	for (int i = 0; i < menu->length; i++) {
 		for (int d = 0; d < depth; d++) printf("\t");
 		printf("%d: %s -> %p\n",
@@ -88,6 +97,14 @@ void menu_up(Menu *menu) {
 Menu *menu_activate(Menu *menu) {
 	if (menu->items[menu->current]->sub_menu != NULL) {
 		return menu->items[menu->current]->sub_menu;
+	} else {
+		return menu;
+	}
+}
+
+Menu *menu_back(Menu *menu) {
+	if (menu->parent_menu != NULL) {
+		return menu->parent_menu;
 	} else {
 		return menu;
 	}
