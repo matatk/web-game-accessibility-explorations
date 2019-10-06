@@ -16,14 +16,7 @@
 	flex-grow: 1;
 }
 
-#output {
-	background-color: black;
-	color: white;
-	font-family: monospace;
-	padding: 0.5em;
-}
-
-div, canvas {
+#canvas, #proxy-ui {
 	border-radius: 0.5em;
 }
 		</style>
@@ -33,15 +26,8 @@ div, canvas {
 			<canvas id='canvas'></canvas>
 			<div id='proxy-ui'></div>
 		</div>
-		<div id='output'></div>
 		<script>
 var Module = {
-	print: (function() {
-		const output = document.getElementById('output')
-			return function(text) {
-				output.innerText += text + '\n'
-			}
-	}()),
 	canvas: document.getElementById('canvas')
 }
 		</script>
