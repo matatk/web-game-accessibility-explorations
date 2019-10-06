@@ -7,10 +7,10 @@
 
 // Our custom JavaScript library functions
 extern void accessibility_setup(void);
-extern void accessibility_render_menu_start();
+extern void accessibility_render_menu_start(Menu *);
 extern void accessibility_render_menu_item(const char *, bool);
 extern void accessibility_render_menu_done();
-extern void accessibility_render_current_item(int);
+extern void accessibility_render_current_item(Menu *, int);
 
 bool accessibility_setup_done = false;
 
@@ -20,7 +20,7 @@ void expose_menu(Menu *menu) {
 		accessibility_setup_done = true;
 	}
 
-	accessibility_render_menu_start();
+	accessibility_render_menu_start(menu);
 
 	for (int i = 0; i < menu->length; i++) {
 		accessibility_render_menu_item(
@@ -31,7 +31,7 @@ void expose_menu(Menu *menu) {
 }
 
 void expose_current_item(Menu *menu) {
-	accessibility_render_current_item(menu->current);
+	accessibility_render_current_item(menu, menu->current);
 }
 
 #endif

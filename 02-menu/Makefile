@@ -8,7 +8,7 @@ CLI_COMMON_CODE := menu/menu.c cli.c
 GUI_AND_ACCESSIBILITY_RENDERERS := \
 	render/render_sdl.c render/render_accessibility.c
 GUI_AND_ACCESSIBILITY_DEPS := \
-	$(GUI_AND_ACCESSIBILITY_RENDERERS) accessibility.library.js
+	$(GUI_AND_ACCESSIBILITY_RENDERERS)  # not accessibility.library.js
 
 build-all: cli cli-fancy sdl sdl.html
 
