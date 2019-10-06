@@ -2,7 +2,7 @@
 echo 'This will carry out the install steps in the main README (except for Emscripten set-up, which needs to be done manually) and then install the dependencies of, and build, all explorations.' | fmt
 echo
 echo 'Interrupt to abort, or press ENTER to continue...'
-read -r
+read -r _
 
 echo Installing repo native dependencies...
 if [ "$(uname -s)" = 'Darwin' ]; then
