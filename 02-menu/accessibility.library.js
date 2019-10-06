@@ -5,11 +5,7 @@ let menuUnderConstruction = null
 mergeInto(LibraryManager.library, {  // eslint-disable-line
 	accessibility_setup: function() {
 		document.body.setAttribute('role', 'application')
-		proxyArea = document.createElement('DIV')
-		proxyArea.style.margin = '0.5rem'
-		proxyArea.style.padding = '0.5rem'
-		proxyArea.style.border = '0.1rem solid black'
-		document.body.appendChild(proxyArea)
+		proxyArea = document.getElementById('proxy-ui')
 		proxyArea.focus()
 	},
 

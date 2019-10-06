@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8'>
+		<title></title>
+		<style>
+#side-by-side {
+	display: flex;
+	margin-bottom: 1em;
+}
+
+#proxy-ui {
+	border: 1px solid black;
+	background: #eee;
+	margin-left: 1em;
+	flex-grow: 1;
+}
+
+#output {
+	background-color: black;
+	color: white;
+	font-family: monospace;
+	padding: 0.5em;
+}
+
+div, canvas {
+	border-radius: 0.5em;
+}
+		</style>
+	</head>
+	<body>
+		<div id='side-by-side'>
+			<canvas id='canvas'></canvas>
+			<div id='proxy-ui'></div>
+		</div>
+		<div id='output'></div>
+		<script>
+var Module = {
+	print: (function() {
+		const output = document.getElementById('output')
+			return function(text) {
+				output.innerText += text + '\n'
+			}
+	}()),
+	canvas: document.getElementById('canvas')
+}
+		</script>
+		<script src='sdl.js'></script>
+	</body>
+</html>

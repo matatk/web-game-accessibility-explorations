@@ -11,8 +11,8 @@
 #include "menu/menu.h"
 #include "render/render.h"
 
-const int WIDTH = 320;
-const int HEIGHT = 240;
+const int WIDTH = 640;
+const int HEIGHT = 480;
 
 Menu *root;
 Menu *current;

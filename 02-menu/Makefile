@@ -8,9 +8,9 @@ CLI_COMMON_CODE := menu/menu.c cli.c
 GUI_AND_ACCESSIBILITY_RENDERERS := \
 	render/render_sdl.c render/render_accessibility.c
 GUI_AND_ACCESSIBILITY_DEPS := \
-	$(GUI_AND_ACCESSIBILITY_RENDERERS)  # not accessibility.library.js
+	$(GUI_AND_ACCESSIBILITY_RENDERERS) accessibility.library.js
 
-build-all: cli cli-fancy sdl sdl.html
+build-all: cli cli-fancy sdl sdl.js
 
 cli: $(CLI_COMMON_DEPS) render/render_print.c
 	cc $(CLI_COMMON_CODE) render/render_print.c -o $@
@@ -22,13 +22,13 @@ sdl: sdl.c $(UNIVERSAL_DEPS) $(GUI_AND_ACCESSIBILITY_DEPS)
 	cc menu/menu.c $(GUI_AND_ACCESSIBILITY_RENDERERS) sdl.c \
 		`sdl-config --cflags --libs` -lSDL_ttf -o $@
 
-sdl.html: sdl.c $(UNIVERSAL_DEPS) $(GUI_AND_ACCESSIBILITY_DEPS)
+sdl.js: sdl.c $(UNIVERSAL_DEPS) $(GUI_AND_ACCESSIBILITY_DEPS)
 	emcc menu/menu.c $(GUI_AND_ACCESSIBILITY_RENDERERS) sdl.c \
 		--js-library accessibility.library.js -o $@
 
-serve: sdl.html
-	@echo 'serving on http://0.0.0.0:8080/$<'
+serve: sdl.js
+	@echo 'serving on http://0.0.0.0:8080/sdl.html'
 	@python -m SimpleHTTPServer 8080
 
 clean:
-	-rm cli cli-fancy sdl sdl.js sdl.wasm sdl.html
+	-rm cli cli-fancy sdl sdl.js sdl.wasm
