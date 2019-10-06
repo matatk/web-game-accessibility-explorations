@@ -1,4 +1,4 @@
-.PHONY: build-all clean
+.PHONY: build-all clean install-deps
 
 UNIVERSAL_DEPS := menu/menu.h menu/menu_p.h menu/menu.c render/render.h
 
@@ -32,3 +32,6 @@ serve: menu-sdl.js
 
 clean:
 	-rm menu-cli menu-cli-fancy menu-sdl menu-sdl.js menu-sdl.wasm
+
+install-deps:
+	[ $$(uname -s) = 'Darwin' ] && brew install sdl sdl_ttf || sudo apt-get install libsdl1.2-dev libsdl-ttf2.0-dev

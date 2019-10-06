@@ -31,6 +31,8 @@ This accessibility code layer is written fairly generically, though only support
 Install
 -------
 
+You can use `make install-deps` or follow the instructions below.
+
 ### Mac
 
 `brew install sdl sdl_ttf`

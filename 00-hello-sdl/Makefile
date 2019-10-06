@@ -1,4 +1,4 @@
-.PHONY: build serve clean
+.PHONY: build serve clean install-deps
 
 build: hello-sdl1 hello-sdl1.html hello-sdl2 hello-sdl2.html
 
@@ -20,3 +20,6 @@ serve: build
 
 clean:
 	-rm -v hello-sdl1 hello-sdl2 hello-sdl*.js hello-sdl*.wasm hello-sdl*.html
+
+install-deps:
+	[ $$(uname -s) = 'Darwin' ] && brew install sdl sdl2 || sudo apt-get install libsdl1.2-dev libsdl2-dev
