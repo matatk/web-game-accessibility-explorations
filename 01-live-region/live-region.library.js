@@ -1,7 +1,7 @@
 'use strict'
 let liveRegion
 
-mergeInto(LibraryManager.library, {
+mergeInto(LibraryManager.library, {  // eslint-disable-line
 	screen_reader_setup: function() {
 		const liveRegionHeading = document.createElement('H1')
 		liveRegionHeading.style.padding = '0.5rem'
@@ -16,6 +16,6 @@ mergeInto(LibraryManager.library, {
 	},
 
 	screen_reader_announce: function(message) {
-		liveRegion.innerText = UTF8ToString(message, 128)
+		liveRegion.innerText = UTF8ToString(message, 128)  // eslint-disable-line
 	},
 })
