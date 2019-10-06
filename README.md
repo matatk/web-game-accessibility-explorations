@@ -6,7 +6,11 @@ Exploring the possibilities for providing semantic information from games compil
 Pre-requisites
 --------------
 
-### To install Emscripten
+On top of the below, the individual examples have differing dependencies; info can be found in each of their READMEs.
+
+### Mac & Ubuntu
+
+It's possible to install emscripten via `brew` (Mac) or `apt-get` (Ubuntu) but I have found configuration problems when doing so, so recommend the officially-supported way...
 
  * `git clone https://github.com/emscripten-core/emsdk`
  * `cd emsdk`
@@ -14,19 +18,24 @@ Pre-requisites
  * `./emsdk activate 1.38.46-upstream`
  * Add `/directory/where/you/cloned/emsdk/emsdk_env.sh > /dev/null` to your shell start-up script and restart your shell.
 
-You can also issue `./emsdk help` for more info. It's recommended to put the "emsdk" checked-out repo directory on your PATH.
+### Mac
+
+ * `brew install cppcheck`
+
+### Ubuntu
+
+ * `sudo apt-get install cppcheck`
 
 ### Set-up for this repo
 
  * `npm install`
- * `brew install cppcheck`
 
 Tests/Support
 -------------
 
 Some simple tests for style consistency and linting are run via `npm test` and on pre-commit.
 
-This has been run/tested on macOS (Mojave).
+This has been run/tested on macOS (Mojave) and Ubuntu (19.04).
 
 Background and acknowledgements
 -------------------------------

@@ -12,6 +12,8 @@ Inversely, the SDL 2 version works fine natively on the Mac and Ubuntu, but not 
 Install
 -------
 
+You can use `make install-deps` or follow the instructions below.
+
 ### Mac
 
 `brew install sdl sdl2`
