@@ -88,7 +88,7 @@ int main() {
 
 	if (init() < 0) return -1;
 
-	printf("\nUse up/down arrows; right to enter submenu; left to go back\n");
+	printf("Use up/down arrows; right to enter submenu; left to go back\n");
 	display_current_menu();
 
 #ifdef __EMSCRIPTEN__

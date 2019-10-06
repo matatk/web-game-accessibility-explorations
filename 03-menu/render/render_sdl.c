@@ -35,7 +35,7 @@ void render_menu(Menu *menu, void *thingy) {
 
 		SDL_Color fg = (i == menu->current)
 			? (SDL_Color){ 255, 255, 255 }
-			: (SDL_Color){ 255, 0, 255 };
+			: (SDL_Color){ 0xF0, 0, 0xF0 };
 
 		SDL_Surface *text = TTF_RenderText_Blended(font, string, fg);
 		SDL_Rect pos = { 10, size + (i * size * 1.5), 0, 0 };
