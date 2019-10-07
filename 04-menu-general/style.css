@@ -1,0 +1,27 @@
+* {
+	box-sizing: border-box;
+}
+
+*:focus {
+	outline: 0.25em solid #007e00;
+}
+
+button {
+	margin: 0.25em;
+}
+
+#side-by-side {
+	display: flex;
+	margin-bottom: 1em;
+}
+
+#proxy-ui {
+	border: 1px solid black;
+	background: #eee;
+	margin-left: 1em;
+	flex-grow: 1;
+}
+
+#canvas, #proxy-ui {
+	border-radius: 0.5em;
+}
