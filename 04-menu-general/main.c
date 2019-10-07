@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #include "menu.h"
-#include "gui.h"
+#include "ui.h"
 
 Menu *make_menus() {
 	Menu *episode_menu = new_menu(3,
@@ -29,6 +29,6 @@ Menu *make_menus() {
 }
 
 int main() {
-	if (init() < 0) return -1;
-	return start(make_menus());
+	if (ui_init() < 0) return -1;
+	return ui_start(make_menus());
 }

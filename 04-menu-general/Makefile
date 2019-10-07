@@ -3,17 +3,17 @@
 build-all: menu-cli menu-cli-fancy menu-sdl menu-sdl.js
 
 menu-cli: *h *c
-	cc main.c menu.c gui_cli.c render_print.c -o $@
+	cc main.c menu.c ui_cli.c render_print.c -o $@
 
 menu-cli-fancy: *h *c
-	cc main.c menu.c gui_cli.c render_print_fancy.c -o $@
+	cc main.c menu.c ui_cli.c render_print_fancy.c -o $@
 
 menu-sdl: *h *c *library.js *html
-	cc main.c menu.c gui_sdl.c render_sdl.c render_accessibility.c \
+	cc main.c menu.c ui_sdl.c render_sdl.c render_accessibility.c \
 		`sdl-config --cflags --libs` -lSDL_ttf -o $@
 
 menu-sdl.js: *h *c *library.js *html
-	emcc main.c menu.c gui_sdl.c render_sdl.c render_accessibility.c \
+	emcc main.c menu.c ui_sdl.c render_sdl.c render_accessibility.c \
 		--js-library accessibility.library.js -o $@
 
 serve: menu-sdl.js

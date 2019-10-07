@@ -19,25 +19,8 @@ Menu *current;
 SDL_Surface *screen;
 int quit = 0;
 
-int init() {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("SDL initialisation error: %s\n", SDL_GetError());
-		return -42;
-	}
 
-	screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_SWSURFACE);
-	if (screen == NULL) {
-		printf("SDL screen initialisation error: %s\n", SDL_GetError());
-		return -43;
-	}
-
-	if (TTF_Init() < 0) {
-		printf("TTF initialisation error: %s\n", TTF_GetError());
-		return -44;
-	}
-
-	return 0;
-}
+// Private
 
 void display_current_menu() {
 	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0x80));
@@ -82,7 +65,30 @@ void one_iter() {
 	}
 }
 
-int start(Menu *menu) {
+
+// Public
+
+int ui_init() {
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		printf("SDL initialisation error: %s\n", SDL_GetError());
+		return -42;
+	}
+
+	screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_SWSURFACE);
+	if (screen == NULL) {
+		printf("SDL screen initialisation error: %s\n", SDL_GetError());
+		return -43;
+	}
+
+	if (TTF_Init() < 0) {
+		printf("TTF initialisation error: %s\n", TTF_GetError());
+		return -44;
+	}
+
+	return 0;
+}
+
+int ui_start(Menu *menu) {
 	current = menu;
 
 	display_current_menu();

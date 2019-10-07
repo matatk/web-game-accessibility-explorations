@@ -10,14 +10,15 @@
 #include "menu.h"
 #include "render.h"
 
-bool is(char, const char*);
-
 Menu *root;
 Menu *current;
 bool quit = false;
 
-int init() {
-	return 0;
+
+// Private
+
+bool is(char input, const char *str) {
+	return strncmp(&input, str, 1) == 0;
 }
 
 void display_current_menu() {
@@ -26,10 +27,6 @@ void display_current_menu() {
 	expose_menu(current);
 	expose_current_item(current);
 #endif
-}
-
-bool is(char input, const char *str) {
-	return strncmp(&input, str, 1) == 0;
 }
 
 void one_iter() {
@@ -63,7 +60,14 @@ void one_iter() {
 	}
 }
 
-int start(Menu *menu) {
+
+// Public
+
+int ui_init() {
+	return 0;
+}
+
+int ui_start(Menu *menu) {
 	current = menu;
 
 	printf("Use j/k as up/down; e to enter menu; b to go back; q to quit\n\n");
