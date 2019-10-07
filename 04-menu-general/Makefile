@@ -2,10 +2,10 @@
 
 build-all: menu-cli menu-cli-fancy menu-sdl menu-sdl.js
 
-menu-cli: *h *c *library.js *html
+menu-cli: *h *c
 	cc main.c menu.c gui_cli.c render_print.c -o $@
 
-menu-cli-fancy: *h *c *library.js *html
+menu-cli-fancy: *h *c
 	cc main.c menu.c gui_cli.c render_print_fancy.c -o $@
 
 menu-sdl: *h *c *library.js *html
