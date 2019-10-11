@@ -5,25 +5,25 @@
 
 Menu *make_menus() {
 	Menu *episode_menu = new_menu(3,
-		new_menu_item("Big pile of great dread", NULL),
-		new_menu_item("The floors look swell", NULL),
-		new_menu_item("Some Pearnod", NULL));
+		new_widget_button("Big pile of great dread"),
+		new_widget_button("The floors look swell"),
+		new_widget_button("Some Pearnod"));
 
 	Menu *player_options_menu = new_menu(2,
-		new_menu_item("Name", NULL),
-		new_menu_item("Colour", NULL));
+		new_widget_button("Name"),
+		new_widget_button("Colour"));
 
 	Menu *options_menu = new_menu(5,
-		new_menu_item("Player", player_options_menu),
-		new_menu_item("Controls", NULL),
-		new_menu_item("Gameplay", NULL),
-		new_menu_item("Sound", NULL),
-		new_menu_item("Video", NULL));
+		new_widget_submenu("Player", player_options_menu),
+		new_widget_button("Controls"),
+		new_widget_button("Gameplay"),
+		new_widget_button("Sound"),
+		new_widget_button("Video"));
 
 	Menu *main_menu = new_menu(3,
-		new_menu_item("New game", episode_menu),
-		new_menu_item("Options", options_menu),
-		new_menu_item("Exit", NULL));
+		new_widget_submenu("New game", episode_menu),
+		new_widget_submenu("Options", options_menu),
+		new_widget_button("Exit"));
 
 	return main_menu;
 }
