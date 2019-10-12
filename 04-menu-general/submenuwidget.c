@@ -3,7 +3,7 @@
 
 #include "submenuwidget.h"
 
-void submenu_widget_to_string(Widget *widget) {
+void submenu_widget_debug_print(Widget *widget) {
 	printf("%s -> %p", widget->name, ((SubmenuWidget *)widget)->sub_menu);
 }
 
@@ -14,7 +14,7 @@ SubmenuWidget *new_widget_submenu(const char *name, Menu *sub_menu) {
 	new->sub_menu = sub_menu;
 
 	WidgetMethods *methods = malloc(sizeof(WidgetMethods));
-	methods->to_string = &submenu_widget_to_string;
+	methods->debug_print = &submenu_widget_debug_print;
 	new->base.methods = methods;
 
 	return new;

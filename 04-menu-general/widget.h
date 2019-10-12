@@ -12,13 +12,13 @@ typedef struct Widget {
 	WidgetMethods *methods;
 } Widget;
 
-void widget_to_string(Widget *);
+void widget_debug_print(Widget *);
 
 
 // Private
 
 typedef struct WidgetMethods {
-	void (*to_string)(Widget *widget);
+	void (*debug_print)(Widget *widget);
 } WidgetMethods;
 
 void _widget_check_copy_name(const char *, char *);

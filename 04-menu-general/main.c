@@ -32,5 +32,7 @@ Menu *make_menus() {
 
 int main() {
 	if (ui_init() < 0) return -1;
-	return ui_start(make_menus());
+	Menu *root = make_menus();
+	debug_print_menu_tree(root);
+	return ui_start(root);
 }

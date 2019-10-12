@@ -3,7 +3,7 @@
 
 #include "buttonwidget.h"
 
-void button_widget_to_string(Widget *widget) {
+void button_widget_debug_print(Widget *widget) {
 	printf("[%s]", widget->name);
 }
 
@@ -13,7 +13,7 @@ ButtonWidget *new_widget_button(const char *name) {
 	new->base.classname = "ButtonWidget";
 
 	WidgetMethods *methods = malloc(sizeof(WidgetMethods));
-	methods->to_string = &button_widget_to_string;
+	methods->debug_print = &button_widget_debug_print;
 	new->base.methods = methods;
 
 	return new;

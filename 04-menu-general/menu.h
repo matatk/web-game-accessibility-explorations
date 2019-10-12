@@ -15,6 +15,8 @@ void menu_up(Menu *);
 Menu *menu_activate(Menu *);
 Menu *menu_back(Menu *);
 
+void debug_print_menu_tree(Menu *);
+
 
 // Private
 

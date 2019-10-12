@@ -27,24 +27,26 @@ Menu *new_menu(int length, ...) {
 	return new;
 }
 
-/* TODO: call teh widget's render function
 void _debug_print_menu_tree(Menu *menu, int depth) {
 	for (int d = 0; d < depth; d++) printf("\t");
 	printf("Menu: %p; Parent: %p\n", menu, menu->parent_menu);
 
 	for (int i = 0; i < menu->length; i++) {
 		for (int d = 0; d < depth; d++) printf("\t");
-		printf("%d: %s -> %p\n",
-			i, menu->items[i]->name, menu->items[i]->sub_menu);
-		if (menu->items[i]->sub_menu != NULL) {
-			_debug_print_menu_tree(menu->items[i]->sub_menu, depth + 1);
+		Widget *item = menu->items[i];
+		printf("%d: ", i);
+		widget_debug_print(item);
+		printf("\n");
+		if (item->classname == "SubmenuWidget") {
+			_debug_print_menu_tree(
+				((SubmenuWidget *)item)->sub_menu, depth + 1);
 		}
 	}
 }
 
 void debug_print_menu_tree(Menu *menu) {
 	_debug_print_menu_tree(menu, 0);
-} */
+}
 
 void menu_down(Menu *menu) {
 	menu->current = (menu->current + 1) % menu->length;

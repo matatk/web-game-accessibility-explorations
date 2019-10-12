@@ -4,8 +4,8 @@
 
 #include "widget.h"
 
-inline void widget_to_string(Widget *widget) {
-	widget->methods->to_string(widget);
+inline void widget_debug_print(Widget *widget) {
+	widget->methods->debug_print(widget);
 }
 
 void _widget_check_copy_name(const char *name, char *destination) {
