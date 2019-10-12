@@ -9,7 +9,7 @@ void button_widget_debug_print(Widget *widget) {
 
 WidgetButton *new_widget_button(const char *name) {
 	WidgetButton *new = malloc(sizeof(WidgetButton));
-	widget_check_copy_name(name, new->base.name);
+	new->base.name = name;
 	new->base.type = BUTTON;
 
 	WidgetMethods *methods = malloc(sizeof(WidgetMethods));

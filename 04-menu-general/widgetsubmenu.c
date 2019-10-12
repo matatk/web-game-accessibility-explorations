@@ -9,7 +9,7 @@ void submenu_widget_debug_print(Widget *widget) {
 
 WidgetSubmenu *new_widget_submenu(const char *name, Menu *sub_menu) {
 	WidgetSubmenu *new = malloc(sizeof(WidgetSubmenu));
-	widget_check_copy_name(name, new->base.name);
+	new->base.name = name;
 	new->base.type = SUBMENU;
 	new->sub_menu = sub_menu;
 

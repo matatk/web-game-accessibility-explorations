@@ -3,9 +3,6 @@
 
 #include <stdbool.h>
 
-//const int MAX_ITEM_NAME_SIZE = 23;
-#define MAX_ITEM_NAME_SIZE 23
-
 typedef enum WidgetType {
 	WIDGET,
 	BUTTON,
@@ -16,7 +13,7 @@ typedef struct WidgetMethods WidgetMethods;
 
 typedef struct Widget {
 	int type;
-	char name[MAX_ITEM_NAME_SIZE];
+	const char *name;
 	WidgetMethods *methods;
 } Widget;
 
