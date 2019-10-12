@@ -4,6 +4,10 @@
 
 #include "widget.h"
 
+inline void widget_to_string(Widget *widget) {
+	widget->methods->to_string(widget);
+}
+
 void _widget_check_copy_name(const char *name, char *destination) {
 	size_t name_len = strnlen(name, MAX_ITEM_NAME_SIZE);
 	if (name_len > MAX_ITEM_NAME_SIZE) {

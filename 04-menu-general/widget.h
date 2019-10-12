@@ -4,16 +4,23 @@
 //const int MAX_ITEM_NAME_SIZE = 23;
 #define MAX_ITEM_NAME_SIZE 23
 
-typedef const char * klassname;
+typedef struct WidgetMethods WidgetMethods;
 
 typedef struct Widget {
-	klassname classname;
+	const char *classname;
 	char name[MAX_ITEM_NAME_SIZE];
+	WidgetMethods *methods;
 } Widget;
+
+void widget_to_string(Widget *);
 
 
 // Private
 
-void _widget_check_copy_name(const char *name, char *destination);
+typedef struct WidgetMethods {
+	void (*to_string)(Widget *widget);
+} WidgetMethods;
+
+void _widget_check_copy_name(const char *, char *);
 
 #endif
