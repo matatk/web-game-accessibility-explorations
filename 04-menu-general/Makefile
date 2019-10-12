@@ -3,20 +3,29 @@
 WIDGET_H := widget.h widgetbutton.h widgetsubmenu.h
 WIDGET_C := widget.c widgetbutton.c widgetsubmenu.c
 
+STD_H := menu.h ui.h render.h
+STD_C := main.c menu.c  # UI and rendering are target-specific
+
+CLI_C :=       ui_cli.c render_print.c
+CLI_FANCY_C := ui_cli.c render_print_fancy.c
+
+SDL_C :=       ui_sdl.c render_sdl.c render_accessibility.c
+SDL_WEB :=     *library.js *html
+
 build-all: menu-cli menu-cli-fancy menu-sdl menu-sdl.js
 
-menu-cli: *h *c $(WIDGET_H) $(WIDGET_C)
-	cc main.c menu.c ui_cli.c $(WIDGET_C) render_print.c -o $@
+menu-cli: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(CLI_C)
+	cc $(STD_C) $(WIDGET_C) $(CLI_C) -o $@
 
-menu-cli-fancy: *h *c $(WIDGET_H) $(WIDGET_C)
-	cc main.c menu.c ui_cli.c $(WIDGET_C) render_print_fancy.c -o $@
+menu-cli-fancy: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(CLI_FANCY_C)
+	cc $(STD_C) $(WIDGET_C) $(CLI_FANCY_C) -o $@
 
-menu-sdl: *h *c $(WIDGET_H) $(WIDGET_C) *library.js *html
-	cc main.c menu.c ui_sdl.c $(WIDGET_C) render_sdl.c render_accessibility.c \
+menu-sdl: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(SDL_C) $(SDL_WEB)
+	cc $(STD_C) $(WIDGET_C) $(SDL_C) \
 		`sdl-config --cflags --libs` -lSDL_ttf -o $@
 
-menu-sdl.js: *h *c $(WIDGET_H) $(WIDGET_C) *library.js *html
-	emcc main.c menu.c ui_sdl.c $(WIDGET_C) render_sdl.c render_accessibility.c \
+menu-sdl.js: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(SDL_C) $(SDL_WEB)
+	emcc $(STD_C) $(WIDGET_C) $(SDL_C) \
 		--js-library accessibility.library.js -o $@
 
 serve: menu-sdl.js
