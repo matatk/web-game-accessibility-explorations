@@ -1,8 +1,6 @@
 #ifndef _WIDGETBUTTON_H_
 #define _WIDGETBUTTON_H_
 
-#include <stdlib.h>
-
 #include "widget.h"
 
 typedef struct WidgetButton {
