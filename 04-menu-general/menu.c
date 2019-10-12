@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdarg.h>
-#include <string.h>
+#include <stdlib.h>
 
 #include "menu.h"
+#include "submenuwidget.h"
 
 Menu *new_menu(int length, ...) {
 	va_list list;
@@ -24,31 +24,6 @@ Menu *new_menu(int length, ...) {
 	}
 	va_end(list);
 
-	return new;
-}
-
-void _check_copy_name(const char *name, char *destination) {
-	size_t name_len = strnlen(name, MAX_ITEM_NAME_SIZE);
-	if (name_len > MAX_ITEM_NAME_SIZE) {
-		printf("Warning: menu item '%s' is too long (>=%d); truncating.\n",
-			name, MAX_ITEM_NAME_SIZE);
-		// TODO return nowt, or something with error?
-	}
-	strncpy(destination, name, MAX_ITEM_NAME_SIZE);
-}
-
-ButtonWidget *new_widget_button(const char *name) {
-	ButtonWidget *new = malloc(sizeof(ButtonWidget));
-	_check_copy_name(name, new->base.name);
-	new->base.classname = "ButtonWidget";
-	return new;
-}
-
-SubmenuWidget *new_widget_submenu(const char *name, Menu *sub_menu) {
-	SubmenuWidget *new = malloc(sizeof(SubmenuWidget));
-	_check_copy_name(name, new->base.name);
-	new->base.classname = "SubmenuWidget";
-	new->sub_menu = sub_menu;
 	return new;
 }
 

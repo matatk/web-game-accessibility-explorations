@@ -1,9 +1,12 @@
 .PHONY: build-all clean install-deps
 
+WIDGET_H := widget.h buttonwidget.h submenuwidget.h
+WIDGET_C := widget.c buttonwidget.c submenuwidget.c
+
 build-all: menu-cli menu-cli-fancy menu-sdl menu-sdl.js
 
-menu-cli: *h *c
-	cc main.c menu.c ui_cli.c render_print.c -o $@
+menu-cli: *h *c $(WIDGET_H) $(WIDGET_C)
+	cc main.c menu.c ui_cli.c render_print.c $(WIDGET_C) -o $@
 
 menu-cli-fancy: *h *c
 	cc main.c menu.c ui_cli.c render_print_fancy.c -o $@

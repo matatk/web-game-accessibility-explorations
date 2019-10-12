@@ -2,6 +2,8 @@
 
 #include "menu.h"
 #include "ui.h"
+#include "buttonwidget.h"
+#include "submenuwidget.h"
 
 Menu *make_menus() {
 	Menu *episode_menu = new_menu(3,
