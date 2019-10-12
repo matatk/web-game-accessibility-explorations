@@ -1,16 +1,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "buttonwidget.h"
+#include "widgetbutton.h"
 
 void button_widget_debug_print(Widget *widget) {
 	printf("[%s]", widget->name);
 }
 
-ButtonWidget *new_widget_button(const char *name) {
-	ButtonWidget *new = malloc(sizeof(ButtonWidget));
-	_widget_check_copy_name(name, new->base.name);
-	new->base.classname = "ButtonWidget";
+WidgetButton *new_widget_button(const char *name) {
+	WidgetButton *new = malloc(sizeof(WidgetButton));
+	widget_check_copy_name(name, new->base.name);
+	new->base.type = BUTTON;
 
 	WidgetMethods *methods = malloc(sizeof(WidgetMethods));
 	methods->debug_print = &button_widget_debug_print;

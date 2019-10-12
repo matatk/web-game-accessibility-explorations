@@ -4,11 +4,11 @@
 #include "widget.h"
 #include "menu.h"
 
-typedef struct SubmenuWidget {
+typedef struct WidgetSubmenu {
 	Widget base;
 	Menu *sub_menu;
-} SubmenuWidget;
+} WidgetSubmenu;
 
-SubmenuWidget *new_widget_submenu(const char *, Menu *);
+WidgetSubmenu *new_widget_submenu(const char *, Menu *);
 
 #endif

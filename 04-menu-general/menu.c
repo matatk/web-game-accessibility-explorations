@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "menu.h"
-#include "submenuwidget.h"
+#include "widgetsubmenu.h"
 
 Menu *new_menu(int length, ...) {
 	va_list list;
@@ -18,8 +18,8 @@ Menu *new_menu(int length, ...) {
 	for (int i = 0; i < length; i++) {
 		new->items[i] = va_arg(list, Widget *);
 
-		if (new->items[i]->classname == "SubmenuWidget") {
-			((SubmenuWidget *)new->items[i])->sub_menu->parent_menu = new;
+		if (widget_is_a(new->items[i], SUBMENU)) {
+			((WidgetSubmenu *)new->items[i])->sub_menu->parent_menu = new;
 		}
 	}
 	va_end(list);
@@ -37,9 +37,9 @@ void _debug_print_menu_tree(Menu *menu, int depth) {
 		printf("%d: ", i);
 		widget_debug_print(item);
 		printf("\n");
-		if (item->classname == "SubmenuWidget") {
+		if (widget_is_a(item, SUBMENU)) {
 			_debug_print_menu_tree(
-				((SubmenuWidget *)item)->sub_menu, depth + 1);
+				((WidgetSubmenu *)item)->sub_menu, depth + 1);
 		}
 	}
 }
@@ -60,8 +60,8 @@ void menu_up(Menu *menu) {
 
 Menu *menu_activate(Menu *menu) {
 	Widget *current = menu->items[menu->current];
-	if (current->classname == "SubmenuWidget") {
-		return ((SubmenuWidget *)current)->sub_menu;
+	if (widget_is_a(current, SUBMENU)) {
+		return ((WidgetSubmenu *)current)->sub_menu;
 	} else {
 		return menu;
 	}

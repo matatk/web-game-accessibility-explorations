@@ -5,10 +5,10 @@
 
 #include "widget.h"
 
-typedef struct ButtonWidget {
+typedef struct WidgetButton {
 	Widget base;
-} ButtonWidget;
+} WidgetButton;
 
-ButtonWidget *new_widget_button(const char *);
+WidgetButton *new_widget_button(const char *);
 
 #endif
