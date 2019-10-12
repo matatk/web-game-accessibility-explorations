@@ -4,7 +4,6 @@
 #include <stdbool.h>
 
 typedef enum WidgetType {
-	WIDGET,  // unused
 	BUTTON,
 	SUBMENU
 } WidgetType;
@@ -14,7 +13,7 @@ typedef struct WidgetMethods WidgetMethods;
 typedef struct Widget {
 	int type;
 	const char *name;
-	WidgetMethods *methods;
+	const WidgetMethods *methods;
 } Widget;
 
 bool widget_is_a(const Widget *, WidgetType);
@@ -26,7 +25,5 @@ void widget_debug_print(const Widget *);
 typedef struct WidgetMethods {
 	void (*debug_print)(const Widget *widget);
 } WidgetMethods;
-
-void widget_check_copy_name(const char *, char *);
 
 #endif
