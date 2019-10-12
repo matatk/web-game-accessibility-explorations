@@ -1,5 +1,5 @@
-#ifndef _BUTTONWIDGET_H_
-#define _BUTTONWIDGET_H_
+#ifndef _WIDGETBUTTON_H_
+#define _WIDGETBUTTON_H_
 
 #include <stdlib.h>
 

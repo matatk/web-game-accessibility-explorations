@@ -1,15 +1,16 @@
 #include <stdio.h>
-// FIXME use macro defn for padding
 
 #include "menu.h"
+#include "widget.h"
 
 void render_menu(Menu *menu) {
-	printf("---======<<<<<< MENU >>>>>>======---\n");
+	printf("----======<<<<<< MENU >>>>>>======----\n");
 	for (int i = 0; i < menu->length; i++) {
-		printf("|   %s %-22s %-3s   |\n",
+		Widget *item = menu->items[i];
+		printf("|   %s %-24s %-3s   |\n",
 			i == menu->current ? "+" : " ",
-			menu->items[i]->name,
-			menu->items[i]->sub_menu != NULL ? ">>>" : "");
+			item->name,
+			widget_is_a(item, SUBMENU) ? ">>>" : "");
 	}
-	printf("---======<<<<<<~~~~~~>>>>>>======---\n");
+	printf("----======<<<<<<~~~~~~>>>>>>======----\n");
 }

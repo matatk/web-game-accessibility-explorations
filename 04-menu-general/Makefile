@@ -8,8 +8,8 @@ build-all: menu-cli menu-cli-fancy menu-sdl menu-sdl.js
 menu-cli: *h *c $(WIDGET_H) $(WIDGET_C)
 	cc main.c menu.c ui_cli.c render_print.c $(WIDGET_C) -o $@
 
-menu-cli-fancy: *h *c
-	cc main.c menu.c ui_cli.c render_print_fancy.c -o $@
+menu-cli-fancy: *h *c $(WIDGET_H) $(WIDGET_C)
+	cc main.c menu.c ui_cli.c render_print_fancy.c $(WIDGET_C) -o $@
 
 menu-sdl: *h *c *library.js *html
 	cc main.c menu.c ui_sdl.c render_sdl.c render_accessibility.c \

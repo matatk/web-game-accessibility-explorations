@@ -1,5 +1,5 @@
-#ifndef _SUBMENUWIDGET_H_
-#define _SUBMENUWIDGET_H_
+#ifndef _WIDGETSUBMENU_H_
+#define _WIDGETSUBMENU_H_
 
 #include "widget.h"
 #include "menu.h"
