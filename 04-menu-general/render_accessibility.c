@@ -2,6 +2,7 @@
 #include <stdbool.h>
 
 #include "menu.h"
+#include "widget.h"
 
 #ifdef __EMSCRIPTEN__
 
@@ -23,8 +24,8 @@ void expose_menu(Menu *menu) {
 	accessibility_render_menu_start(menu);
 
 	for (int i = 0; i < menu->length; i++) {
-		accessibility_render_menu_item(
-			menu->items[i]->name, menu->items[i]->sub_menu != NULL);
+		Widget *item = menu->items[i];
+		accessibility_render_menu_item(item->name, widget_is_a(item, SUBMENU));
 	}
 
 	accessibility_render_menu_done();

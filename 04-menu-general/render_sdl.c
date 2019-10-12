@@ -4,6 +4,7 @@
 #include <SDL_ttf.h>
 
 #include "menu.h"
+#include "widget.h"
 
 #ifdef __EMSCRIPTEN__
 #define FONT "ARIAL.TTF"
@@ -29,9 +30,11 @@ void render_menu(Menu *menu, void *thingy) {
 
 	for (int i = 0; i < menu->length; i++) {
 		char *string;
+		Widget *item = menu->items[i];
+
 		asprintf(&string, "%s %s",
-			menu->items[i]->name,
-			menu->items[i]->sub_menu != NULL ? ">>" : "");
+			item->name,
+			widget_is_a(item, SUBMENU) ? ">>" : "");
 
 		SDL_Color fg = (i == menu->current)
 			? (SDL_Color){ 255, 255, 255 }
