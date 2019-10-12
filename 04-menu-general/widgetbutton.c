@@ -3,7 +3,7 @@
 
 #include "widgetbutton.h"
 
-void button_widget_debug_print(Widget *widget) {
+void button_widget_debug_print(const Widget *widget) {
 	printf("[%s]", widget->name);
 }
 

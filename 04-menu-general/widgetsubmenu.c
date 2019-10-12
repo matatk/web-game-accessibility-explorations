@@ -3,7 +3,7 @@
 
 #include "widgetsubmenu.h"
 
-void submenu_widget_debug_print(Widget *widget) {
+void submenu_widget_debug_print(const Widget *widget) {
 	printf("%s -> %p", widget->name, ((WidgetSubmenu *)widget)->sub_menu);
 }
 

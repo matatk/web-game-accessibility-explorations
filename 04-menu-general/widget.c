@@ -4,10 +4,10 @@
 
 #include "widget.h"
 
-bool widget_is_a(Widget *widget, WidgetType type) {
+bool widget_is_a(const Widget *widget, WidgetType type) {
 	return widget->type == type;
 }
 
-inline void widget_debug_print(Widget *widget) {
+inline void widget_debug_print(const Widget *widget) {
 	widget->methods->debug_print(widget);
 }
