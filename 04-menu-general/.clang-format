@@ -1,0 +1,6 @@
+BasedOnStyle: WebKit
+AlwaysBreakAfterReturnType: TopLevelDefinitions
+BreakBeforeBraces: Attach
+PointerAlignment: Left
+TabWidth: 4
+UseTab: Always
