@@ -1,7 +1,7 @@
 .PHONY: build-all clean install-deps
 
-WIDGET_H := widget.h widgetbutton.h widgetsubpage.h
-WIDGET_C := widget.c widgetbutton.c widgetsubpage.c
+WIDGET_H := widget.h widgetbutton.h widgetsubpage.h widgetcontainer.h
+WIDGET_C := widget.c widgetbutton.c widgetsubpage.c widgetcontainer.c
 
 STD_H := page.h ui.h render.h
 STD_C := main.c page.c  # UI and rendering are target-specific

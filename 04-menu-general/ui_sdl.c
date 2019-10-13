@@ -14,9 +14,9 @@
 const int WIDTH = 640;
 const int HEIGHT = 480;
 
-Page* root;
-Page* current;
-SDL_Surface* screen;
+Page *root;
+Page *current;
+SDL_Surface *screen;
 int quit = 0;
 
 // Private
@@ -42,11 +42,11 @@ one_iter() {
 		} else if (e.type == SDL_KEYDOWN) {
 			switch (e.key.keysym.sym) {
 			case SDLK_UP:
-				page_up(current);
+				move_up(current);
 				break;
 
 			case SDLK_DOWN:
-				page_down(current);
+				move_down(current);
 				break;
 
 			case SDLK_RIGHT:
@@ -90,7 +90,7 @@ ui_init() {
 }
 
 int
-ui_start(Page* page) {
+ui_start(Page *page) {
 	current = page;
 
 	display_current_page();

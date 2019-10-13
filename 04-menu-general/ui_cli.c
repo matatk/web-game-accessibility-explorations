@@ -10,14 +10,14 @@
 #include "page.h"
 #include "render.h"
 
-Page* root;
-Page* current;
+Page *root;
+Page *current;
 bool quit = false;
 
 // Private
 
 bool
-is(char input, const char* str) {
+is(char input, const char *str) {
 	return strncmp(&input, str, 1) == 0;
 }
 
@@ -45,10 +45,10 @@ one_iter() {
 	} else {
 		if (is(input, "j")) {
 			printf("<DOWN>\n");
-			page_down(current);
+			move_down(current);
 		} else if (is(input, "k")) {
 			printf("<UP>\n");
-			page_up(current);
+			move_up(current);
 		} else if (is(input, "e")) {
 			printf("<ENTER>\n");
 			current = page_activate(current);
@@ -70,7 +70,7 @@ ui_init() {
 }
 
 int
-ui_start(Page* page) {
+ui_start(Page *page) {
 	current = page;
 
 	printf("Use j/k as up/down; e to enter page; b to go back; q to quit\n\n");

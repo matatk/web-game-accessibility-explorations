@@ -20,18 +20,18 @@ const int size = 24;
 
 // This requires that TTF_Init() has already been called
 void
-render_page(Page* page, void* thingy) {
-	SDL_Surface* screen = (SDL_Surface*)thingy;
+render_page(Page *page, void *thingy) {
+	SDL_Surface *screen = (SDL_Surface *)thingy;
 
-	TTF_Font* font = TTF_OpenFont(FONT, size);
+	TTF_Font *font = TTF_OpenFont(FONT, size);
 	if (font == NULL) {
 		printf("TTF loading error: %s\n", TTF_GetError());
 		return;
 	}
 
 	for (int i = 0; i < page->length; i++) {
-		char* string;
-		Widget* item = page->items[i];
+		char *string;
+		Widget *item = page->items[i];
 
 		asprintf(&string, "%s %s",
 			item->name,
@@ -41,7 +41,7 @@ render_page(Page* page, void* thingy) {
 			? (SDL_Color) { 255, 255, 255 }
 			: (SDL_Color) { 0xF0, 0, 0xF0 };
 
-		SDL_Surface* text = TTF_RenderText_Blended(font, string, fg);
+		SDL_Surface *text = TTF_RenderText_Blended(font, string, fg);
 		SDL_Rect pos = { 10, size + (i * size * 1.5), 0, 0 };
 		SDL_BlitSurface(text, NULL, screen, &pos);
 		SDL_FreeSurface(text);

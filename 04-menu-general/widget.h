@@ -5,26 +5,27 @@
 
 typedef enum WidgetType {
 	BUTTON,
-	SUBPAGE
+	SUBPAGE,
+	CONTAINER
 } WidgetType;
 
 typedef struct WidgetMethods WidgetMethods;
 
 typedef struct Widget {
 	int type;
-	const char* name;
-	const WidgetMethods* vtable;
+	const char *name;
+	const WidgetMethods *vtable;
 } Widget;
 
 bool
-widget_is_a(const Widget*, WidgetType);
+widget_is_a(const Widget *, WidgetType);
 void
-widget_debug_print(const Widget*);
+widget_debug_print(const Widget *);
 
 // Private
 
 typedef struct WidgetMethods {
-	void (*debug_print)(const Widget* widget);
+	void (*debug_print)(const Widget *widget);
 } WidgetMethods;
 
 #endif

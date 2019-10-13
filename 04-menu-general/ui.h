@@ -6,6 +6,6 @@
 int
 ui_init();
 int
-ui_start(Page*);
+ui_start(Page *);
 
 #endif
