@@ -56,32 +56,27 @@ debug_print_page_tree(Page *page) {
 	_debug_print_page_tree(page, 0);
 }
 
-// FIXME DRY
-void
-move_down(Page *page) {
+static void
+move(Page *page, Widget *(*func)(WidgetContainer *wc)) {
 	Widget *current = page->focused;
 	printf("Current focused widget: %s\n", page->focused->name);
 	WidgetContainer *current_container = current->parent;
 	if (widget_is_a(current_container, CONTAINER)) {
-		page->focused = widget_container_next(current_container);
+		page->focused = func(current_container);
 	} else {
 		printf("ERROR!\n");
 	}
 	printf("New focused widget: %s\n", page->focused->name);
 }
 
-// FIXME DRY
+void
+move_down(Page *page) {
+	move(page, widget_container_next);
+}
+
 void
 move_up(Page *page) {
-	Widget *current = page->focused;
-	printf("Current focused widget: %s\n", page->focused->name);
-	WidgetContainer *current_container = current->parent;
-	if (widget_is_a(current_container, CONTAINER)) {
-		page->focused = widget_container_previous(current_container);
-	} else {
-		printf("ERROR!\n");
-	}
-	printf("New focused widget: %s\n", page->focused->name);
+	move(page, widget_container_previous);
 }
 
 Page *
