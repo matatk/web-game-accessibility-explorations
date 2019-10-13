@@ -1,6 +1,6 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifdef __EMSCRIPTEN__
@@ -10,18 +10,19 @@
 #include "page.h"
 #include "render.h"
 
-Page *root;
-Page *current;
+Page* root;
+Page* current;
 bool quit = false;
-
 
 // Private
 
-bool is(char input, const char *str) {
+bool
+is(char input, const char* str) {
 	return strncmp(&input, str, 1) == 0;
 }
 
-void display_current_page() {
+void
+display_current_page() {
 	render_page(current, NULL);
 #ifdef __EMSCRIPTEN__
 	expose_page(current);
@@ -29,7 +30,8 @@ void display_current_page() {
 #endif
 }
 
-void one_iter() {
+void
+one_iter() {
 	char input;
 
 	render_page(current, NULL);
@@ -60,14 +62,15 @@ void one_iter() {
 	}
 }
 
-
 // Public
 
-int ui_init() {
+int
+ui_init() {
 	return 0;
 }
 
-int ui_start(Page *page) {
+int
+ui_start(Page* page) {
 	current = page;
 
 	printf("Use j/k as up/down; e to enter page; b to go back; q to quit\n\n");
@@ -75,7 +78,7 @@ int ui_start(Page *page) {
 #ifdef __EMSCRIPTEN__
 	emscripten_set_main_loop(one_iter, 0, 1);
 #else
-	while(!quit) {
+	while (!quit) {
 		one_iter();
 	}
 #endif
