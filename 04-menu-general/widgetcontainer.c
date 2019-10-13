@@ -23,8 +23,16 @@ container_widget_first(WidgetContainer *wc) {
 }
 
 static Widget *
-container_widget_current(WidgetContainer *wc) {
-	return wc->widgets[wc->current];
+container_widget_enter(WidgetContainer *wc, Direction dir) {
+	switch (dir) {
+	case TOP:
+		wc->current = 0;
+		return wc->widgets[0];
+		break;
+	case BOTTOM:
+		wc->current = wc->length - 1;
+		return wc->widgets[wc->current];
+	}
 }
 
 Widget *
@@ -42,7 +50,7 @@ container_widget_next(WidgetContainer *wc) {
 		wc->current = idx;
 		Widget *next = wc->widgets[wc->current];
 		if (widget_is_a(next, CONTAINER)) {
-			return widget_container_current(next);
+			return widget_container_enter(next, TOP);
 		} else {
 			return wc->widgets[wc->current];
 		}
@@ -55,7 +63,7 @@ static const WidgetMethods container_base_vtable = {
 
 static const WidgetContainerMethods container_extra_vtable = {
 	.first = container_widget_first,
-	.current = container_widget_current,
+	.current = container_widget_enter,
 	.next = container_widget_next,
 };
 
@@ -94,8 +102,8 @@ widget_container_first(WidgetContainer *wc) {
 }
 
 inline Widget *
-widget_container_current(WidgetContainer *wc) {
-	return wc->container_vtable->current(wc);
+widget_container_enter(WidgetContainer *wc, Direction dir) {
+	return wc->container_vtable->current(wc, dir);
 }
 
 inline Widget *

@@ -8,6 +8,12 @@ typedef enum Orientation {
 	HORIZONTAL
 } Orientation;
 
+// FIXME make private
+typedef enum {
+	TOP,
+	BOTTOM
+} Direction;
+
 typedef struct WidgetContainerMethods WidgetContainerMethods;
 
 typedef struct WidgetContainer {
@@ -22,14 +28,14 @@ typedef struct WidgetContainer {
 
 WidgetContainer *widget_container_new(const char *, Orientation, int, ...);
 Widget *widget_container_first(WidgetContainer *);
-Widget *widget_container_current(WidgetContainer *);
+Widget *widget_container_enter(WidgetContainer *, Direction);
 Widget *widget_container_next(WidgetContainer *);
 
 // Private
 
 typedef struct WidgetContainerMethods {
 	Widget *(*first)(WidgetContainer *);
-	Widget *(*current)(WidgetContainer *);
+	Widget *(*current)(WidgetContainer *, Direction);
 	Widget *(*next)(WidgetContainer *);
 } WidgetContainerMethods;
 
