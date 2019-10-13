@@ -1,38 +1,38 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "menu.h"
+#include "page.h"
 #include "widget.h"
 
 #ifdef __EMSCRIPTEN__
 
 // Our custom JavaScript library functions
 extern void accessibility_setup(void);
-extern void accessibility_render_menu_start(Menu *);
-extern void accessibility_render_menu_item(const char *, bool);
-extern void accessibility_render_menu_done();
-extern void accessibility_render_current_item(Menu *, int);
+extern void accessibility_render_page_start(Page *);
+extern void accessibility_render_page_item(const char *, bool);
+extern void accessibility_render_page_done();
+extern void accessibility_render_current_item(Page *, int);
 
 bool accessibility_setup_done = false;
 
-void expose_menu(Menu *menu) {
+void expose_page(Page *page) {
 	if (!accessibility_setup_done) {
 		accessibility_setup();
 		accessibility_setup_done = true;
 	}
 
-	accessibility_render_menu_start(menu);
+	accessibility_render_page_start(page);
 
-	for (int i = 0; i < menu->length; i++) {
-		Widget *item = menu->items[i];
-		accessibility_render_menu_item(item->name, widget_is_a(item, SUBMENU));
+	for (int i = 0; i < page->length; i++) {
+		Widget *item = page->items[i];
+		accessibility_render_page_item(item->name, widget_is_a(item, SUBPAGE));
 	}
 
-	accessibility_render_menu_done();
+	accessibility_render_page_done();
 }
 
-void expose_current_item(Menu *menu) {
-	accessibility_render_current_item(menu, menu->current);
+void expose_current_item(Page *page) {
+	accessibility_render_current_item(page, page->current);
 }
 
 #endif

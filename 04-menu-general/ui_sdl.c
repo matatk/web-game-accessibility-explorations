@@ -8,26 +8,26 @@
 #include <emscripten.h>
 #endif
 
-#include "menu.h"
+#include "page.h"
 #include "render.h"
 
 const int WIDTH = 640;
 const int HEIGHT = 480;
 
-Menu *root;
-Menu *current;
+Page *root;
+Page *current;
 SDL_Surface *screen;
 int quit = 0;
 
 
 // Private
 
-void display_current_menu() {
+void display_current_page() {
 	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0x80));
-	render_menu(current, screen);
+	render_page(current, screen);
 	SDL_Flip(screen);
 #ifdef __EMSCRIPTEN__
-	expose_menu(current);
+	expose_page(current);
 	expose_current_item(current);
 #endif
 }
@@ -41,26 +41,26 @@ void one_iter() {
 		} else if (e.type == SDL_KEYDOWN) {
 			switch (e.key.keysym.sym) {
 				case SDLK_UP:
-					menu_up(current);
+					page_up(current);
 					break;
 
 				case SDLK_DOWN:
-					menu_down(current);
+					page_down(current);
 					break;
 
 				case SDLK_RIGHT:
-					current = menu_activate(current);
+					current = page_activate(current);
 					break;
 
 				case SDLK_LEFT:
-					current = menu_back(current);
+					current = page_back(current);
 					break;
 
 				default:
 					break;
 			}
 
-			display_current_menu();
+			display_current_page();
 		}
 	}
 }
@@ -88,10 +88,10 @@ int ui_init() {
 	return 0;
 }
 
-int ui_start(Menu *menu) {
-	current = menu;
+int ui_start(Page *page) {
+	current = page;
 
-	display_current_menu();
+	display_current_page();
 
 #ifdef __EMSCRIPTEN__
 	emscripten_set_main_loop(one_iter, 0, 1);

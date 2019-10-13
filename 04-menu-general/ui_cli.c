@@ -7,11 +7,11 @@
 #include <emscripten.h>
 #endif
 
-#include "menu.h"
+#include "page.h"
 #include "render.h"
 
-Menu *root;
-Menu *current;
+Page *root;
+Page *current;
 bool quit = false;
 
 
@@ -21,10 +21,10 @@ bool is(char input, const char *str) {
 	return strncmp(&input, str, 1) == 0;
 }
 
-void display_current_menu() {
-	render_menu(current, NULL);
+void display_current_page() {
+	render_page(current, NULL);
 #ifdef __EMSCRIPTEN__
-	expose_menu(current);
+	expose_page(current);
 	expose_current_item(current);
 #endif
 }
@@ -32,7 +32,7 @@ void display_current_menu() {
 void one_iter() {
 	char input;
 
-	render_menu(current, NULL);
+	render_page(current, NULL);
 
 	scanf(" %c", &input);
 	getchar();
@@ -43,16 +43,16 @@ void one_iter() {
 	} else {
 		if (is(input, "j")) {
 			printf("<DOWN>\n");
-			menu_down(current);
+			page_down(current);
 		} else if (is(input, "k")) {
 			printf("<UP>\n");
-			menu_up(current);
+			page_up(current);
 		} else if (is(input, "e")) {
 			printf("<ENTER>\n");
-			current = menu_activate(current);
+			current = page_activate(current);
 		} else if (is(input, "b")) {
 			printf("<BACK>\n");
-			current = menu_back(current);
+			current = page_back(current);
 		} else {
 			printf("<unhandled input>\n");
 		}
@@ -67,10 +67,10 @@ int ui_init() {
 	return 0;
 }
 
-int ui_start(Menu *menu) {
-	current = menu;
+int ui_start(Page *page) {
+	current = page;
 
-	printf("Use j/k as up/down; e to enter menu; b to go back; q to quit\n\n");
+	printf("Use j/k as up/down; e to enter page; b to go back; q to quit\n\n");
 
 #ifdef __EMSCRIPTEN__
 	emscripten_set_main_loop(one_iter, 0, 1);

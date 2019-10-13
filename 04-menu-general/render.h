@@ -1,12 +1,12 @@
 #ifndef _RENDER_H_
 #define _RENDER_H_
 
-#include "menu.h"
+#include "page.h"
 
-void render_menu(Menu *, void *);
+void render_page(Page *, void *);
 
 // Accessibility stuff
-void expose_menu(Menu *);
-void expose_current_item(Menu *);
+void expose_page(Page *);
+void expose_current_item(Page *);
 
 #endif

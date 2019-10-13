@@ -1,43 +1,43 @@
 #include <stdlib.h>
 
-#include "menu.h"
+#include "page.h"
 #include "ui.h"
 #include "widgetbutton.h"
-#include "widgetsubmenu.h"
+#include "widgetsubpage.h"
 
-Menu *make_menus() {
-	Menu *episode_menu = new_menu(3,
+Page *make_pages() {
+	Page *episode_page = new_page(3,
 		new_widget_button("Big pile of great dread"),
 		/*
-		new_menu(2,
+		new_page(2,
 			new_widget_button("moo1"),
 			new_widget_button("moo2")),
 		*/
 		new_widget_button("The floors look swell"),
 		new_widget_button("Some Pearnod"));
 
-	Menu *player_options_menu = new_menu(2,
+	Page *player_options_page = new_page(2,
 		new_widget_button("Name"),
 		new_widget_button("Colour"));
 
-	Menu *options_menu = new_menu(5,
-		new_widget_submenu("Player", player_options_menu),
+	Page *options_page = new_page(5,
+		new_widget_subpage("Player", player_options_page),
 		new_widget_button("Controls"),
 		new_widget_button("Gameplay"),
 		new_widget_button("Sound"),
 		new_widget_button("Video"));
 
-	Menu *main_menu = new_menu(3,
-		new_widget_submenu("New game", episode_menu),
-		new_widget_submenu("Options", options_menu),
+	Page *main_page = new_page(3,
+		new_widget_subpage("New game", episode_page),
+		new_widget_subpage("Options", options_page),
 		new_widget_button("Exit"));
 
-	return main_menu;
+	return main_page;
 }
 
 int main() {
 	if (ui_init() < 0) return -1;
-	Menu *root = make_menus();
-	debug_print_menu_tree(root);
+	Page *root = make_pages();
+	debug_print_page_tree(root);
 	return ui_start(root);
 }

@@ -1,6 +1,6 @@
 'use strict'
 let proxyArea = null
-let menuUnderConstruction = null
+let pageUnderConstruction = null
 
 mergeInto(LibraryManager.library, {  // eslint-disable-line
 	accessibility_setup: function() {
@@ -9,43 +9,43 @@ mergeInto(LibraryManager.library, {  // eslint-disable-line
 		proxyArea.focus()
 	},
 
-	accessibility_render_menu_start: function(ptrMenu) {
-		const menuId = String(ptrMenu)
+	accessibility_render_page_start: function(ptrPage) {
+		const pageId = String(ptrPage)
 		let found = null
 
 		for (const child of proxyArea.children) {
-			if (child.id === menuId) {
+			if (child.id === pageId) {
 				found = child
 			}
-			child.hidden = child.id !== menuId
+			child.hidden = child.id !== pageId
 		}
 
 		if (!found) {
 			const list = document.createElement('UL')
-			list.id = menuId
+			list.id = pageId
 			proxyArea.appendChild(list)
-			menuUnderConstruction = list
+			pageUnderConstruction = list
 		}
 	},
 
-	accessibility_render_menu_item: function(name, hasSubMenu) {
-		if (menuUnderConstruction) {
+	accessibility_render_page_item: function(name, hasSubPage) {
+		if (pageUnderConstruction) {
 			const listItem = document.createElement('LI')
-			const menuButton = document.createElement('BUTTON')
-			menuButton.innerText = UTF8ToString(name, 128)  // eslint-disable-line
-			if (hasSubMenu) menuButton.setAttribute('aria-haspopup', 'true')
-			menuButton.setAttribute('tabindex', '-1')
-			listItem.appendChild(menuButton)
-			menuUnderConstruction.appendChild(listItem)
+			const pageButton = document.createElement('BUTTON')
+			pageButton.innerText = UTF8ToString(name, 128)  // eslint-disable-line
+			if (hasSubPage) pageButton.setAttribute('aria-haspopup', 'true')
+			pageButton.setAttribute('tabindex', '-1')
+			listItem.appendChild(pageButton)
+			pageUnderConstruction.appendChild(listItem)
 		}
 	},
 
-	accessibility_render_menu_done: function() {
-		menuUnderConstruction = null
+	accessibility_render_page_done: function() {
+		pageUnderConstruction = null
 	},
 
-	accessibility_render_current_item: function(ptrMenu, itemNumber) {
-		document.getElementById(String(ptrMenu))
+	accessibility_render_current_item: function(ptrPage, itemNumber) {
+		document.getElementById(String(ptrPage))
 			.children[itemNumber].firstChild.focus()
 	}
 })

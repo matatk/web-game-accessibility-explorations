@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "menu.h"
+#include "page.h"
 #include "widget.h"
 
 #ifdef __EMSCRIPTEN__
@@ -19,7 +19,7 @@
 const int size = 24;
 
 // This requires that TTF_Init() has already been called
-void render_menu(Menu *menu, void *thingy) {
+void render_page(Page *page, void *thingy) {
 	SDL_Surface *screen = (SDL_Surface *)thingy;
 
 	TTF_Font* font = TTF_OpenFont(FONT, size);
@@ -28,15 +28,15 @@ void render_menu(Menu *menu, void *thingy) {
 		return;
 	}
 
-	for (int i = 0; i < menu->length; i++) {
+	for (int i = 0; i < page->length; i++) {
 		char *string;
-		Widget *item = menu->items[i];
+		Widget *item = page->items[i];
 
 		asprintf(&string, "%s %s",
 			item->name,
-			widget_is_a(item, SUBMENU) ? ">>" : "");
+			widget_is_a(item, SUBPAGE) ? ">>" : "");
 
-		SDL_Color fg = (i == menu->current)
+		SDL_Color fg = (i == page->current)
 			? (SDL_Color){ 255, 255, 255 }
 			: (SDL_Color){ 0xF0, 0, 0xF0 };
 

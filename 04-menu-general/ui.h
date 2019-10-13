@@ -1,9 +1,9 @@
 #ifndef _UI_H_
 #define _UI_H_
 
-#include "menu.h"
+#include "page.h"
 
 int ui_init();
-int ui_start(Menu *);
+int ui_start(Page *);
 
 #endif

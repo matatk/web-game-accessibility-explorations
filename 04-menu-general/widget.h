@@ -5,7 +5,7 @@
 
 typedef enum WidgetType {
 	BUTTON,
-	SUBMENU
+	SUBPAGE
 } WidgetType;
 
 typedef struct WidgetMethods WidgetMethods;
