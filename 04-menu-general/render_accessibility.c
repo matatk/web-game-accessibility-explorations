@@ -7,11 +7,16 @@
 #ifdef __EMSCRIPTEN__
 
 // Our custom JavaScript library functions
-extern void accessibility_setup(void);
-extern void accessibility_render_page_start(Page*);
-extern void accessibility_render_page_item(const char*, bool);
-extern void accessibility_render_page_done();
-extern void accessibility_render_current_item(Page*, int);
+extern void
+accessibility_setup(void);
+extern void
+accessibility_render_page_start(Page*);
+extern void
+accessibility_render_page_item(const char*, bool);
+extern void
+accessibility_render_page_done();
+extern void
+accessibility_render_current_item(Page*, int);
 
 bool accessibility_setup_done = false;
 

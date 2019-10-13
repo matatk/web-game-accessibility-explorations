@@ -7,14 +7,20 @@ typedef struct Page Page;
 
 // Public
 
-Page* new_page(int, ...);
+Page*
+new_page(int, ...);
 
-void page_down(Page*);
-void page_up(Page*);
-Page* page_activate(Page*);
-Page* page_back(Page*);
+void
+page_down(Page*);
+void
+page_up(Page*);
+Page*
+page_activate(Page*);
+Page*
+page_back(Page*);
 
-void debug_print_page_tree(Page*);
+void
+debug_print_page_tree(Page*);
 
 // Private
 

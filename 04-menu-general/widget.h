@@ -13,11 +13,13 @@ typedef struct WidgetMethods WidgetMethods;
 typedef struct Widget {
 	int type;
 	const char* name;
-	const WidgetMethods* methods;
+	const WidgetMethods* vtable;
 } Widget;
 
-bool widget_is_a(const Widget*, WidgetType);
-void widget_debug_print(const Widget*);
+bool
+widget_is_a(const Widget*, WidgetType);
+void
+widget_debug_print(const Widget*);
 
 // Private
 

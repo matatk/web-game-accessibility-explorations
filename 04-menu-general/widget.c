@@ -11,5 +11,5 @@ widget_is_a(const Widget* widget, WidgetType type) {
 
 inline void
 widget_debug_print(const Widget* widget) {
-	widget->methods->debug_print(widget);
+	widget->vtable->debug_print(widget);
 }
