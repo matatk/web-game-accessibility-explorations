@@ -57,6 +57,28 @@ container_widget_next(WidgetContainer *wc) {
 	}
 }
 
+Widget *
+container_widget_previous(WidgetContainer *wc) {
+	int idx = wc->current - 1;
+
+	if (idx < 0) {
+		if (wc->parent != NULL) {
+			return container_widget_previous(wc->parent);
+		} else {
+			wc->current = wc->length - 1;
+			return wc->widgets[wc->current];
+		}
+	} else {
+		wc->current = idx;
+		Widget *prev = wc->widgets[wc->current];
+		if (widget_is_a(prev, CONTAINER)) {
+			return widget_container_enter(prev, BOTTOM);
+		} else {
+			return wc->widgets[wc->current];
+		}
+	}
+}
+
 static const WidgetMethods container_base_vtable = {
 	.debug_print = container_widget_debug_print
 };
@@ -65,6 +87,7 @@ static const WidgetContainerMethods container_extra_vtable = {
 	.first = container_widget_first,
 	.current = container_widget_enter,
 	.next = container_widget_next,
+	.previous = container_widget_previous,
 };
 
 // Public
@@ -101,7 +124,7 @@ widget_container_first(WidgetContainer *wc) {
 	return wc->container_vtable->first(wc);
 }
 
-inline Widget *
+inline Widget * // FIXME remove - private!
 widget_container_enter(WidgetContainer *wc, Direction dir) {
 	return wc->container_vtable->current(wc, dir);
 }
@@ -109,4 +132,9 @@ widget_container_enter(WidgetContainer *wc, Direction dir) {
 inline Widget *
 widget_container_next(WidgetContainer *wc) {
 	return wc->container_vtable->next(wc);
+}
+
+inline Widget *
+widget_container_previous(WidgetContainer *wc) {
+	return wc->container_vtable->previous(wc);
 }

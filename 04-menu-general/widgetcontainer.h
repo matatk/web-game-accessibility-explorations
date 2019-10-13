@@ -28,8 +28,9 @@ typedef struct WidgetContainer {
 
 WidgetContainer *widget_container_new(const char *, Orientation, int, ...);
 Widget *widget_container_first(WidgetContainer *);
-Widget *widget_container_enter(WidgetContainer *, Direction);
+Widget *widget_container_enter(WidgetContainer *, Direction); // FIXME private!
 Widget *widget_container_next(WidgetContainer *);
+Widget *widget_container_previous(WidgetContainer *);
 
 // Private
 
@@ -37,6 +38,7 @@ typedef struct WidgetContainerMethods {
 	Widget *(*first)(WidgetContainer *);
 	Widget *(*current)(WidgetContainer *, Direction);
 	Widget *(*next)(WidgetContainer *);
+	Widget *(*previous)(WidgetContainer *);
 } WidgetContainerMethods;
 
 #endif
