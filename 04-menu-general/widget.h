@@ -25,7 +25,7 @@ widget_debug_print(const Widget *);
 // Private
 
 typedef struct WidgetMethods {
-	void (*debug_print)(const Widget *widget);
+	void (*debug_print)(const Widget *);
 } WidgetMethods;
 
 #endif

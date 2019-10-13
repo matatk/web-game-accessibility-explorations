@@ -13,8 +13,22 @@ container_widget_debug_print(const Widget *widget) {
 	}
 }
 
+void
+container_widget_next(const WidgetContainer *wc) {
+	printf("container_widget_next()\n");
+}
+
+int
+next(const WidgetContainer *wc) {
+	printf("next(): current: %d\n", wc->current);
+}
+
 static const WidgetMethods container_vtable = {
 	.debug_print = container_widget_debug_print
+};
+
+static const WidgetContainerMethods container_extra_vtable = {
+	.next = container_widget_next
 };
 
 WidgetContainer *

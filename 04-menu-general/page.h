@@ -8,7 +8,7 @@ typedef struct Page Page;
 // Public
 
 Page *
-new_page(int, ...);
+new_page(Widget *);
 
 void
 move_down(Page *);
@@ -25,10 +25,9 @@ debug_print_page_tree(Page *);
 // Private
 
 typedef struct Page {
-	int length;
-	int current;
-	Widget **items;
-	Page *parent_page;
+	int focused;
+	Widget *root;
+	Page *parent;
 } Page;
 
 #endif

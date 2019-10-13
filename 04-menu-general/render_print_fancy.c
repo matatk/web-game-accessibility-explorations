@@ -5,6 +5,7 @@
 
 void
 render_page(Page *page) {
+	/*
 	printf("----======<<<<<< PAGE >>>>>>======----\n");
 	for (int i = 0; i < page->length; i++) {
 		Widget *item = page->items[i];
@@ -14,4 +15,5 @@ render_page(Page *page) {
 			widget_is_a(item, SUBPAGE) ? ">>>" : "");
 	}
 	printf("----======<<<<<<~~~~~~>>>>>>======----\n");
+	*/
 }
