@@ -4,6 +4,11 @@
 
 #include "widgetcontainer.h"
 
+typedef enum {
+	TOP,
+	BOTTOM
+} Direction;
+
 static void
 container_widget_debug_print(const Widget *widget) {
 	WidgetContainer *wc = (WidgetContainer *)widget;
@@ -50,7 +55,7 @@ container_widget_next(WidgetContainer *wc) {
 		wc->current = idx;
 		Widget *next = wc->widgets[wc->current];
 		if (widget_is_a(next, CONTAINER)) {
-			return widget_container_enter(next, TOP);
+			return container_widget_enter(next, TOP);
 		} else {
 			return wc->widgets[wc->current];
 		}
@@ -72,7 +77,7 @@ container_widget_previous(WidgetContainer *wc) {
 		wc->current = idx;
 		Widget *prev = wc->widgets[wc->current];
 		if (widget_is_a(prev, CONTAINER)) {
-			return widget_container_enter(prev, BOTTOM);
+			return container_widget_enter(prev, BOTTOM);
 		} else {
 			return wc->widgets[wc->current];
 		}
@@ -85,7 +90,6 @@ static const WidgetMethods container_base_vtable = {
 
 static const WidgetContainerMethods container_extra_vtable = {
 	.first = container_widget_first,
-	.current = container_widget_enter,
 	.next = container_widget_next,
 	.previous = container_widget_previous,
 };
@@ -122,11 +126,6 @@ widget_container_new(const char *name, Orientation orientation, int length, ...)
 inline Widget *
 widget_container_first(WidgetContainer *wc) {
 	return wc->container_vtable->first(wc);
-}
-
-inline Widget * // FIXME remove - private!
-widget_container_enter(WidgetContainer *wc, Direction dir) {
-	return wc->container_vtable->current(wc, dir);
 }
 
 inline Widget *
