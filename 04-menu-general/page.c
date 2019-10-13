@@ -22,7 +22,7 @@ new_page(Widget *root) {
 	new->parent = NULL;
 	new->root = root;
 	new->focused = find_first_interactive_widget(new);
-	printf("new_page(): first interactive widget: %s\n", new->focused->name);
+	printf("new_page(): focused widget: %s\n", new->focused->name);
 	return new;
 }
 
@@ -58,16 +58,15 @@ debug_print_page_tree(Page *page) {
 
 void
 move_down(Page *page) {
-	Widget *current = page->root;
-	if (widget_is_a(current, CONTAINER)) {
-		WidgetContainer *wc = (WidgetContainer *)current;
-		Widget *next = widget_container_next(wc);
-		printf("next: %s\n", next->name);
-		page->focused = next;
+	Widget *current = page->focused;
+	printf("Current focused widget: %s\n", page->focused->name);
+	WidgetContainer *current_container = current->parent;
+	if (widget_is_a(current_container, CONTAINER)) {
+		page->focused = widget_container_next(current_container);
 	} else {
-		printf("root is a single widget\n");
-		page->focused = current;
+		printf("ERROR!\n");
 	}
+	printf("New focused widget: %s\n", page->focused->name);
 }
 
 void

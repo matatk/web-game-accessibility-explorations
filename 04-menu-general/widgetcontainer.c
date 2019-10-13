@@ -29,28 +29,21 @@ container_widget_current(WidgetContainer *wc) {
 
 Widget *
 container_widget_next(WidgetContainer *wc) {
-	printf("container %s - length %d - current %d/%d %s\n",
-		wc->base.name, wc->length, wc->current, wc->length, wc->widgets[wc->current]->name);
 	int idx = wc->current + 1;
 
 	if (idx > wc->length - 1) {
 		if (wc->parent != NULL) {
-			printf("not wrapping over - calling parent\n");
 			return container_widget_next(wc->parent);
 		} else {
-			printf("reached end; no parent: wrapping\n");
 			wc->current = 0;
 			return wc->widgets[wc->current];
 		}
 	} else {
 		wc->current = idx;
 		Widget *next = wc->widgets[wc->current];
-		printf("next is a container - calling child\n");
 		if (widget_is_a(next, CONTAINER)) {
 			return widget_container_current(next);
 		} else {
-			printf("Returning next widget in container: %s\n",
-				wc->widgets[wc->current]->name);
 			return wc->widgets[wc->current];
 		}
 	}
@@ -85,6 +78,7 @@ widget_container_new(const char *name, Orientation orientation, int length, ...)
 	va_start(list, length);
 	for (int i = 0; i < length; i++) {
 		Widget *widget = va_arg(list, Widget *);
+		widget->parent = new;
 		new->widgets[i] = widget;
 		if (widget_is_a(widget, CONTAINER))
 			((WidgetContainer *)widget)->parent = new;
