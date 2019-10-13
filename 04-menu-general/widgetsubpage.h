@@ -9,7 +9,6 @@ typedef struct WidgetSubpage {
 	Page *sub_page;
 } WidgetSubpage;
 
-WidgetSubpage *
-widget_subpage_new(const char *, Page *);
+WidgetSubpage *widget_subpage_new(const char *, Page *);
 
 #endif

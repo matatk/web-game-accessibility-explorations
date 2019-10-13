@@ -17,10 +17,8 @@ typedef struct Widget {
 	const WidgetMethods *vtable;
 } Widget;
 
-bool
-widget_is_a(const Widget *, WidgetType);
-void
-widget_debug_print(const Widget *);
+bool widget_is_a(const Widget *, WidgetType);
+void widget_debug_print(const Widget *);
 
 // Private
 

@@ -17,19 +17,19 @@ typedef struct WidgetContainer {
 	Widget **widgets;
 	int current;
 	Orientation orientation;
+	Widget *parent;
 } WidgetContainer;
 
-WidgetContainer *
-widget_container_new(const char *, Orientation, int, ...);
-Widget *
-widget_container_first(WidgetContainer *);
-Widget *
-widget_container_next(WidgetContainer *);
+WidgetContainer *widget_container_new(const char *, Orientation, int, ...);
+Widget *widget_container_first(WidgetContainer *);
+Widget *widget_container_current(WidgetContainer *);
+Widget *widget_container_next(WidgetContainer *);
 
 // Private
 
 typedef struct WidgetContainerMethods {
 	Widget *(*first)(WidgetContainer *);
+	Widget *(*current)(WidgetContainer *);
 	Widget *(*next)(WidgetContainer *);
 } WidgetContainerMethods;
 

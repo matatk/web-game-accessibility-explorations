@@ -4,16 +4,29 @@
 #include "page.h"
 #include "widgetcontainer.h"
 
+static Widget *
+find_first_interactive_widget(Page *page) {
+	Widget *current = page->root;
+	do {
+		if (widget_is_a(current, CONTAINER)) {
+			current = widget_container_first(current);
+		} else {
+			return current;
+		}
+	} while (1);
+}
+
 Page *
 new_page(Widget *root) {
 	Page *new = malloc(sizeof(Page));
 	new->parent = NULL;
-	new->focused = 0;
 	new->root = root;
+	new->focused = find_first_interactive_widget(new);
+	printf("new_page(): first interactive widget: %s\n", new->focused->name);
 	return new;
 }
 
-void
+static void
 _debug_print_page_tree(Page *page, int depth) {
 	printf("debug:\n");
 	widget_debug_print(page->root);
@@ -45,30 +58,16 @@ debug_print_page_tree(Page *page) {
 
 void
 move_down(Page *page) {
-	int desired = page->focused + 1;
-	int found_non_container_elements = 0;
-
-	printf("move_down(): page currently focused: %d; desired: %d\n", page->focused, desired);
-
-	WidgetContainer *current_container = NULL;
 	Widget *current = page->root;
-
-	do {
-		if (widget_is_a(current, CONTAINER)) {
-			current_container = (WidgetContainer *)current;
-			current = widget_container_first(current_container);
-		} else {
-			++found_non_container_elements;
-			if (found_non_container_elements < desired) {
-				current = widget_container_next(current_container);
-			}
-		}
-	} while (found_non_container_elements < desired);
-
-	page->focused = found_non_container_elements;
-	printf("current_container name: %s\n", current_container->base.name);
-	printf("current name: %s\n", current->name);
-	printf("page focused: %d\n", page->focused);
+	if (widget_is_a(current, CONTAINER)) {
+		WidgetContainer *wc = (WidgetContainer *)current;
+		Widget *next = widget_container_next(wc);
+		printf("next: %s\n", next->name);
+		page->focused = next;
+	} else {
+		printf("root is a single widget\n");
+		page->focused = current;
+	}
 }
 
 void
