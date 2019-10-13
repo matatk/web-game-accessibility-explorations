@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "page.h"
+#include "widgetcontainer.h"
 
 Page *
 new_page(Widget *root) {
@@ -14,6 +15,9 @@ new_page(Widget *root) {
 
 void
 _debug_print_page_tree(Page *page, int depth) {
+	printf("debug:\n");
+	widget_debug_print(page->root);
+	printf("</debug>\n");
 	/*
 	for (int d = 0; d < depth; d++)
 		printf("\t");
@@ -41,8 +45,30 @@ debug_print_page_tree(Page *page) {
 
 void
 move_down(Page *page) {
-	printf("move_down(): page currently focused: %d\n", page->focused);
-	//page->root->page->current = (page->current + 1) % page->length;
+	int desired = page->focused + 1;
+	int found_non_container_elements = 0;
+
+	printf("move_down(): page currently focused: %d; desired: %d\n", page->focused, desired);
+
+	WidgetContainer *current_container = NULL;
+	Widget *current = page->root;
+
+	do {
+		if (widget_is_a(current, CONTAINER)) {
+			current_container = (WidgetContainer *)current;
+			current = widget_container_first(current_container);
+		} else {
+			++found_non_container_elements;
+			if (found_non_container_elements < desired) {
+				current = widget_container_next(current_container);
+			}
+		}
+	} while (found_non_container_elements < desired);
+
+	page->focused = found_non_container_elements;
+	printf("current_container name: %s\n", current_container->base.name);
+	printf("current name: %s\n", current->name);
+	printf("page focused: %d\n", page->focused);
 }
 
 void
@@ -52,6 +78,7 @@ move_up(Page *page) {
 
 Page *
 page_activate(Page *page) {
+	return page;
 	/*
 	Widget *current = page->items[page->current];
 	if (widget_is_a(current, SUBPAGE)) {

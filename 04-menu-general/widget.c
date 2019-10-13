@@ -4,6 +4,8 @@
 
 #include "widget.h"
 
+// Public
+
 bool
 widget_is_a(const Widget *widget, WidgetType type) {
 	return widget->type == type;

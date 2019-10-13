@@ -3,20 +3,34 @@
 
 #include "widget.h"
 
+typedef enum Orientation {
+	VERTICAL,
+	HORIZONTAL
+} Orientation;
+
+typedef struct WidgetContainerMethods WidgetContainerMethods;
+
 typedef struct WidgetContainer {
 	Widget base;
+	WidgetContainerMethods *container_vtable;
 	int length;
 	Widget **widgets;
 	int current;
+	Orientation orientation;
 } WidgetContainer;
 
 WidgetContainer *
-new_widget_container(const char *, int, ...);
+widget_container_new(const char *, Orientation, int, ...);
+Widget *
+widget_container_first(WidgetContainer *);
+Widget *
+widget_container_next(WidgetContainer *);
 
 // Private
 
 typedef struct WidgetContainerMethods {
-	int (*next)(const WidgetContainer *);
+	Widget *(*first)(WidgetContainer *);
+	Widget *(*next)(WidgetContainer *);
 } WidgetContainerMethods;
 
 #endif

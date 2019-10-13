@@ -12,7 +12,7 @@ typedef enum WidgetType {
 typedef struct WidgetMethods WidgetMethods;
 
 typedef struct Widget {
-	int type;
+	WidgetType type;
 	const char *name;
 	const WidgetMethods *vtable;
 } Widget;

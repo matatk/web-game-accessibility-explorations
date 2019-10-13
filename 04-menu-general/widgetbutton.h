@@ -8,6 +8,6 @@ typedef struct WidgetButton {
 } WidgetButton;
 
 WidgetButton *
-new_widget_button(const char *);
+widget_button_new(const char *);
 
 #endif

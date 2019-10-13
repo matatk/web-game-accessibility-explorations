@@ -9,32 +9,32 @@
 Page *
 make_pages() {
 	Page *episode_page = new_page(
-		new_widget_container("Episode", 3,
-			new_widget_button("Big pile of great dread"),
-			new_widget_button("The floors look swell"),
-			new_widget_button("Some Pearnod")));
+		widget_container_new("Episode", VERTICAL, 3,
+			widget_button_new("Big pile of great dread"),
+			widget_button_new("The floors look swell"),
+			widget_button_new("Some Pearnod")));
 
 	Page *player_options_page = new_page(
-		new_widget_container("Player Options", 2,
-			new_widget_button("Name"),
-			new_widget_button("Colour")));
+		widget_container_new("Player Options", VERTICAL, 2,
+			widget_button_new("Name"),
+			widget_button_new("Colour")));
 
 	Page *options_page = new_page(
-		new_widget_container("Options", 5,
-			new_widget_subpage("Player", player_options_page),
-			new_widget_button("Controls"),
-			new_widget_button("Gameplay"),
-			new_widget_button("Sound"),
-			new_widget_button("Video")));
+		widget_container_new("Options", VERTICAL, 5,
+			widget_subpage_new("Player", player_options_page),
+			widget_button_new("Controls"),
+			widget_button_new("Gameplay"),
+			widget_button_new("Sound"),
+			widget_button_new("Video")));
 
 	Page *main_page = new_page(
-		new_widget_container("Main", 4,
-			new_widget_subpage("New game", episode_page),
-			new_widget_subpage("Options", options_page),
-			new_widget_container("Container", 2,
-				new_widget_button("contained1"),
-				new_widget_button("contained2")),
-			new_widget_button("Exit")));
+		widget_container_new("Main", VERTICAL, 4,
+			widget_subpage_new("New game", episode_page),
+			widget_subpage_new("Options", options_page),
+			widget_container_new("Extra", HORIZONTAL, 2,
+				widget_button_new("contained1"),
+				widget_button_new("contained2")),
+			widget_button_new("Exit")));
 
 	return main_page;
 }
