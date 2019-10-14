@@ -1,6 +1,4 @@
-#ifndef _WIDGETCONTAINER_H_
-#define _WIDGETCONTAINER_H_
-
+#pragma once
 #include "widget.h"
 
 #define AS_WIDGET_CONTAINER(widget) ((WidgetContainer *)widget)
@@ -33,5 +31,3 @@ typedef struct WidgetContainerMethods {
 	Widget *(*next)(WidgetContainer *);
 	Widget *(*previous)(WidgetContainer *);
 } WidgetContainerMethods;
-
-#endif

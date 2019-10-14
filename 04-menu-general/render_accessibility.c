@@ -1,10 +1,10 @@
+#ifdef __EMSCRIPTEN__
+
 #include <stdbool.h>
 #include <stdio.h>
 
 #include "page.h"
 #include "widget.h"
-
-#ifdef __EMSCRIPTEN__
 
 // Our custom JavaScript library functions
 extern void

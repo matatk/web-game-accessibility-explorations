@@ -1,6 +1,4 @@
-#ifndef _WIDGETBUTTON_H_
-#define _WIDGETBUTTON_H_
-
+#pragma once
 #include "widget.h"
 
 typedef struct WidgetButton {
@@ -8,5 +6,3 @@ typedef struct WidgetButton {
 } WidgetButton;
 
 WidgetButton *widget_button_new(const char *);
-
-#endif

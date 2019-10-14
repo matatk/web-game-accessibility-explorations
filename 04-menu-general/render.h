@@ -1,6 +1,4 @@
-#ifndef _RENDER_H_
-#define _RENDER_H_
-
+#pragma once
 #include "page.h"
 
 void render_page(Page *, void *);
@@ -8,5 +6,3 @@ void render_page(Page *, void *);
 // Accessibility stuff
 void expose_page(Page *);
 void expose_current_item(Page *);
-
-#endif

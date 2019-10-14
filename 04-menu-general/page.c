@@ -3,6 +3,7 @@
 
 #include "page.h"
 #include "widgetcontainer.h"
+#include "widgetsubpage.h"
 
 static Widget *
 find_first_interactive_widget(Page *page) {
@@ -81,15 +82,12 @@ move_up(Page *page) {
 
 Page *
 page_activate(Page *page) {
-	return page;
-	/*
-	Widget *current = page->items[page->current];
+	Widget *current = page->focused;
 	if (widget_is_a(current, SUBPAGE)) {
-		return ((WidgetSubpage *)current)->sub_page;
+		return AS_WIDGET_SUBPAGE(current)->sub_page;
 	} else {
 		return page;
 	}
-	*/
 }
 
 Page *

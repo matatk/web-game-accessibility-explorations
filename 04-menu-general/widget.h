@@ -1,6 +1,4 @@
-#ifndef _WIDGET_H_
-#define _WIDGET_H_
-
+#pragma once
 #include <stdbool.h>
 
 #define AS_WIDGET(derrived) ((Widget *)derrived)
@@ -29,5 +27,3 @@ void widget_debug_print(const Widget *);
 typedef struct WidgetMethods {
 	void (*debug_print)(const Widget *);
 } WidgetMethods;
-
-#endif

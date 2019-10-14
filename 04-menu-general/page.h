@@ -1,6 +1,4 @@
-#ifndef _PAGE_H_
-#define _PAGE_H_
-
+#pragma once
 #include "widget.h"
 
 typedef struct Page Page;
@@ -23,5 +21,3 @@ typedef struct Page {
 	Widget *root;
 	Page *parent;
 } Page;
-
-#endif
