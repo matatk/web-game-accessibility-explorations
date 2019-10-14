@@ -1,4 +1,4 @@
-.PHONY: build-all clean install-deps
+.PHONY: build-all test clean install-deps
 
 ifeq ($(shell uname -s), Darwin)
 SYS := -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/
@@ -17,6 +17,9 @@ SDL_C :=       ui_sdl.c render_sdl.c render_accessibility.c
 SDL_WEB :=     *library.js *html
 
 build-all: page-cli page-cli-fancy page-sdl page-sdl.js
+
+test:
+	oclint-json-compilation-database
 
 page-cli: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(CLI_C)
 	$(CC) $(SYS) $(STD_C) $(WIDGET_C) $(CLI_C) -o $@

@@ -4,6 +4,8 @@
 
 #include "widgetcontainer.h"
 
+#define AS_WIDGET_CONTAINER(widget) (WidgetContainer *)widget
+
 typedef enum {
 	TOP,
 	BOTTOM
@@ -48,13 +50,13 @@ container_widget_next(WidgetContainer *wc) {
 			wc->current = 0;
 			return wc->widgets[wc->current];
 		}
-		return container_widget_next(wc->parent);
+		return container_widget_next(AS_WIDGET_CONTAINER(wc->parent));
 	}
 
 	wc->current = idx;
 	Widget *next = wc->widgets[wc->current];
 	if (widget_is_a(next, CONTAINER)) {
-		return container_widget_enter(next, TOP);
+		return container_widget_enter(AS_WIDGET_CONTAINER(next), TOP);
 	}
 	return wc->widgets[wc->current];
 }
@@ -68,13 +70,13 @@ container_widget_previous(WidgetContainer *wc) {
 			wc->current = wc->length - 1;
 			return wc->widgets[wc->current];
 		}
-		return container_widget_previous(wc->parent);
+		return container_widget_previous(AS_WIDGET_CONTAINER(wc->parent));
 	}
 
 	wc->current = idx;
 	Widget *prev = wc->widgets[wc->current];
 	if (widget_is_a(prev, CONTAINER)) {
-		return container_widget_enter(prev, BOTTOM);
+		return container_widget_enter(AS_WIDGET_CONTAINER(prev), BOTTOM);
 	}
 	return wc->widgets[wc->current];
 }
@@ -111,7 +113,7 @@ widget_container_new(const char *name, Orientation orientation, int length, ...)
 		widget->parent = AS_WIDGET(new);
 		new->widgets[i] = widget;
 		if (widget_is_a(widget, CONTAINER))
-			((WidgetContainer *)widget)->parent = new;
+			((WidgetContainer *)widget)->parent = AS_WIDGET(new);
 	}
 	va_end(list);
 

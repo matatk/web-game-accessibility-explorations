@@ -3,6 +3,8 @@
 
 #include "widget.h"
 
+#define AS_WIDGET_CONTAINER(widget) (WidgetContainer *)widget
+
 typedef enum Orientation {
 	VERTICAL,
 	HORIZONTAL
@@ -12,7 +14,7 @@ typedef struct WidgetContainerMethods WidgetContainerMethods;
 
 typedef struct WidgetContainer {
 	Widget base;
-	WidgetContainerMethods *container_vtable;
+	const WidgetContainerMethods *container_vtable;
 	int length;
 	Widget **widgets;
 	int current;

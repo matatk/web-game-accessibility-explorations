@@ -9,7 +9,7 @@ find_first_interactive_widget(Page *page) {
 	Widget *current = page->root;
 	do {
 		if (widget_is_a(current, CONTAINER)) {
-			current = widget_container_first(current);
+			current = widget_container_first(AS_WIDGET_CONTAINER(current));
 		} else {
 			return current;
 		}
@@ -57,10 +57,10 @@ debug_print_page_tree(Page *page) {
 }
 
 static void
-move(Page *page, Widget *(*func)(WidgetContainer *wc)) {
+move(Page *page, Widget *(*func)()) {
 	Widget *current = page->focused;
 	printf("Current focused widget: %s\n", page->focused->name);
-	WidgetContainer *current_container = current->parent;
+	WidgetContainer *current_container = AS_WIDGET_CONTAINER(current->parent);
 	if (widget_is_a(AS_WIDGET(current_container), CONTAINER)) {
 		page->focused = func(current_container);
 	} else {
