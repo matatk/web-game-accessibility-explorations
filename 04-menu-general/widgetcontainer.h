@@ -3,7 +3,7 @@
 
 #include "widget.h"
 
-#define AS_WIDGET_CONTAINER(widget) (WidgetContainer *)widget
+#define AS_WIDGET_CONTAINER(widget) ((WidgetContainer *)widget)
 
 typedef enum Orientation {
 	VERTICAL,
@@ -19,7 +19,6 @@ typedef struct WidgetContainer {
 	Widget **widgets;
 	int current;
 	Orientation orientation;
-	Widget *parent; // FIXME remove
 } WidgetContainer;
 
 WidgetContainer *widget_container_new(const char *, Orientation, int, ...);
