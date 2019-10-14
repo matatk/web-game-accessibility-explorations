@@ -21,7 +21,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "git clean -fdx -e node_modules/",
-    "test": "eclint check && cppcheck --quiet --error-exitcode=42 . && eslint ."
+    "test": "eclint check && eslint ."
   },
   "husky": {
     "hooks": {

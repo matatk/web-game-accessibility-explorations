@@ -33,7 +33,6 @@ container_widget_enter(WidgetContainer *wc, Direction dir) {
 	case TOP:
 		wc->current = 0;
 		return wc->widgets[0];
-		break;
 	case BOTTOM:
 		wc->current = wc->length - 1;
 		return wc->widgets[wc->current];
@@ -45,21 +44,19 @@ container_widget_next(WidgetContainer *wc) {
 	int idx = wc->current + 1;
 
 	if (idx > wc->length - 1) {
-		if (wc->parent != NULL) {
-			return container_widget_next(wc->parent);
-		} else {
+		if (wc->parent == NULL) {
 			wc->current = 0;
 			return wc->widgets[wc->current];
 		}
-	} else {
-		wc->current = idx;
-		Widget *next = wc->widgets[wc->current];
-		if (widget_is_a(next, CONTAINER)) {
-			return container_widget_enter(next, TOP);
-		} else {
-			return wc->widgets[wc->current];
-		}
+		return container_widget_next(wc->parent);
 	}
+
+	wc->current = idx;
+	Widget *next = wc->widgets[wc->current];
+	if (widget_is_a(next, CONTAINER)) {
+		return container_widget_enter(next, TOP);
+	}
+	return wc->widgets[wc->current];
 }
 
 Widget *
@@ -67,21 +64,19 @@ container_widget_previous(WidgetContainer *wc) {
 	int idx = wc->current - 1;
 
 	if (idx < 0) {
-		if (wc->parent != NULL) {
-			return container_widget_previous(wc->parent);
-		} else {
+		if (wc->parent == NULL) {
 			wc->current = wc->length - 1;
 			return wc->widgets[wc->current];
 		}
-	} else {
-		wc->current = idx;
-		Widget *prev = wc->widgets[wc->current];
-		if (widget_is_a(prev, CONTAINER)) {
-			return container_widget_enter(prev, BOTTOM);
-		} else {
-			return wc->widgets[wc->current];
-		}
+		return container_widget_previous(wc->parent);
 	}
+
+	wc->current = idx;
+	Widget *prev = wc->widgets[wc->current];
+	if (widget_is_a(prev, CONTAINER)) {
+		return container_widget_enter(prev, BOTTOM);
+	}
+	return wc->widgets[wc->current];
 }
 
 static const WidgetMethods container_base_vtable = {
@@ -113,7 +108,7 @@ widget_container_new(const char *name, Orientation orientation, int length, ...)
 	va_start(list, length);
 	for (int i = 0; i < length; i++) {
 		Widget *widget = va_arg(list, Widget *);
-		widget->parent = new;
+		widget->parent = AS_WIDGET(new);
 		new->widgets[i] = widget;
 		if (widget_is_a(widget, CONTAINER))
 			((WidgetContainer *)widget)->parent = new;

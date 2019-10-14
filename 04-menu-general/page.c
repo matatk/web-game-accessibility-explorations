@@ -61,7 +61,7 @@ move(Page *page, Widget *(*func)(WidgetContainer *wc)) {
 	Widget *current = page->focused;
 	printf("Current focused widget: %s\n", page->focused->name);
 	WidgetContainer *current_container = current->parent;
-	if (widget_is_a(current_container, CONTAINER)) {
+	if (widget_is_a(AS_WIDGET(current_container), CONTAINER)) {
 		page->focused = func(current_container);
 	} else {
 		printf("ERROR!\n");
@@ -94,9 +94,8 @@ page_activate(Page *page) {
 
 Page *
 page_back(Page *page) {
-	if (page->parent != NULL) {
-		return page->parent;
-	} else {
+	if (page->parent == NULL) {
 		return page;
 	}
+	return page->parent;
 }

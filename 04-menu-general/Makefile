@@ -1,5 +1,9 @@
 .PHONY: build-all clean install-deps
 
+ifeq ($(shell uname -s), Darwin)
+SYS := -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/
+endif
+
 WIDGET_H := widget.h widgetbutton.h widgetsubpage.h widgetcontainer.h
 WIDGET_C := widget.c widgetbutton.c widgetsubpage.c widgetcontainer.c
 
@@ -15,13 +19,13 @@ SDL_WEB :=     *library.js *html
 build-all: page-cli page-cli-fancy page-sdl page-sdl.js
 
 page-cli: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(CLI_C)
-	cc $(STD_C) $(WIDGET_C) $(CLI_C) -o $@
+	$(CC) $(SYS) $(STD_C) $(WIDGET_C) $(CLI_C) -o $@
 
 page-cli-fancy: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(CLI_FANCY_C)
-	cc $(STD_C) $(WIDGET_C) $(CLI_FANCY_C) -o $@
+	$(CC) $(SYS) $(STD_C) $(WIDGET_C) $(CLI_FANCY_C) -o $@
 
 page-sdl: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(SDL_C) $(SDL_WEB)
-	cc $(STD_C) $(WIDGET_C) $(SDL_C) \
+	$(CC) $(SYS) $(STD_C) $(WIDGET_C) $(SDL_C) \
 		`sdl-config --cflags --libs` -lSDL_ttf -o $@
 
 page-sdl.js: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(SDL_C) $(SDL_WEB)

@@ -17,3 +17,4 @@ page-cli
 page-cli-fancy
 page-sdl
 !page-sdl.html
+compile_commands.json

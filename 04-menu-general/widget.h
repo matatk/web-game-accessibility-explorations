@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#define AS_WIDGET(derrived) (Widget *)derrived
+
 typedef enum WidgetType {
 	BUTTON,
 	SUBPAGE,
