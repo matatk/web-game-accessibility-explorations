@@ -5,7 +5,7 @@
 
 static void
 subpage_widget_debug_print(const Widget *widget) {
-	printf("%s -> %p", widget->name, ((WidgetSubpage *)widget)->sub_page);
+	printf("(%s -> %p)", widget->name, ((WidgetSubpage *)widget)->sub_page);
 }
 
 static const WidgetMethods subpage_base_vtable = {

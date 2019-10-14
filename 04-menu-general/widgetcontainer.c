@@ -19,6 +19,8 @@ container_widget_debug_print(const Widget *widget) {
 		widget_debug_print(wc->widgets[i]);
 		if (wc->orientation == VERTICAL)
 			printf("\n");
+		else
+			printf(" ");
 	}
 }
 
@@ -112,8 +114,7 @@ widget_container_new(const char *name, Orientation orientation, int length, ...)
 		Widget *widget = va_arg(list, Widget *);
 		widget->parent = AS_WIDGET(new);
 		new->widgets[i] = widget;
-		if (widget_is_a(widget, CONTAINER))
-			widget->parent = AS_WIDGET(new);
+		if (widget_is_a(widget, CONTAINER)) widget->parent = AS_WIDGET(new);
 	}
 	va_end(list);
 

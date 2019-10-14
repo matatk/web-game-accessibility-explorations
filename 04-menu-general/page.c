@@ -23,7 +23,6 @@ new_page(Widget *root) {
 	new->parent = NULL;
 	new->root = root;
 	new->focused = find_first_interactive_widget(new);
-	printf("new_page(): focused widget: %s\n", new->focused->name);
 	return new;
 }
 
@@ -33,13 +32,11 @@ _debug_print_page_tree(Page *page, int depth) {
 	widget_debug_print(page->root);
 	printf("</debug>\n");
 	/*
-	for (int d = 0; d < depth; d++)
-		printf("\t");
+	for (int d = 0; d < depth; d++) printf("\t");
 	printf("Page: %p; Parent: %p\n", page, page->parent);
 
 	for (int i = 0; i < page->length; i++) {
-		for (int d = 0; d < depth; d++)
-			printf("\t");
+		for (int d = 0; d < depth; d++) printf("\t");
 		Widget *item = page->items[i];
 		printf("%d: ", i);
 		widget_debug_print(item);

@@ -1,5 +1,7 @@
-BasedOnStyle: WebKit
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
 AlwaysBreakAfterReturnType: TopLevelDefinitions
+BasedOnStyle: WebKit
 BreakBeforeBraces: Attach
 PointerAlignment: Right
 TabWidth: 4

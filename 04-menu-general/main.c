@@ -40,8 +40,7 @@ make_pages() {
 
 int
 main() {
-	if (ui_init() < 0)
-		return -1;
+	if (ui_init() < 0) return -1;
 	Page *root = make_pages();
 	debug_print_page_tree(root);
 	return ui_start(root);
