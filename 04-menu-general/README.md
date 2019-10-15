@@ -39,3 +39,16 @@ Run
 
  * **Native:** either `./page-cli`, `./page-cli-fancy` or `./page-sdl`
  * **Web:** `make serve`, open the given URL
+
+Learnings
+---------
+
+ * https://www.cs.rit.edu/~ats/books/ooc.pdf
+ * [Object-oriented techniques in C](https://dmitryfrank.com/articles/oop_in_c)
+ * [Classes in C](https://www.pvv.ntnu.no/~hakonhal/main.cgi/c/classes/)
+ * [C Object Oriented Programming](https://nullprogram.com/blog/2014/10/21/)
+ * [Tip 63: Seamlessly extend C structures](https://modelingwithdata.org/arch/00000113.htm)
+ * https://stackoverflow.com/questions/46784479/c11-struct-inheritance-with-anonymous-struct
+ * https://stackoverflow.com/questions/8932707/when-are-anonymous-structs-and-unions-useful-in-c11
+ * https://stackoverflow.com/questions/17621544/dynamic-method-dispatching-in-c/17622474#17622474
+ * https://softwareengineering.stackexchange.com/questions/204500/when-and-for-what-purposes-should-the-const-keyword-be-used-in-c-for-variables

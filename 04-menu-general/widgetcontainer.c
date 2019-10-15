@@ -100,10 +100,10 @@ widget_container_new(const char *name, Orientation orientation, int length, ...)
 	va_list list;
 
 	WidgetContainer *new = malloc(sizeof(WidgetContainer));
-	new->base.name = name;
-	new->base.type = CONTAINER;
-	new->base.parent = NULL;
-	new->base.vtable = &container_base_vtable;
+	new->name = name;
+	new->type = CONTAINER;
+	new->parent = NULL;
+	new->vtable = &container_base_vtable;
 	new->container_vtable = &container_extra_vtable;
 	new->orientation = orientation;
 

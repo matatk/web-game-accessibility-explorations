@@ -1,5 +1,7 @@
 .PHONY: build-all test clean install-deps
 
+CFLAGS += -fms-extensions -Wno-microsoft-anon-tag
+
 ifeq ($(shell uname -s), Darwin)
 SYS := -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/
 endif
@@ -22,17 +24,17 @@ test:
 	oclint-json-compilation-database
 
 page-cli: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(CLI_C)
-	$(CC) $(SYS) $(STD_C) $(WIDGET_C) $(CLI_C) -o $@
+	$(CC) $(CFLAGS) $(SYS) $(STD_C) $(WIDGET_C) $(CLI_C) -o $@
 
 page-cli-fancy: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(CLI_FANCY_C)
-	$(CC) $(SYS) $(STD_C) $(WIDGET_C) $(CLI_FANCY_C) -o $@
+	$(CC) $(CFLAGS) $(SYS) $(STD_C) $(WIDGET_C) $(CLI_FANCY_C) -o $@
 
 page-sdl: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(SDL_C) $(SDL_WEB)
-	$(CC) $(SYS) $(STD_C) $(WIDGET_C) $(SDL_C) \
+	$(CC) $(CFLAGS) $(SYS) $(STD_C) $(WIDGET_C) $(SDL_C) \
 		`sdl-config --cflags --libs` -lSDL_ttf -o $@
 
 page-sdl.js: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(SDL_C) $(SDL_WEB)
-	emcc $(STD_C) $(WIDGET_C) $(SDL_C) \
+	emcc $(CFLAGS) $(STD_C) $(WIDGET_C) $(SDL_C) \
 		--js-library accessibility.library.js -o $@
 
 serve: page-sdl.js

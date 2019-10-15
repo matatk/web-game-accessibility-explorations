@@ -17,9 +17,9 @@ static const WidgetMethods subpage_base_vtable = {
 WidgetSubpage *
 widget_subpage_new(const char *name, Page *sub_page) {
 	WidgetSubpage *new = malloc(sizeof(WidgetSubpage));
-	new->base.name = name;
-	new->base.type = SUBPAGE;
-	new->base.vtable = &subpage_base_vtable;
+	new->name = name;
+	new->type = SUBPAGE;
+	new->vtable = &subpage_base_vtable;
 	new->sub_page = sub_page;
 	return new;
 }

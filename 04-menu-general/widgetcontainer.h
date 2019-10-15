@@ -11,7 +11,7 @@ typedef enum Orientation {
 typedef struct WidgetContainerMethods WidgetContainerMethods;
 
 typedef struct WidgetContainer {
-	Widget base;
+	struct Widget;
 	const WidgetContainerMethods *container_vtable;
 	int length;
 	Widget **widgets;

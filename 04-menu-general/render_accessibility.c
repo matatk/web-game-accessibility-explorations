@@ -29,17 +29,19 @@ expose_page(Page *page) {
 
 	accessibility_render_page_start(page);
 
+	/*
 	for (int i = 0; i < page->length; i++) {
 		Widget *item = page->items[i];
 		accessibility_render_page_item(item->name, widget_is_a(item, SUBPAGE));
 	}
+	*/
 
 	accessibility_render_page_done();
 }
 
 void
 expose_current_item(Page *page) {
-	accessibility_render_current_item(page, page->current);
+	// accessibility_render_current_item(page, page->current);
 }
 
 #endif

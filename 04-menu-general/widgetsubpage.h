@@ -5,7 +5,7 @@
 #define AS_WIDGET_SUBPAGE(widget) ((WidgetSubpage *)widget)
 
 typedef struct WidgetSubpage {
-	Widget base;
+	struct Widget;
 	Page *sub_page;
 } WidgetSubpage;
 

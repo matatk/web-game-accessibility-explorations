@@ -45,7 +45,7 @@ render_widget(Page *page, int depth, Widget *widget) {
 		padding(depth, "-");
 		printf("-- %-*s---------------",
 			INITIAL_BARE_WIDTH - depth - 18,
-			wc->base.name);
+			wc->name);
 		printf("%s", BORDER_R);
 		printf("\n");
 		//

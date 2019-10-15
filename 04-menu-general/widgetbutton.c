@@ -17,8 +17,8 @@ static const WidgetMethods button_base_vtable = {
 WidgetButton *
 widget_button_new(const char *name) {
 	WidgetButton *new = malloc(sizeof(WidgetButton));
-	new->base.name = name;
-	new->base.type = BUTTON;
-	new->base.vtable = &button_base_vtable;
+	new->name = name;
+	new->type = BUTTON;
+	new->vtable = &button_base_vtable;
 	return new;
 }

@@ -29,6 +29,7 @@ render_page(Page *page, void *thingy) {
 		return;
 	}
 
+	/*
 	for (int i = 0; i < page->length; i++) {
 		char *string;
 		Widget *item = page->items[i];
@@ -46,6 +47,7 @@ render_page(Page *page, void *thingy) {
 		SDL_BlitSurface(text, NULL, screen, &pos);
 		SDL_FreeSurface(text);
 	}
+	*/
 
 	SDL_Flip(screen);
 	TTF_CloseFont(font);

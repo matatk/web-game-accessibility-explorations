@@ -10,7 +10,7 @@ render_widget(Page *page, int depth, Widget *widget) {
 	if (widget_is_a(widget, CONTAINER)) {
 		WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
 		for (int i = 0; i < depth; i++) printf(" ");
-		printf("--- %s ---\n", wc->base.name);
+		printf("--- %s ---\n", wc->name);
 		for (int i = 0; i < wc->length; i++) {
 			render_widget(page, depth + 1, wc->widgets[i]);
 		}
