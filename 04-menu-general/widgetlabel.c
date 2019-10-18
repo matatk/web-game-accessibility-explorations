@@ -3,9 +3,11 @@
 
 #include "widgetlabel.h"
 
-static void
-label_widget_debug_print(const Widget *widget) {
-	printf("-%s-", widget->name);
+static char *
+label_widget_debug_print(const Widget *widget, const int depth) {
+	char *string;
+	asprintf(&string, "%s-%s-", padding(depth), widget->name);
+	return string;
 }
 
 static const WidgetMethods label_base_vtable = {

@@ -4,14 +4,25 @@
 
 #include "widget.h"
 
-static void
-base_widget_debug_print(const Widget *widget) {
-	printf("<%s>", widget->name);
+static char *
+base_widget_debug_print(const Widget *widget, const int depth) {
+	char *string;
+	asprintf(&string, "%s<%s>", padding(depth), widget->name);
+	return string;
 }
 
 static const WidgetMethods base_vtable = {
 	.debug_print = base_widget_debug_print
 };
+
+// Intended for widgets only
+
+const char *
+padding(int depth) {
+	char *string;
+	asprintf(&string, "%*s", depth, "");
+	return string;
+}
 
 // Public
 
@@ -35,7 +46,7 @@ widget_is_a(const Widget *widget, WidgetType type) {
 	return widget->type == type;
 }
 
-inline void
-widget_debug_print(const Widget *widget) {
-	widget->vtable->debug_print(widget);
+inline char *
+widget_debug_print(const Widget *widget, const int depth) {
+	return widget->vtable->debug_print(widget, depth);
 }

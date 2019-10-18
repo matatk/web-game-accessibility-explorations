@@ -3,9 +3,11 @@
 
 #include "widgettextbox.h"
 
-static void
-textbox_widget_debug_print(const Widget *widget) {
-	printf("[__%s__]", widget->name);
+static char *
+textbox_widget_debug_print(const Widget *widget, const int depth) {
+	char *string;
+	asprintf(&string, "%s[__%s__]", padding(depth), widget->name);
+	return string;
 }
 
 static const WidgetMethods textbox_base_vtable = {

@@ -13,6 +13,7 @@ Page *page_activate(Page *);
 Page *page_back(Page *);
 
 void debug_print_page_tree(Page *);
+const char *_debug_print_page_tree(Page *, int);
 
 // Private
 

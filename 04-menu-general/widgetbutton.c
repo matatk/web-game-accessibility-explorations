@@ -3,9 +3,11 @@
 
 #include "widgetbutton.h"
 
-static void
-button_widget_debug_print(const Widget *widget) {
-	printf("[%s]", widget->name);
+static char *
+button_widget_debug_print(const Widget *widget, const int depth) {
+	char *string;
+	asprintf(&string, "%s[%s]", padding(depth), widget->name);
+	return string;
 }
 
 static const WidgetMethods button_base_vtable = {

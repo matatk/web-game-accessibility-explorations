@@ -26,32 +26,34 @@ new_page(Widget *root) {
 	return new;
 }
 
-static void
+const char *
 _debug_print_page_tree(Page *page, int depth) {
-	printf("debug:\n");
-	widget_debug_print(page->root);
-	printf("</debug>\n");
-	/*
-	for (int d = 0; d < depth; d++) printf("\t");
-	printf("Page: %p; Parent: %p\n", page, page->parent);
-
-	for (int i = 0; i < page->length; i++) {
-		for (int d = 0; d < depth; d++) printf("\t");
-		Widget *item = page->items[i];
-		printf("%d: ", i);
-		widget_debug_print(item);
-		printf("\n");
-		if (widget_is_a(item, SUBPAGE)) {
-			_debug_print_page_tree(
-				((WidgetSubpage *)item)->sub_page, depth + 1);
-		}
-	}
-	*/
+	char *string;
+	asprintf(&string,
+		"%s--- page debug info: ---\n"
+		"%sDepth: %d\n"
+		"%sFocused: %s\n"
+		"%sRoot: %s\n"
+		"%sParent: %p\n"
+		"%s\n"
+		"%s/// page debug info: ///\n",
+		padding(depth),
+		padding(depth),
+		depth,
+		padding(depth),
+		page->focused->name,
+		padding(depth),
+		page->root->name,
+		padding(depth),
+		page->parent,
+		widget_debug_print(page->root, depth),
+		padding(depth));
+	return string;
 }
 
 void
 debug_print_page_tree(Page *page) {
-	_debug_print_page_tree(page, 0);
+	printf("%s", _debug_print_page_tree(page, 0));
 }
 
 static void

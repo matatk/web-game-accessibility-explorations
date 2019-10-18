@@ -1,6 +1,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h> // strcat
 
 #include "widgetcontainer.h"
 
@@ -9,25 +10,42 @@ typedef enum { // TODO how to make static? or why not needed?
 	BOTTOM
 } Direction;
 
-static void
-newline_or_spape(const WidgetContainer *wc) {
+static char *
+newline_or_space(const WidgetContainer *wc) {
 	if (wc->orientation == VERTICAL)
-		printf("\n");
-	else
-		printf(" ");
+		return "\n";
+	return " ";
 }
 
-static void
-container_widget_debug_print(const Widget *widget) {
-	WidgetContainer *wc = (WidgetContainer *)widget;
-	printf("<<%s %s>>",
+static char *
+container_widget_debug_print(const Widget *widget, const int depth) {
+	WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
+	char *start;
+	char *all;
+
+	asprintf(&start, "%s<<%d %s %s>>%s",
+		padding(depth),
+		depth,
 		widget->name,
-		widget->parent == NULL ? "NP" : "HP");
-	newline_or_spape(wc);
+		widget->parent == NULL ? "NP" : "HP",
+		newline_or_space(wc));
+
+	int buffer_size = sizeof(char) * 4096 + 1;
+	char *buffer = malloc(buffer_size);
+	buffer[0] = 0;
+
 	for (int i = 0; i < wc->length; i++) {
-		widget_debug_print(wc->widgets[i]);
-		newline_or_spape(wc);
+		snprintf(
+			buffer + strlen(buffer),
+			buffer_size - strlen(buffer),
+			"%s%s%s",
+			padding(depth),
+			widget_debug_print(wc->widgets[i], depth + 1),
+			newline_or_space(wc));
 	}
+
+	asprintf(&all, "%s%s", start, buffer);
+	return all;
 }
 
 static Widget *

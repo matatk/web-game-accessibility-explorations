@@ -22,7 +22,7 @@ const char *BORDER_L = "| ";
 const char *BORDER_R = " |";
 
 static void
-repeat(int times, const char *string) {
+repeat(int times, char *string) {
 	for (int i = 0; i < times; i++) {
 		if (string == NULL) {
 			printf(" ");
@@ -33,7 +33,7 @@ repeat(int times, const char *string) {
 }
 
 static void
-padding(int depth, const char *string) {
+render_padding(int depth, char *string) {
 	repeat(depth, string);
 }
 
@@ -43,7 +43,7 @@ render_widget(Page *page, int depth, Widget *widget) {
 		WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
 		//
 		printf("%s", BORDER_L);
-		padding(depth, "-");
+		render_padding(depth, "-");
 		printf("-- %-*s---------------",
 			INITIAL_BARE_WIDTH - depth - 18,
 			wc->name);
@@ -61,7 +61,7 @@ render_widget(Page *page, int depth, Widget *widget) {
 		//
 	} else {
 		printf("%s", BORDER_L);
-		padding(depth, NULL);
+		render_padding(depth, NULL);
 		printf("%s", widget == page->focused ? SELECTED : EMPTY);
 		switch (widget->type) {
 		case BUTTON:

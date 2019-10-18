@@ -3,9 +3,16 @@
 
 #include "widgetsubpage.h"
 
-static void
-subpage_widget_debug_print(const Widget *widget) {
-	printf("(%s -> %p)", widget->name, ((WidgetSubpage *)widget)->sub_page);
+static char *
+subpage_widget_debug_print(const Widget *widget, const int depth) {
+	char *string;
+	asprintf(&string, "%s(%s -> %p)\n%s%s",
+			padding(depth),
+			widget->name,
+			AS_WIDGET_SUBPAGE(widget)->sub_page,
+			padding(depth),
+			_debug_print_page_tree(AS_WIDGET_SUBPAGE(widget)->sub_page, depth + 1));
+	return string;
 }
 
 static const WidgetMethods subpage_base_vtable = {

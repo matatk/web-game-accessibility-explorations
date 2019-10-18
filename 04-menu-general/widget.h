@@ -26,10 +26,14 @@ Widget *widget_new(const char *);
 void widget_constructor(Widget *, const char *);
 
 bool widget_is_a(const Widget *, WidgetType);
-void widget_debug_print(const Widget *);
+char *widget_debug_print(const Widget *, const int);  // TODO make const
+
+// Intended for widgets only
+
+const char *padding(int);
 
 // Private
 
 typedef struct WidgetMethods {
-	void (*debug_print)(const Widget *);
+	char *(*debug_print)(const Widget *, const int);
 } WidgetMethods;
