@@ -4,7 +4,7 @@
 #define AS_WIDGET(derrived) (Widget *)derrived
 
 typedef enum WidgetType {
-	WIDGET,  // don't use
+	WIDGET,  // Base type; doesn't do much :-)
 	BUTTON,
 	SUBPAGE,
 	CONTAINER,

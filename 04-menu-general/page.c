@@ -49,7 +49,7 @@ _debug_print_page_tree(Page *page, int depth) {
 
 void
 debug_print_page_tree(Page *page) {
-	printf("%s", _debug_print_page_tree(page, 0));
+	printf("%s\n", _debug_print_page_tree(page, 0));
 }
 
 static void

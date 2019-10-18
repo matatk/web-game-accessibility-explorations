@@ -15,6 +15,7 @@ const int BORDER_WIDTH = 2;
 const int INITIAL_BARE_WIDTH = TOTAL_WIDTH - (2 * BORDER_WIDTH);
 const int INITIAL_CONTENT_WIDTH = TOTAL_WIDTH - (2 * INDICATOR_WIDTH) - (2 * BORDER_WIDTH);
 
+// Indicators
 const char *CHEVRON = ">>>";
 const char *SELECTED = " + ";
 const char *EMPTY = "   ";
@@ -84,12 +85,14 @@ render_widget(Page *page, int depth, Widget *widget) {
 			break;
 		case TEXTBOX:
 			printf("___%-*s___",
-				INITIAL_CONTENT_WIDTH - depth - 6,
+				INITIAL_BARE_WIDTH - depth - 9,
 				widget->name);
 			printf("%s", EMPTY);
 			break;
 		default:
-			printf("DEFAULT: %s", widget->name);
+			printf("DEFAULT: %-*s",
+				INITIAL_CONTENT_WIDTH - depth - 6,  // TODO: shouldn't this be 9?
+				widget->name);
 			break;
 		}
 		printf("%s", BORDER_R);
