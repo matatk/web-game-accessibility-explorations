@@ -15,11 +15,16 @@ static const WidgetMethods subpage_base_vtable = {
 // Public
 
 WidgetSubpage *
-widget_subpage_new(const char *name, Page *sub_page) {
+widget_subpage_new(const char *name, const Page *sub_page) {
 	WidgetSubpage *new = malloc(sizeof(WidgetSubpage));
-	new->name = name;
+	widget_subpage_constructor(new, name, sub_page);
+	return new;
+}
+
+void
+widget_subpage_constructor(WidgetSubpage *new, const char *name, const Page *sub_page) {
+	widget_constructor(AS_WIDGET(new), name);
 	new->type = SUBPAGE;
 	new->vtable = &subpage_base_vtable;
 	new->sub_page = sub_page;
-	return new;
 }

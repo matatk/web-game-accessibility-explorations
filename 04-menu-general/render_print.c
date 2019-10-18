@@ -1,4 +1,4 @@
-#include <assert.h>
+// TODO: Support horizontal contiainers
 #include <stdio.h>
 
 #include "page.h"
@@ -23,6 +23,12 @@ render_widget(Page *page, int depth, Widget *widget) {
 			break;
 		case SUBPAGE:
 			printf("%s >\n", widget->name);
+			break;
+		case LABEL:
+			printf("%s:\n", widget->name);
+			break;
+		case TEXTBOX:
+			printf("_%s_\n", widget->name);
 			break;
 		default:
 			printf("DEFAULT: %s\n", widget->name);

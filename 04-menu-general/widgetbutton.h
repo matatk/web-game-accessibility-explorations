@@ -6,3 +6,4 @@ typedef struct WidgetButton {
 } WidgetButton;
 
 WidgetButton *widget_button_new(const char *);
+void widget_button_constructor(WidgetButton *, const char *);

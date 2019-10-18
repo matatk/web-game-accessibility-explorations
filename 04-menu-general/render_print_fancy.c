@@ -1,3 +1,4 @@
+// TODO: support horizontal containers
 #include <stdio.h>
 
 #include "page.h"
@@ -12,7 +13,7 @@ const int TOTAL_WIDTH = 38;
 const int INDICATOR_WIDTH = 3;
 const int BORDER_WIDTH = 2;
 const int INITIAL_BARE_WIDTH = TOTAL_WIDTH - (2 * BORDER_WIDTH);
-const int INITIAL_INTERACTIVE_WIDTH = TOTAL_WIDTH - (2 * INDICATOR_WIDTH) - (2 * BORDER_WIDTH);
+const int INITIAL_CONTENT_WIDTH = TOTAL_WIDTH - (2 * INDICATOR_WIDTH) - (2 * BORDER_WIDTH);
 
 const char *CHEVRON = ">>>";
 const char *SELECTED = " + ";
@@ -65,15 +66,27 @@ render_widget(Page *page, int depth, Widget *widget) {
 		switch (widget->type) {
 		case BUTTON:
 			printf("[%-*s]",
-				INITIAL_INTERACTIVE_WIDTH - depth - 2,
+				INITIAL_CONTENT_WIDTH - depth - 2,
 				widget->name);
 			printf("%s", EMPTY);
 			break;
 		case SUBPAGE:
 			printf("%-*s",
-				INITIAL_INTERACTIVE_WIDTH - depth,
+				INITIAL_CONTENT_WIDTH - depth,
 				widget->name);
 			printf("%s", CHEVRON);
+			break;
+		case LABEL:
+			printf("%-*s:",
+				INITIAL_CONTENT_WIDTH - depth - 1,
+				widget->name);
+			printf("%s", EMPTY);
+			break;
+		case TEXTBOX:
+			printf("___%-*s___",
+				INITIAL_CONTENT_WIDTH - depth - 6,
+				widget->name);
+			printf("%s", EMPTY);
 			break;
 		default:
 			printf("DEFAULT: %s", widget->name);

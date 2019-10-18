@@ -4,10 +4,18 @@
 
 #include "widgetcontainer.h"
 
-typedef enum {
+typedef enum { // TODO how to make static? or why not needed?
 	TOP,
 	BOTTOM
 } Direction;
+
+static void
+newline_or_spape(const WidgetContainer *wc) {
+	if (wc->orientation == VERTICAL)
+		printf("\n");
+	else
+		printf(" ");
+}
 
 static void
 container_widget_debug_print(const Widget *widget) {
@@ -15,12 +23,10 @@ container_widget_debug_print(const Widget *widget) {
 	printf("<<%s %s>>",
 		widget->name,
 		widget->parent == NULL ? "NP" : "HP");
+	newline_or_spape(wc);
 	for (int i = 0; i < wc->length; i++) {
 		widget_debug_print(wc->widgets[i]);
-		if (wc->orientation == VERTICAL)
-			printf("\n");
-		else
-			printf(" ");
+		newline_or_spape(wc);
 	}
 }
 
@@ -41,8 +47,8 @@ container_widget_enter(WidgetContainer *wc, Direction dir) {
 	}
 }
 
-Widget *
-container_widget_next(WidgetContainer *wc) {
+static Widget *
+container_widget_next(WidgetContainer *wc) { // FIXME skip labels
 	int idx = wc->current + 1;
 	Widget *widget = AS_WIDGET(wc);
 
@@ -62,7 +68,7 @@ container_widget_next(WidgetContainer *wc) {
 	return wc->widgets[wc->current];
 }
 
-Widget *
+static Widget *
 container_widget_previous(WidgetContainer *wc) {
 	int idx = wc->current - 1;
 	Widget *widget = AS_WIDGET(wc);
@@ -97,28 +103,36 @@ static const WidgetContainerMethods container_extra_vtable = {
 
 WidgetContainer *
 widget_container_new(const char *name, Orientation orientation, int length, ...) {
-	va_list list;
-
 	WidgetContainer *new = malloc(sizeof(WidgetContainer));
-	new->name = name;
+
+	va_list args;
+	va_start(args, length);
+
+	widget_container_constructor(new, name, orientation, length, args);
+
+	va_end(args);
+
+	return new;
+}
+
+void
+widget_container_constructor(WidgetContainer *new, const char *name, Orientation orientation, int length, va_list args) {
+	widget_constructor(AS_WIDGET(new), name);
 	new->type = CONTAINER;
-	new->parent = NULL;
 	new->vtable = &container_base_vtable;
+
 	new->container_vtable = &container_extra_vtable;
 	new->orientation = orientation;
 
 	new->length = length;
 	new->widgets = malloc(length * sizeof(Widget *));
-	va_start(list, length);
+
 	for (int i = 0; i < length; i++) {
-		Widget *widget = va_arg(list, Widget *);
+		Widget *widget = va_arg(args, Widget *);
 		widget->parent = AS_WIDGET(new);
 		new->widgets[i] = widget;
 		if (widget_is_a(widget, CONTAINER)) widget->parent = AS_WIDGET(new);
 	}
-	va_end(list);
-
-	return new;
 }
 
 inline Widget *

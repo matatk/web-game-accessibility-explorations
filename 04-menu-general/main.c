@@ -5,7 +5,9 @@
 #include "widget.h"
 #include "widgetbutton.h"
 #include "widgetcontainer.h"
+#include "widgetlabel.h"
 #include "widgetsubpage.h"
+#include "widgettextbox.h"
 
 Page *
 make_pages() {
@@ -17,8 +19,12 @@ make_pages() {
 
 	Page *player_options_page = new_page(
 		AS_WIDGET(widget_container_new("Player Options", VERTICAL, 2,
-			widget_button_new("Name"),
-			widget_button_new("Colour"))));
+			widget_container_new("Player Name", HORIZONTAL, 2,
+				widget_label_new("Name"),
+				widget_textbox_new("Name")),
+			widget_container_new("Team Colour", HORIZONTAL, 2,
+				widget_label_new("Colour"),
+				widget_textbox_new("Colour")))));
 
 	Page *options_page = new_page(
 		AS_WIDGET(widget_container_new("Options", VERTICAL, 5,
@@ -29,12 +35,13 @@ make_pages() {
 			widget_button_new("Video"))));
 
 	return new_page(
-		AS_WIDGET(widget_container_new("Main", VERTICAL, 4,
+		AS_WIDGET(widget_container_new("Main", VERTICAL, 5,
 			widget_subpage_new("New game", episode_page),
 			widget_subpage_new("Options", options_page),
 			widget_container_new("Extra", HORIZONTAL, 2,
 				widget_button_new("contained1"),
-				widget_button_new("contained2")),
+				widget_label_new("contained2")),
+			widget_new("Help"),
 			widget_button_new("Exit"))));
 }
 
