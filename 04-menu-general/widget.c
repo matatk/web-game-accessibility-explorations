@@ -7,7 +7,7 @@
 static char *
 base_widget_debug_print(const Widget *widget, const int depth) {
 	char *string;
-	asprintf(&string, "%s<%s>", padding(depth), widget->name);
+	asprintf(&string, "%s<%s>", widget_padding(depth), widget->name);
 	return string;
 }
 
@@ -18,7 +18,7 @@ static const WidgetMethods base_vtable = {
 // Intended for widgets only
 
 const char *
-padding(int depth) {
+widget_padding(int depth) {
 	char *string;
 	asprintf(&string, "%*s", depth, "");
 	return string;

@@ -6,12 +6,11 @@
 static char *
 subpage_widget_debug_print(const Widget *widget, const int depth) {
 	char *string;
-	asprintf(&string, "%s(%s -> %p)\n%s%s",
-			padding(depth),
-			widget->name,
-			AS_WIDGET_SUBPAGE(widget)->sub_page,
-			padding(depth),
-			_debug_print_page_tree(AS_WIDGET_SUBPAGE(widget)->sub_page, depth + 1));
+	asprintf(&string, "%s(%s -> %p)\n%s",
+		widget_padding(depth),
+		widget->name,
+		AS_WIDGET_SUBPAGE(widget)->sub_page,
+		_debug_print_page_tree(AS_WIDGET_SUBPAGE(widget)->sub_page, depth + 1));
 	return string;
 }
 

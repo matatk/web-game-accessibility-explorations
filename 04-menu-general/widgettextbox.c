@@ -6,7 +6,7 @@
 static char *
 textbox_widget_debug_print(const Widget *widget, const int depth) {
 	char *string;
-	asprintf(&string, "%s[__%s__]", padding(depth), widget->name);
+	asprintf(&string, "%s[__%s__]", widget_padding(depth), widget->name);
 	return string;
 }
 

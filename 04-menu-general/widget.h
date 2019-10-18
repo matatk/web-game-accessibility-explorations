@@ -30,7 +30,7 @@ char *widget_debug_print(const Widget *, const int);  // TODO make const
 
 // Intended for widgets only
 
-const char *padding(int);
+const char *widget_padding(int);
 
 // Private
 

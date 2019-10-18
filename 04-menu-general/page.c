@@ -36,18 +36,14 @@ _debug_print_page_tree(Page *page, int depth) {
 		"%sRoot: %s\n"
 		"%sParent: %p\n"
 		"%s\n"
-		"%s/// page debug info: ///\n",
-		padding(depth),
-		padding(depth),
-		depth,
-		padding(depth),
-		page->focused->name,
-		padding(depth),
-		page->root->name,
-		padding(depth),
-		page->parent,
+		"%s/// page debug info: ///",
+		widget_padding(depth),
+		widget_padding(depth), depth,
+		widget_padding(depth), page->focused->name,
+		widget_padding(depth), page->root->name,
+		widget_padding(depth), page->parent,
 		widget_debug_print(page->root, depth),
-		padding(depth));
+		widget_padding(depth));
 	return string;
 }
 

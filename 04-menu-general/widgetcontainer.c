@@ -24,7 +24,7 @@ container_widget_debug_print(const Widget *widget, const int depth) {
 	char *all;
 
 	asprintf(&start, "%s<<%d %s %s>>%s",
-		padding(depth),
+		widget_padding(depth),
 		depth,
 		widget->name,
 		widget->parent == NULL ? "NP" : "HP",
@@ -39,12 +39,19 @@ container_widget_debug_print(const Widget *widget, const int depth) {
 			buffer + strlen(buffer),
 			buffer_size - strlen(buffer),
 			"%s%s%s",
-			padding(depth),
-			widget_debug_print(wc->widgets[i], depth + 1),
-			newline_or_space(wc));
+			wc->orientation == VERTICAL
+				? widget_padding(depth)
+				: "",
+			widget_debug_print(
+				wc->widgets[i],
+				wc->orientation == VERTICAL
+					? depth + 1
+					: 0),
+			i == wc->length - 1 ? " " : newline_or_space(wc));
 	}
 
 	asprintf(&all, "%s%s", start, buffer);
+	free(buffer);
 	return all;
 }
 
