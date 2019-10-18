@@ -22,6 +22,13 @@ const char *EMPTY = "   ";
 const char *BORDER_L = "| ";
 const char *BORDER_R = " |";
 
+// Internal API
+static void repeat(int, char *);
+static void render_padding(int, char *);
+static void render_container_widget(Page *page, Widget *widget, int depth);
+static void render_widgety_widget(Page *page, Widget *widget, int depth);
+static void render_widget(Page *page, int depth, Widget *widget);
+
 static void
 repeat(int times, char *string) {
 	for (int i = 0; i < times; i++) {
@@ -39,64 +46,75 @@ render_padding(int depth, char *string) {
 }
 
 static void
+render_container_widget(Page *page, Widget *widget, int depth) {
+	WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
+
+	printf("%s", BORDER_L);
+	render_padding(depth, "-");
+	printf("-- %-*s---------------",
+		INITIAL_BARE_WIDTH - depth - 18,
+		wc->name);
+	printf("%s", BORDER_R);
+	printf("\n");
+
+	for (int i = 0; i < wc->length; i++) {
+		render_widget(page, depth + 1, wc->widgets[i]);
+	}
+
+	printf("%s", BORDER_L);
+	repeat(INITIAL_BARE_WIDTH, "-");
+	printf("%s", BORDER_R);
+	printf("\n");
+}
+
+static void
+render_widgety_widget(Page *page, Widget *widget, int depth) {
+	printf("%s", BORDER_L);
+	render_padding(depth, NULL);
+	printf("%s", widget == page->focused ? SELECTED : EMPTY);
+
+	switch (widget->type) {
+	case BUTTON:
+		printf("[%-*s]",
+			INITIAL_CONTENT_WIDTH - depth - 2,
+			widget->name);
+		printf("%s", EMPTY);
+		break;
+	case SUBPAGE:
+		printf("%-*s",
+			INITIAL_CONTENT_WIDTH - depth,
+			widget->name);
+		printf("%s", CHEVRON);
+		break;
+	case LABEL:
+		printf("%-*s:",
+			INITIAL_CONTENT_WIDTH - depth - 1,
+			widget->name);
+		printf("%s", EMPTY);
+		break;
+	case TEXTBOX:
+		printf("___%-*s___",
+			INITIAL_BARE_WIDTH - depth - 9,
+			widget->name);
+		printf("%s", EMPTY);
+		break;
+	default:
+		printf("DEFAULT: %-*s",
+			INITIAL_CONTENT_WIDTH - depth - 6,
+			widget->name);
+		break;
+	}
+
+	printf("%s", BORDER_R);
+	printf("\n");
+}
+
+static void
 render_widget(Page *page, int depth, Widget *widget) {
 	if (widget_is_a(widget, CONTAINER)) {
-		WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
-		//
-		printf("%s", BORDER_L);
-		render_padding(depth, "-");
-		printf("-- %-*s---------------",
-			INITIAL_BARE_WIDTH - depth - 18,
-			wc->name);
-		printf("%s", BORDER_R);
-		printf("\n");
-		//
-		for (int i = 0; i < wc->length; i++) {
-			render_widget(page, depth + 1, wc->widgets[i]);
-		}
-		//
-		printf("%s", BORDER_L);
-		repeat(INITIAL_BARE_WIDTH, "-");
-		printf("%s", BORDER_R);
-		printf("\n");
-		//
+		render_container_widget(page, widget, depth);
 	} else {
-		printf("%s", BORDER_L);
-		render_padding(depth, NULL);
-		printf("%s", widget == page->focused ? SELECTED : EMPTY);
-		switch (widget->type) {
-		case BUTTON:
-			printf("[%-*s]",
-				INITIAL_CONTENT_WIDTH - depth - 2,
-				widget->name);
-			printf("%s", EMPTY);
-			break;
-		case SUBPAGE:
-			printf("%-*s",
-				INITIAL_CONTENT_WIDTH - depth,
-				widget->name);
-			printf("%s", CHEVRON);
-			break;
-		case LABEL:
-			printf("%-*s:",
-				INITIAL_CONTENT_WIDTH - depth - 1,
-				widget->name);
-			printf("%s", EMPTY);
-			break;
-		case TEXTBOX:
-			printf("___%-*s___",
-				INITIAL_BARE_WIDTH - depth - 9,
-				widget->name);
-			printf("%s", EMPTY);
-			break;
-		default:
-			printf("DEFAULT: %-*s",
-				INITIAL_CONTENT_WIDTH - depth - 6,  // TODO: shouldn't this be 9?
-				widget->name);
-			break;
-		}
-		printf("%s", BORDER_R);
-		printf("\n");
+		render_widgety_widget(page, widget, depth);
 	}
 }
 

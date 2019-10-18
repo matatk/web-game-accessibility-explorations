@@ -20,7 +20,7 @@ static const WidgetMethods base_vtable = {
 const char *
 widget_padding(int depth) {
 	char *string;
-	asprintf(&string, "%*s", depth, "");
+	asprintf(&string, "%*s", depth * 4, "");
 	return string;
 }
 

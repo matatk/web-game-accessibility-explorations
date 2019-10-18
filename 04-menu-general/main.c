@@ -11,10 +11,13 @@
 
 Page *
 make_pages() {
+	Page *episode_two = new_page(
+			widget_new("Episode Two"));
+
 	Page *episode_page = new_page(
 		AS_WIDGET(widget_container_new("Episode", VERTICAL, 3,
 			widget_button_new("Big pile of great dread"),
-			widget_button_new("The floors look swell"),
+			widget_subpage_new("The floors look swell", episode_two),
 			widget_button_new("Some Pearnod"))));
 
 	Page *player_options_page = new_page(

@@ -45,7 +45,7 @@ container_widget_debug_print(const Widget *widget, const int depth) {
 			widget_debug_print(
 				wc->widgets[i],
 				wc->orientation == VERTICAL
-					? depth + 1
+					? depth
 					: 0),
 			i == wc->length - 1 ? " " : newline_or_space(wc));
 	}
