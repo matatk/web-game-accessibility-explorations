@@ -1,7 +1,7 @@
 #pragma once
 #include <stdbool.h>
 
-#define AS_WIDGET(derrived) (Widget *)derrived
+#define AS_WIDGET(derived) (Widget *)derived
 
 typedef enum WidgetType {
 	WIDGET, // Base type; doesn't do much :-)
