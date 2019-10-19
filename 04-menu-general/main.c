@@ -5,15 +5,15 @@
 #include "widget.h"
 #include "widgetbutton.h"
 #include "widgetcontainer.h"
-#include "widgetlabel.h"
-#include "widgetsubpage.h"
 #include "widgetinput.h"
 #include "widgetinputtext.h"
+#include "widgetlabel.h"
+#include "widgetsubpage.h"
 
 Page *
 make_pages() {
 	Page *episode_two = new_page(
-			widget_new("Episode Two"));
+		widget_new("Episode Two"));
 
 	Page *episode_page = new_page(
 		AS_WIDGET(widget_container_new("Episode", VERTICAL, 3,

@@ -4,7 +4,7 @@
 #include "widgetsubpage.h"
 
 static char *
-subpage_widget_debug_print(const Widget *widget, const int depth) {
+subpage_widget_to_string(const Widget *widget, const int depth) {
 	char *string;
 	asprintf(&string, "%s(%s -> %p)\n%s",
 		widget_padding(depth),
@@ -15,7 +15,7 @@ subpage_widget_debug_print(const Widget *widget, const int depth) {
 }
 
 static const WidgetMethods subpage_base_vtable = {
-	.debug_print = subpage_widget_debug_print
+	.to_string = subpage_widget_to_string
 };
 
 // Public

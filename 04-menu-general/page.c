@@ -42,7 +42,7 @@ _debug_print_page_tree(Page *page, int depth) {
 		widget_padding(depth), page->focused->name,
 		widget_padding(depth), page->root->name,
 		widget_padding(depth), page->parent,
-		widget_debug_print(page->root, depth),
+		widget_to_string(page->root, depth),
 		widget_padding(depth));
 	return string;
 }

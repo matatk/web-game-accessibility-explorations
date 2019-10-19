@@ -18,7 +18,7 @@ newline_or_space(const WidgetContainer *wc) {
 }
 
 static char *
-container_widget_debug_print(const Widget *widget, const int depth) {
+container_widget_to_string(const Widget *widget, const int depth) {
 	WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
 	char *start;
 	char *all;
@@ -39,15 +39,11 @@ container_widget_debug_print(const Widget *widget, const int depth) {
 			buffer + strlen(buffer),
 			buffer_size - strlen(buffer),
 			"%s%s%s",
-			wc->orientation == VERTICAL
-				? widget_padding(depth)
-				: "",
-			widget_debug_print(
+			wc->orientation == VERTICAL ? widget_padding(depth) : "",
+			widget_to_string(
 				wc->widgets[i],
-				wc->orientation == VERTICAL
-					? depth
-					: 0),
-			i == wc->length - 1 ? " " : newline_or_space(wc));
+				wc->orientation == VERTICAL ? depth : 0),
+			i == (wc->length - 1) ? " " : newline_or_space(wc));
 	}
 
 	asprintf(&all, "%s%s", start, buffer);
@@ -115,7 +111,7 @@ container_widget_previous(WidgetContainer *wc) {
 }
 
 static const WidgetMethods container_base_vtable = {
-	.debug_print = container_widget_debug_print
+	.to_string = container_widget_to_string
 };
 
 static const WidgetContainerMethods container_extra_vtable = {

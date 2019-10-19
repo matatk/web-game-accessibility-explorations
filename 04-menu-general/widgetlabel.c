@@ -4,14 +4,14 @@
 #include "widgetlabel.h"
 
 static char *
-label_widget_debug_print(const Widget *widget, const int depth) {
+label_widget_to_string(const Widget *widget, const int depth) {
 	char *string;
 	asprintf(&string, "%s-%s-", widget_padding(depth), widget->name);
 	return string;
 }
 
 static const WidgetMethods label_base_vtable = {
-	.debug_print = label_widget_debug_print
+	.to_string = label_widget_to_string
 };
 
 // Public

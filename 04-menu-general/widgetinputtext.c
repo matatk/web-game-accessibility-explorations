@@ -4,14 +4,14 @@
 #include "widgetinputtext.h"
 
 static char *
-text_input_widget_debug_print(const Widget *widget, const int depth) {
+text_input_widget_to_string(const Widget *widget, const int depth) {
 	char *string;
 	asprintf(&string, "%s[__%s__]", widget_padding(depth), widget->name);
 	return string;
 }
 
 static const WidgetMethods text_input_base_vtable = {
-	.debug_print = text_input_widget_debug_print
+	.to_string = text_input_widget_to_string
 };
 
 // Public
