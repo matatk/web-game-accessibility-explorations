@@ -26,6 +26,6 @@ widget_label_new(const char *name) {
 void
 widget_label_constructor(WidgetLabel *new, const char *name) {
 	widget_constructor(AS_WIDGET(new), name);
-	new->type = LABEL;
+	new->type	= LABEL;
 	new->vtable = &label_base_vtable;
 }

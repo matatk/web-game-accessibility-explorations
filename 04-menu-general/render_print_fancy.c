@@ -9,16 +9,17 @@
 // | <-- chevron --> <-- initial --> <-- chevron --> |
 // | <-- d --> <-- c --> <-- init - de --> <-- c --> |
 
-const int TOTAL_WIDTH = 38;
-const int INDICATOR_WIDTH = 3;
-const int BORDER_WIDTH = 2;
+const int TOTAL_WIDTH		 = 38;
+const int INDICATOR_WIDTH	 = 3;
+const int BORDER_WIDTH		 = 2;
 const int INITIAL_BARE_WIDTH = TOTAL_WIDTH - (2 * BORDER_WIDTH);
-const int INITIAL_CONTENT_WIDTH = TOTAL_WIDTH - (2 * INDICATOR_WIDTH) - (2 * BORDER_WIDTH);
+const int INITIAL_CONTENT_WIDTH
+	= TOTAL_WIDTH - (2 * INDICATOR_WIDTH) - (2 * BORDER_WIDTH);
 
 // Indicators
-const char *CHEVRON = ">>>";
+const char *CHEVRON	 = ">>>";
 const char *SELECTED = " + ";
-const char *EMPTY = "   ";
+const char *EMPTY	 = "   ";
 const char *BORDER_L = "| ";
 const char *BORDER_R = " |";
 
@@ -51,9 +52,7 @@ render_container_widget(Page *page, Widget *widget, int depth) {
 
 	printf("%s", BORDER_L);
 	render_padding(depth, "-");
-	printf("-- %-*s---------------",
-		INITIAL_BARE_WIDTH - depth - 18,
-		wc->name);
+	printf("-- %-*s---------------", INITIAL_BARE_WIDTH - depth - 18, wc->name);
 	printf("%s", BORDER_R);
 	printf("\n");
 
@@ -75,39 +74,28 @@ render_widgety_widget(Page *page, Widget *widget, int depth) {
 
 	switch (widget->type) {
 	case BUTTON:
-		printf("[%-*s]",
-			INITIAL_CONTENT_WIDTH - depth - 2,
-			widget->name);
+		printf("[%-*s]", INITIAL_CONTENT_WIDTH - depth - 2, widget->name);
 		printf("%s", EMPTY);
 		break;
 	case SUBPAGE:
-		printf("%-*s",
-			INITIAL_CONTENT_WIDTH - depth,
-			widget->name);
+		printf("%-*s", INITIAL_CONTENT_WIDTH - depth, widget->name);
 		printf("%s", CHEVRON);
 		break;
 	case LABEL:
-		printf("%-*s:",
-			INITIAL_CONTENT_WIDTH - depth - 1,
-			widget->name);
+		printf("%-*s:", INITIAL_CONTENT_WIDTH - depth - 1, widget->name);
 		printf("%s", EMPTY);
 		break;
 	case INPUT:
-		printf(">>>%-*s<<<",
-			INITIAL_CONTENT_WIDTH - depth - 6,
-			widget->name);
+		printf(">>>%-*s<<<", INITIAL_CONTENT_WIDTH - depth - 6, widget->name);
 		printf("%s", EMPTY);
 		break;
 	case TEXTBOX:
-		printf("___%-*s___",
-			INITIAL_CONTENT_WIDTH - depth - 6,
-			widget->name);
+		printf("___%-*s___", INITIAL_CONTENT_WIDTH - depth - 6, widget->name);
 		printf("%s", EMPTY);
 		break;
 	default:
-		printf("DEFAULT: %-*s",
-			INITIAL_CONTENT_WIDTH - depth - 6,
-			widget->name);
+		printf(
+			"DEFAULT: %-*s", INITIAL_CONTENT_WIDTH - depth - 6, widget->name);
 		break;
 	}
 

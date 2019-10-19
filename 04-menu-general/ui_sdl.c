@@ -11,7 +11,7 @@
 #include "page.h"
 #include "render.h"
 
-const int WIDTH = 640;
+const int WIDTH	 = 640;
 const int HEIGHT = 480;
 
 Page *root;

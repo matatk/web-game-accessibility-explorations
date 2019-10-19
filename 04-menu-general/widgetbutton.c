@@ -26,6 +26,6 @@ widget_button_new(const char *name) {
 void
 widget_button_constructor(WidgetButton *new, const char *name) {
 	widget_constructor(AS_WIDGET(new), name);
-	new->type = BUTTON;
+	new->type	= BUTTON;
 	new->vtable = &button_base_vtable;
 }

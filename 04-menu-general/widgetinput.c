@@ -26,6 +26,6 @@ widget_input_new(const char *name) {
 void
 widget_input_constructor(WidgetInput *new, const char *name) {
 	widget_constructor(AS_WIDGET(new), name);
-	new->type = INPUT;
+	new->type	= INPUT;
 	new->vtable = &input_base_vtable;
 }

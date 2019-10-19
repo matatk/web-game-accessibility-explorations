@@ -26,6 +26,6 @@ widget_input_text_new(const char *name) {
 void
 widget_input_text_constructor(WidgetInputText *new, const char *name) {
 	widget_input_constructor(AS_WIDGET_INPUT(new), name);
-	new->type = TEXTBOX;
+	new->type	= TEXTBOX;
 	new->vtable = &text_input_base_vtable;
 }

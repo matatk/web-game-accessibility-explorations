@@ -30,8 +30,8 @@ widget_subpage_new(const char *name, const Page *sub_page) {
 void
 widget_subpage_constructor(WidgetSubpage *new, const char *name, const Page *sub_page) {
 	widget_constructor(AS_WIDGET(new), name);
-	new->type = SUBPAGE;
-	new->vtable = &subpage_base_vtable;
+	new->type	  = SUBPAGE;
+	new->vtable	  = &subpage_base_vtable;
 	new->sub_page = sub_page;
 	// TODO: Make pages subclass WidgetContainer so we can find the nearest
 	//       parent page.
