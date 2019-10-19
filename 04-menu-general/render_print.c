@@ -34,11 +34,11 @@ render_widgety_widget(Page *page, int depth, Widget *widget) {
 	case LABEL:
 		printf("%s:\n", widget->name);
 		break;
-	case INPUT:
-		printf(">%s<\n", widget->name);
-		break;
 	case TEXTBOX:
 		printf("_%s_\n", widget->name);
+		break;
+	case SLIDER:
+		printf("~~%s~~\n", widget->name);
 		break;
 	default:
 		printf("DEFAULT: %s\n", widget->name);

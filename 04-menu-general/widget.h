@@ -9,8 +9,8 @@ typedef enum WidgetType {
 	SUBPAGE,
 	CONTAINER,
 	LABEL,
-	INPUT, // Base input type; don't use
-	TEXTBOX
+	TEXTBOX,
+	SLIDER
 } WidgetType;
 
 typedef struct WidgetMethods WidgetMethods;

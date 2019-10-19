@@ -12,8 +12,8 @@ WIDGET_H := \
 	widgetsubpage.h \
 	widgetcontainer.h \
 	widgetlabel.h \
-	widgetinput.h \
-	widgetinputtext.h
+	widgettextbox.h \
+	widgetslider.h
 
 WIDGET_C := \
 	widget.c \
@@ -21,8 +21,8 @@ WIDGET_C := \
 	widgetsubpage.c \
 	widgetcontainer.c \
 	widgetlabel.c \
-	widgetinput.c \
-	widgetinputtext.c
+	widgettextbox.c \
+	widgetslider.c
 
 STD_H := page.h ui.h render.h
 STD_C := main.c page.c  # UI and rendering are target-specific

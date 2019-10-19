@@ -85,12 +85,12 @@ render_widgety_widget(Page *page, Widget *widget, int depth) {
 		printf("%-*s:", INITIAL_CONTENT_WIDTH - depth - 1, widget->name);
 		printf("%s", EMPTY);
 		break;
-	case INPUT:
-		printf(">>>%-*s<<<", INITIAL_CONTENT_WIDTH - depth - 6, widget->name);
+	case TEXTBOX:
+		printf("__%-*s__", INITIAL_CONTENT_WIDTH - depth - 4, widget->name);
 		printf("%s", EMPTY);
 		break;
-	case TEXTBOX:
-		printf("___%-*s___", INITIAL_CONTENT_WIDTH - depth - 6, widget->name);
+	case SLIDER:
+		printf("~~%-*s~~", INITIAL_CONTENT_WIDTH - depth - 4, widget->name);
 		printf("%s", EMPTY);
 		break;
 	default:

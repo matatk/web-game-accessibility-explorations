@@ -5,10 +5,10 @@
 #include "widget.h"
 #include "widgetbutton.h"
 #include "widgetcontainer.h"
-#include "widgetinput.h"
-#include "widgetinputtext.h"
 #include "widgetlabel.h"
+#include "widgetslider.h"
 #include "widgetsubpage.h"
+#include "widgettextbox.h"
 
 Page *
 make_pages() {
@@ -25,20 +25,26 @@ make_pages() {
 		AS_WIDGET(widget_container_new("Player Options", VERTICAL, 3,
 			widget_container_new("Player Name", HORIZONTAL, 2,
 				widget_label_new("Name"),
-				widget_input_text_new("Name")),
+				widget_text_new("Name")),
 			widget_container_new("Base Input", HORIZONTAL, 2,
 				widget_label_new("Something"),
-				widget_input_new("Else")),
+				widget_new("Else")),
 			widget_container_new("Team Colour", HORIZONTAL, 2,
 				widget_label_new("Colour"),
-				widget_input_text_new("Colour")))));
+				widget_text_new("Colour")))));
+
+	Page *sound_options_page = new_page(
+		AS_WIDGET(widget_container_new("Sound Options", VERTICAL, 1,
+			widget_container_new("vol", HORIZONTAL, 2,
+				widget_label_new("Volume"),
+				widget_slider_new("Volume", 0, 25, 100)))));
 
 	Page *options_page = new_page(
 		AS_WIDGET(widget_container_new("Options", VERTICAL, 5,
 			widget_subpage_new("Player", player_options_page),
 			widget_button_new("Controls"),
 			widget_button_new("Gameplay"),
-			widget_button_new("Sound"),
+			widget_subpage_new("Sound", sound_options_page),
 			widget_button_new("Video"))));
 
 	return new_page(
