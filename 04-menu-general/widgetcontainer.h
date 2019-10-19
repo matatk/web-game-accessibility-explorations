@@ -3,7 +3,7 @@
 
 #include "widget.h"
 
-#define AS_WIDGET_CONTAINER(widget) (WidgetContainer *)widget
+#define AS_WIDGET_CONTAINER(widget) ((WidgetContainer *)widget)
 
 typedef enum Orientation {
 	VERTICAL,
