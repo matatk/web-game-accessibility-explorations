@@ -4,6 +4,7 @@
 #include "page.h"
 #include "widget.h"
 #include "widgetcontainer.h"
+#include "widgetslider.h"
 
 // <------------------ total width ------------------>
 // | <-- chevron --> <-- initial --> <-- chevron --> |
@@ -90,7 +91,11 @@ render_widgety_widget(Page *page, Widget *widget, int depth) {
 		printf("%s", EMPTY);
 		break;
 	case SLIDER:
-		printf("~~%-*s~~", INITIAL_CONTENT_WIDTH - depth - 4, widget->name);
+		WidgetSlider *slider = AS_WIDGET_SLIDER(widget);
+		printf("~~%-*s (%d, %d, %d)~~",
+			INITIAL_CONTENT_WIDTH - depth - 14,
+			widget->name,
+			slider->value_min, slider->value, slider->value_max);
 		printf("%s", EMPTY);
 		break;
 	default:

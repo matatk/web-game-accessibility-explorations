@@ -37,7 +37,7 @@ make_pages() {
 		AS_WIDGET(widget_container_new("Sound Options", VERTICAL, 1,
 			widget_container_new("vol", HORIZONTAL, 2,
 				widget_label_new("Volume"),
-				widget_slider_new("Volume", 0, 25, 100)))));
+				widget_slider_new("Volume", 0, 3, 5)))));
 
 	Page *options_page = new_page(
 		AS_WIDGET(widget_container_new("Options", VERTICAL, 5,

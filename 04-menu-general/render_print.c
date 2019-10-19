@@ -4,6 +4,7 @@
 #include "page.h"
 #include "widget.h"
 #include "widgetcontainer.h"
+#include "widgetslider.h"
 
 // Internal API
 static void render_container_widget(Page *page, int depth, Widget *widget);
@@ -38,7 +39,9 @@ render_widgety_widget(Page *page, int depth, Widget *widget) {
 		printf("_%s_\n", widget->name);
 		break;
 	case SLIDER:
-		printf("~~%s~~\n", widget->name);
+		WidgetSlider *slider = AS_WIDGET_SLIDER(widget);
+		printf("~~%s (%d, %d, %d)~~\n", widget->name,
+			slider->value_min, slider->value, slider->value_max);
 		break;
 	default:
 		printf("DEFAULT: %s\n", widget->name);

@@ -145,9 +145,8 @@ widget_container_constructor(WidgetContainer *new,
 
 	new->container_vtable = &container_extra_vtable;
 	new->orientation	  = orientation;
-
-	new->length	 = length;
-	new->widgets = malloc(length * sizeof(Widget *));
+	new->length			  = length;
+	new->widgets		  = malloc(length * sizeof(Widget *));
 
 	for (int i = 0; i < length; i++) {
 		Widget *widget	= va_arg(args, Widget *);

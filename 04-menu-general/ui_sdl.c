@@ -10,6 +10,8 @@
 
 #include "page.h"
 #include "render.h"
+#include "widget.h"
+#include "widgetslider.h"
 
 const int WIDTH	 = 640;
 const int HEIGHT = 480;
@@ -34,13 +36,13 @@ display_current_page() {
 
 void
 one_iter() {
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
+	SDL_Event evt;
+	while (SDL_PollEvent(&evt)) {
+		if (evt.type == SDL_QUIT) {
 			printf("Quitting...\n");
 			quit = 1;
-		} else if (e.type == SDL_KEYDOWN) {
-			switch (e.key.keysym.sym) {
+		} else if (evt.type == SDL_KEYDOWN) {
+			switch (evt.key.keysym.sym) {
 			case SDLK_UP:
 				move_up(current);
 				break;
@@ -50,11 +52,20 @@ one_iter() {
 				break;
 
 			case SDLK_RIGHT:
-				current = page_activate(current);
+				if (widget_is_a(current->focused, SUBPAGE)) {
+					current = page_activate(current);
+				} else if (widget_is_a(current->focused, SLIDER)) {
+					widget_slider_increase(AS_WIDGET_SLIDER(current->focused));
+				}
 				break;
 
 			case SDLK_LEFT:
-				current = page_back(current);
+				if (widget_is_a(current->focused, SUBPAGE)) {
+					current = page_back(current);
+				} else if (widget_is_a(current->focused, SLIDER)) {
+					widget_slider_decrease(AS_WIDGET_SLIDER(current->focused));
+				}
+
 				break;
 
 			default:

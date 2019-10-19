@@ -9,6 +9,8 @@
 
 #include "page.h"
 #include "render.h"
+#include "widget.h"
+#include "widgetslider.h"
 
 Page *root;
 Page *current;
@@ -49,12 +51,20 @@ one_iter() {
 		} else if (is(input, "k")) {
 			printf("<UP>\n");
 			move_up(current);
-		} else if (is(input, "e")) {
-			printf("<ENTER>\n");
-			current = page_activate(current);
-		} else if (is(input, "b")) {
+		} else if (is(input, "l")) {
+			printf("<FORWARD>\n");
+			if (widget_is_a(current->focused, SUBPAGE)) {
+				current = page_activate(current);
+			} else if (widget_is_a(current->focused, SLIDER)) {
+				widget_slider_increase(AS_WIDGET_SLIDER(current->focused));
+			}
+		} else if (is(input, "h")) {
 			printf("<BACK>\n");
-			current = page_back(current);
+			if (widget_is_a(current->focused, SUBPAGE)) {
+				current = page_back(current);
+			} else if (widget_is_a(current->focused, SLIDER)) {
+				widget_slider_decrease(AS_WIDGET_SLIDER(current->focused));
+			}
 		} else {
 			printf("<unhandled input>\n");
 		}
@@ -73,7 +83,7 @@ int
 ui_start(Page *page) {
 	current = page;
 
-	printf("Use j/k as up/down; e to enter page; b to go back; q to quit\n\n");
+	printf("Use j/k as up/down; h/l as left/right; q to quit\n\n");
 
 #ifdef __EMSCRIPTEN__
 	emscripten_set_main_loop(one_iter, 0, 1);
