@@ -23,7 +23,7 @@ int quit = 0;
 
 // Private
 
-void
+static void
 display_current_page() {
 	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0x80));
 	render_page(current, screen);
@@ -34,7 +34,7 @@ display_current_page() {
 #endif
 }
 
-void
+static void
 one_iter() {
 	SDL_Event evt;
 	while (SDL_PollEvent(&evt)) {
@@ -52,6 +52,7 @@ one_iter() {
 				break;
 
 			case SDLK_RIGHT:
+				// TODO: DRY with other ui
 				if (widget_is_a(current->focused, SUBPAGE)) {
 					current = page_activate(current);
 				} else if (widget_is_a(current->focused, SLIDER)) {

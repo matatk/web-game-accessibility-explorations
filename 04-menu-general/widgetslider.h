@@ -1,7 +1,7 @@
 #pragma once
 #include "widget.h"
 
-#define AS_WIDGET_SLIDER(widget) ((WidgetSlider *)widget)
+#define AS_WIDGET_SLIDER(widget) (WidgetSlider *)widget
 
 typedef struct WidgetSliderMethods WidgetSliderMethods;
 

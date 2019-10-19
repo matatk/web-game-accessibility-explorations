@@ -2,7 +2,7 @@
 #include "page.h"
 #include "widget.h"
 
-#define AS_WIDGET_SUBPAGE(widget) ((WidgetSubpage *)widget)
+#define AS_WIDGET_SUBPAGE(widget) (WidgetSubpage *)widget
 
 typedef struct WidgetSubpage {
 	struct Widget;

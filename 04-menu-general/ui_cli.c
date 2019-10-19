@@ -18,12 +18,12 @@ bool quit = false;
 
 // Private
 
-bool
+static bool
 is(char input, const char *str) {
 	return strncmp(&input, str, 1) == 0;
 }
 
-void
+static void
 display_current_page() {
 	render_page(current, NULL);
 #ifdef __EMSCRIPTEN__
@@ -32,7 +32,7 @@ display_current_page() {
 #endif
 }
 
-void
+static void
 one_iter() {
 	char input;
 
@@ -52,6 +52,7 @@ one_iter() {
 			printf("<UP>\n");
 			move_up(current);
 		} else if (is(input, "l")) {
+			// TODO: DRY with other ui
 			printf("<FORWARD>\n");
 			if (widget_is_a(current->focused, SUBPAGE)) {
 				current = page_activate(current);
@@ -59,6 +60,7 @@ one_iter() {
 				widget_slider_increase(AS_WIDGET_SLIDER(current->focused));
 			}
 		} else if (is(input, "h")) {
+			// TODO: DRY with other ui
 			printf("<BACK>\n");
 			if (widget_is_a(current->focused, SUBPAGE)) {
 				current = page_back(current);

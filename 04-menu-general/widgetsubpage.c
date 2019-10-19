@@ -9,8 +9,8 @@ subpage_widget_to_string(const Widget *widget, const int depth) {
 	asprintf(&string, "%s(%s -> %p)\n%s",
 		widget_padding(depth),
 		widget->name,
-		AS_WIDGET_SUBPAGE(widget)->sub_page,
-		_debug_print_page_tree(AS_WIDGET_SUBPAGE(widget)->sub_page, depth + 1));
+		(AS_WIDGET_SUBPAGE(widget))->sub_page,
+		_debug_print_page_tree((AS_WIDGET_SUBPAGE(widget))->sub_page, depth + 1));
 	return string;
 }
 

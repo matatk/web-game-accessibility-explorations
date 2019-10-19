@@ -84,9 +84,9 @@ render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget
 		break;
 	case SLIDER:
 		asprintf(&string, "~~(%s: %d, %d, %d)~~\n", widget->name,
-			AS_WIDGET_SLIDER(widget)->value_min,
-			AS_WIDGET_SLIDER(widget)->value,
-			AS_WIDGET_SLIDER(widget)->value_max);
+			(AS_WIDGET_SLIDER(widget))->value_min,
+			(AS_WIDGET_SLIDER(widget))->value,
+			(AS_WIDGET_SLIDER(widget))->value_max);
 		break;
 	default:
 		asprintf(&string, "DEFAULT: %s\n", widget->name);

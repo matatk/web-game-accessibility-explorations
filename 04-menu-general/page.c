@@ -79,7 +79,7 @@ Page *
 page_activate(Page *page) {
 	Widget *current = page->focused;
 	if (widget_is_a(current, SUBPAGE)) {
-		return AS_WIDGET_SUBPAGE(current)->sub_page;
+		return (AS_WIDGET_SUBPAGE(current))->sub_page;
 	}
 	return page;
 }
