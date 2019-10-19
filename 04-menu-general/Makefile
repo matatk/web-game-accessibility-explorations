@@ -6,8 +6,23 @@ ifeq ($(shell uname -s), Darwin)
 SYS := -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/
 endif
 
-WIDGET_H := widget.h widgetbutton.h widgetsubpage.h widgetcontainer.h widgetlabel.h widgettextbox.h
-WIDGET_C := widget.c widgetbutton.c widgetsubpage.c widgetcontainer.c widgetlabel.c widgettextbox.c
+WIDGET_H := \
+	widget.h \
+	widgetbutton.h \
+	widgetsubpage.h \
+	widgetcontainer.h \
+	widgetlabel.h \
+	widgetinput.h \
+	widgetinputtext.h
+
+WIDGET_C := \
+	widget.c \
+	widgetbutton.c \
+	widgetsubpage.c \
+	widgetcontainer.c \
+	widgetlabel.c \
+	widgetinput.c \
+	widgetinputtext.c
 
 STD_H := page.h ui.h render.h
 STD_C := main.c page.c  # UI and rendering are target-specific
