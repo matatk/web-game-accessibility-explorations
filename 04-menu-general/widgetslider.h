@@ -7,7 +7,7 @@ typedef struct WidgetSliderMethods WidgetSliderMethods;
 
 typedef struct WidgetSlider {
 	struct Widget;
-	WidgetSliderMethods *slider_vtable;
+	const WidgetSliderMethods *slider_vtable;
 	int value_min;
 	int value;
 	int value_max;

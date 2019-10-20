@@ -6,8 +6,8 @@
 
 typedef struct WidgetSubpage {
 	struct Widget;
-	Page *sub_page;
+	Page *sub_page; // TODO const?
 } WidgetSubpage;
 
-WidgetSubpage *widget_subpage_new(const char *, const Page *);
-void widget_subpage_constructor(WidgetSubpage *, const char *, const Page *);
+WidgetSubpage *widget_subpage_new(const char *, Page *);
+void widget_subpage_constructor(WidgetSubpage *, const char *, Page *);
