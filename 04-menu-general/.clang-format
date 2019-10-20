@@ -1,4 +1,3 @@
-AlignConsecutiveAssignments: true
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true

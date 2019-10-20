@@ -31,8 +31,8 @@ container_widget_to_string(const Widget *widget, const int depth) {
 		newline_or_space(wc));
 
 	int buffer_size = sizeof(char) * 4096 + 1;
-	char *buffer	= malloc(buffer_size);
-	buffer[0]		= 0;
+	char *buffer = malloc(buffer_size);
+	buffer[0] = 0;
 
 	for (int i = 0; i < wc->length; i++) {
 		snprintf(
@@ -70,7 +70,7 @@ container_widget_enter(WidgetContainer *wc, Direction dir) {
 
 static Widget *
 container_widget_next(WidgetContainer *wc) { // FIXME skip labels
-	int idx		   = wc->current + 1;
+	int idx = wc->current + 1;
 	Widget *widget = AS_WIDGET(wc);
 
 	if (idx > wc->length - 1) {
@@ -81,7 +81,7 @@ container_widget_next(WidgetContainer *wc) { // FIXME skip labels
 		return container_widget_next(AS_WIDGET_CONTAINER(widget->parent));
 	}
 
-	wc->current	 = idx;
+	wc->current = idx;
 	Widget *next = wc->widgets[wc->current];
 	if (widget_is_a(next, CONTAINER)) {
 		return container_widget_enter(AS_WIDGET_CONTAINER(next), TOP);
@@ -91,7 +91,7 @@ container_widget_next(WidgetContainer *wc) { // FIXME skip labels
 
 static Widget *
 container_widget_previous(WidgetContainer *wc) {
-	int idx		   = wc->current - 1;
+	int idx = wc->current - 1;
 	Widget *widget = AS_WIDGET(wc);
 
 	if (idx < 0) {
@@ -102,7 +102,7 @@ container_widget_previous(WidgetContainer *wc) {
 		return container_widget_previous(AS_WIDGET_CONTAINER(widget->parent));
 	}
 
-	wc->current	 = idx;
+	wc->current = idx;
 	Widget *prev = wc->widgets[wc->current];
 	if (widget_is_a(prev, CONTAINER)) {
 		return container_widget_enter(AS_WIDGET_CONTAINER(prev), BOTTOM);
@@ -115,8 +115,8 @@ static const WidgetMethods container_base_vtable = {
 };
 
 static const WidgetContainerMethods container_extra_vtable = {
-	.first	  = container_widget_first,
-	.next	  = container_widget_next,
+	.first = container_widget_first,
+	.next = container_widget_next,
 	.previous = container_widget_previous,
 };
 
@@ -140,17 +140,17 @@ void
 widget_container_constructor(WidgetContainer *new,
 	const char *name, Orientation orientation, int length, va_list args) {
 	widget_constructor(AS_WIDGET(new), name);
-	new->type	= CONTAINER;
+	new->type = CONTAINER;
 	new->vtable = &container_base_vtable;
 
 	new->container_vtable = &container_extra_vtable;
-	new->orientation	  = orientation;
-	new->length			  = length;
-	new->widgets		  = malloc(length * sizeof(Widget *));
+	new->orientation = orientation;
+	new->length = length;
+	new->widgets = malloc(length * sizeof(Widget *));
 
 	for (int i = 0; i < length; i++) {
-		Widget *widget	= va_arg(args, Widget *);
-		widget->parent	= AS_WIDGET(new);
+		Widget *widget = va_arg(args, Widget *);
+		widget->parent = AS_WIDGET(new);
 		new->widgets[i] = widget;
 		if (widget_is_a(widget, CONTAINER)) widget->parent = AS_WIDGET(new);
 	}

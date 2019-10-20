@@ -10,17 +10,17 @@
 // | <-- chevron --> <-- initial --> <-- chevron --> |
 // | <-- d --> <-- c --> <-- init - de --> <-- c --> |
 
-const int TOTAL_WIDTH		 = 38;
-const int INDICATOR_WIDTH	 = 3;
-const int BORDER_WIDTH		 = 2;
+const int TOTAL_WIDTH = 38;
+const int INDICATOR_WIDTH = 3;
+const int BORDER_WIDTH = 2;
 const int INITIAL_BARE_WIDTH = TOTAL_WIDTH - (2 * BORDER_WIDTH);
 const int INITIAL_CONTENT_WIDTH
 	= TOTAL_WIDTH - (2 * INDICATOR_WIDTH) - (2 * BORDER_WIDTH);
 
 // Indicators
-const char *CHEVRON	 = ">>>";
+const char *CHEVRON = ">>>";
 const char *SELECTED = " + ";
-const char *EMPTY	 = "   ";
+const char *EMPTY = "   ";
 const char *BORDER_L = "| ";
 const char *BORDER_R = " |";
 

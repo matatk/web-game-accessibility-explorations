@@ -42,7 +42,7 @@ render_string_graphically(
 		: (SDL_Color) { 0xF0, 0, 0xF0 };
 
 	SDL_Surface *text = TTF_RenderText_Blended(font, string, fg);
-	SDL_Rect pos	  = { 10 + (10 * depth), size + (ypos * size * 1.5), 0, 0 };
+	SDL_Rect pos = { 10 + (10 * depth), size + (ypos * size * 1.5), 0, 0 };
 	SDL_BlitSurface(text, NULL, screen, &pos);
 	SDL_FreeSurface(text);
 

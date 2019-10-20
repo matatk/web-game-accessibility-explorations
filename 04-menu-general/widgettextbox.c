@@ -26,6 +26,6 @@ widget_text_new(const char *name) {
 void
 widget_text_constructor(WidgetText *new, const char *name) {
 	widget_constructor(AS_WIDGET(new), name);
-	new->type	= TEXTBOX;
+	new->type = TEXTBOX;
 	new->vtable = &text_base_vtable;
 }

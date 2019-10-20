@@ -45,13 +45,13 @@ widget_slider_new(const char *name, int min, int start, int max) {
 void
 widget_slider_constructor(WidgetSlider *new, const char *name, int min, int start, int max) {
 	widget_constructor(AS_WIDGET(new), name);
-	new->type	= SLIDER;
+	new->type = SLIDER;
 	new->vtable = &slider_base_vtable;
 
 	new->slider_vtable = &slider_extra_vtable;
-	new->value_min	   = min;
-	new->value		   = start;
-	new->value_max	   = max;
+	new->value_min = min;
+	new->value = start;
+	new->value_max = max;
 }
 
 inline void

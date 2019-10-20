@@ -35,8 +35,8 @@ widget_new(const char *name) {
 
 void
 widget_constructor(Widget *new, const char *name) {
-	new->type	= WIDGET;
-	new->name	= name;
+	new->type = WIDGET;
+	new->name = name;
 	new->parent = NULL;
 	new->vtable = &base_vtable;
 }

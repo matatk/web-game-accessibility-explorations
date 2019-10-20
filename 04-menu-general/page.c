@@ -19,9 +19,9 @@ find_first_interactive_widget(Page *page) {
 
 Page *
 new_page(Widget *root) {
-	Page *new	 = malloc(sizeof(Page));
-	new->parent	 = NULL;
-	new->root	 = root;
+	Page *new = malloc(sizeof(Page));
+	new->parent = NULL;
+	new->root = root;
 	new->focused = find_first_interactive_widget(new);
 	return new;
 }
