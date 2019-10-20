@@ -15,7 +15,10 @@ static void
 render_container_widget(Page *page, int depth, Widget *widget) {
 	WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
 	for (int i = 0; i < depth; i++) printf(" ");
-	printf("--- %s ---\n", wc->name);
+	printf("%s %s %s\n",
+		wc->parent == NULL ? "===" : "---",
+		wc->name,
+		wc->parent == NULL ? "===" : "---");
 	for (int i = 0; i < wc->length; i++) {
 		render_widget(page, depth + 1, wc->widgets[i]);
 	}

@@ -22,13 +22,10 @@ make_pages() {
 			widget_button_new("Some Pearnod"))));
 
 	Page *player_options_page = new_page(
-		AS_WIDGET(widget_container_new("Player Options", VERTICAL, 3,
+		AS_WIDGET(widget_container_new("Player Options", VERTICAL, 2,
 			widget_container_new("Player Name", HORIZONTAL, 2,
 				widget_label_new("Name"),
 				widget_text_new("Name")),
-			widget_container_new("Base Input", HORIZONTAL, 2,
-				widget_label_new("Something"),
-				widget_new("Else")),
 			widget_container_new("Team Colour", HORIZONTAL, 2,
 				widget_label_new("Colour"),
 				widget_text_new("Colour")))));

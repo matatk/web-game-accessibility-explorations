@@ -53,7 +53,10 @@ render_container_widget(Page *page, Widget *widget, int depth) {
 
 	printf("%s", BORDER_L);
 	render_padding(depth, "-");
-	printf("-- %-*s---------------", INITIAL_BARE_WIDTH - depth - 18, wc->name);
+	printf("%s %-*s%s",
+		wc->parent == NULL ? "===" : "---",
+		INITIAL_BARE_WIDTH - depth - 18, wc->name,
+		wc->parent == NULL ? "==============" : "--------------");
 	printf("%s", BORDER_R);
 	printf("\n");
 
@@ -62,7 +65,7 @@ render_container_widget(Page *page, Widget *widget, int depth) {
 	}
 
 	printf("%s", BORDER_L);
-	repeat(INITIAL_BARE_WIDTH, "-");
+	repeat(INITIAL_BARE_WIDTH, wc->parent == NULL ? "=" : "-");
 	printf("%s", BORDER_R);
 	printf("\n");
 }

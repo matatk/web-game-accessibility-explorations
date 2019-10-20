@@ -19,6 +19,8 @@
 #endif
 
 const int size = 24;
+const int indent = 24;
+const int line_height = size * 1.5;
 
 static int ypos = 0;
 
@@ -42,7 +44,7 @@ render_string_graphically(
 		: (SDL_Color) { 0xF0, 0, 0xF0 };
 
 	SDL_Surface *text = TTF_RenderText_Blended(font, string, fg);
-	SDL_Rect pos = { 10 + (10 * depth), size + (ypos * size * 1.5), 0, 0 };
+	SDL_Rect pos = { indent + (indent * depth), size + (ypos * line_height), 0, 0 };
 	SDL_BlitSurface(text, NULL, screen, &pos);
 	SDL_FreeSurface(text);
 
@@ -57,7 +59,10 @@ render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widg
 	WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
 	char *string;
 
-	asprintf(&string, "--- %s ---\n", wc->name);
+	asprintf(&string, "%s %s %s\n",
+		wc->parent == NULL ? "===" : "---",
+		wc->name,
+		wc->parent == NULL ? "===" : "---");
 	render_string_graphically(screen, page, widget, depth, string);
 
 	for (int i = 0; i < wc->length; i++) {
