@@ -23,16 +23,16 @@ make_pages() {
 
 	Page *player_options_page = new_page(
 		AS_WIDGET(widget_container_new("Player Options", VERTICAL, 2,
-			widget_container_new("Player Name", HORIZONTAL, 2,
+			widget_container_new("HorizPlayerName", HORIZONTAL, 2,
 				widget_label_new("Name"),
 				widget_text_new("Name")),
-			widget_container_new("Team Colour", HORIZONTAL, 2,
+			widget_container_new("HorizTeamColour", HORIZONTAL, 2,
 				widget_label_new("Colour"),
 				widget_text_new("Colour")))));
 
 	Page *sound_options_page = new_page(
 		AS_WIDGET(widget_container_new("Sound Options", VERTICAL, 1,
-			widget_container_new("vol", HORIZONTAL, 2,
+			widget_container_new("HorizVolume", HORIZONTAL, 2,
 				widget_label_new("Volume"),
 				widget_slider_new("Volume", 0, 3, 5)))));
 
@@ -48,7 +48,7 @@ make_pages() {
 		AS_WIDGET(widget_container_new("Main", VERTICAL, 5,
 			widget_subpage_new("New game", episode_page),
 			widget_subpage_new("Options", options_page),
-			widget_container_new("Extra", HORIZONTAL, 2,
+			widget_container_new("HorizExtra", HORIZONTAL, 2,
 				widget_button_new("contained1"),
 				widget_label_new("contained2")),
 			widget_new("Help"),
