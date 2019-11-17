@@ -69,6 +69,14 @@ container_widget_enter(WidgetContainer *wc, Direction dir) {
 }
 
 static Widget *
+direct_or_contained_widget(Widget *widget, const Direction direction) {
+	if (widget_is_a(widget, CONTAINER)) {
+		return container_widget_enter(AS_WIDGET_CONTAINER(widget), direction);
+	}
+	return widget;
+}
+
+static Widget *
 container_widget_next(WidgetContainer *wc) { // FIXME skip labels
 	int idx = wc->current + 1;
 	Widget *widget = AS_WIDGET(wc);
@@ -76,54 +84,32 @@ container_widget_next(WidgetContainer *wc) { // FIXME skip labels
 	if (idx > wc->length - 1) {
 		if (widget->parent == NULL) {
 			wc->current = 0;
-			if (widget_is_a(wc->widgets[wc->current], CONTAINER)) {
-				printf("container_widget_next(): wrapped: no parent: returning container %s's next widget\n", wc->widgets[wc->current]->name);
-				return container_widget_enter(AS_WIDGET_CONTAINER(wc->widgets[wc->current]), TOP);
-			}
-			printf("container_widget_next(): wrapped: no parent: returning current widget %s\n", wc->widgets[wc->current]->name);
-			return wc->widgets[wc->current];
+			return direct_or_contained_widget(wc->widgets[wc->current], TOP);
 		}
-		printf("container_widget_next(): wrapped: returning parent %s's next widget\n", wc->widgets[wc->current]->name);
 		return container_widget_next(AS_WIDGET_CONTAINER(widget->parent));
 	}
 
 	wc->current = idx;
 	Widget *next = wc->widgets[wc->current];
-	if (widget_is_a(next, CONTAINER)) {
-		printf("container_widget_next(): next: returning container %s's next widget\n", wc->widgets[wc->current]->name);
-		return container_widget_enter(AS_WIDGET_CONTAINER(next), TOP);
-	}
-	printf("container_widget_next(): next: returning current widget %s\n", wc->widgets[wc->current]->name);
-	return wc->widgets[wc->current];
+	return direct_or_contained_widget(next, TOP);
 }
 
 static Widget *
-container_widget_previous(WidgetContainer *wc) {
+container_widget_previous(WidgetContainer *wc) { // FIXME skip labels
 	int idx = wc->current - 1;
 	Widget *widget = AS_WIDGET(wc);
 
 	if (idx < 0) {
 		if (widget->parent == NULL) {
 			wc->current = wc->length - 1;
-			if (widget_is_a(wc->widgets[wc->current], CONTAINER)) {
-				printf("container_widget_previous(): wrapped: no parent: returning container %s's previous widget\n", wc->widgets[wc->current]->name);
-				return container_widget_enter(AS_WIDGET_CONTAINER(wc->widgets[wc->current]), BOTTOM);
-			}
-			printf("container_widget_previous(): wrapped: no parent: returning current widget %s\n", wc->widgets[wc->current]->name);
-			return wc->widgets[wc->current];
+			return direct_or_contained_widget(wc->widgets[wc->current], BOTTOM);
 		}
-		printf("container_widget_previous(): wrapped: returning parent %s's previous widget\n", wc->widgets[wc->current]->name);
 		return container_widget_previous(AS_WIDGET_CONTAINER(widget->parent));
 	}
 
 	wc->current = idx;
 	Widget *prev = wc->widgets[wc->current];
-	if (widget_is_a(prev, CONTAINER)) {
-		printf("container_widget_previous(): previous: returning container %s's previous widget\n", wc->widgets[wc->current]->name);
-		return container_widget_enter(AS_WIDGET_CONTAINER(prev), BOTTOM);
-	}
-	printf("container_widget_previous(): previous: returning current widget %s\n", wc->widgets[wc->current]->name);
-	return wc->widgets[wc->current];
+	return direct_or_contained_widget(prev, BOTTOM);
 }
 
 static const WidgetMethods container_base_vtable = {
