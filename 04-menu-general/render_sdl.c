@@ -102,7 +102,6 @@ static void
 render_string_for_container(SDL_Surface *surface, Page *page, Widget *widget, const char *string, const int depth) {
 	// FIXME DRY with render_widgety_widget
 	SDL_Surface *rendered_string = make_widget_surface(depth);
-	SDL_FillRect(rendered_string, NULL, SDL_MapRGB(rendered_string->format, 0, 0xAA, 0));
 	render_string(rendered_string, page, widget, string);
 	SDL_Rect pos = get_pos_rect(depth);
 	SDL_BlitSurface(rendered_string, NULL, surface, &pos);
@@ -142,7 +141,6 @@ render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget
 
 	// FIXME DRY with render_string_for_container
 	SDL_Surface *rendered_widget = make_widget_surface(depth);
-	SDL_FillRect(rendered_widget, NULL, SDL_MapRGB(rendered_widget->format, 0, 0, 0xAA));
 
 	switch (widget->type) {
 	case BUTTON:
