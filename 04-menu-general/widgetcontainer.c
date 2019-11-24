@@ -52,19 +52,43 @@ container_widget_to_string(const Widget *widget, const int depth) {
 }
 
 static Widget *
+first_non_label(WidgetContainer *wc) {
+	int idx = -1;
+	Widget *widget = NULL;
+	do {
+		idx++;
+		wc->current = idx;
+		widget = wc->widgets[wc->current];
+	} while (idx <= wc->length - 1 && widget->type == LABEL);
+	// FIXME DRY condition
+	return widget;
+}
+
+static Widget *
+last_non_label(WidgetContainer *wc) {
+	int idx = wc->length;
+	Widget *widget = NULL;
+	do {
+		idx--;
+		wc->current = idx;
+		widget = wc->widgets[wc->current];
+	} while (idx >= 0 && widget->type == LABEL);
+	// FIXME DRY condition
+	return widget;
+}
+
+static Widget *
 container_widget_first(WidgetContainer *wc) {
-	return wc->widgets[0];
+	return first_non_label(wc);
 }
 
 static Widget *
 container_widget_enter(WidgetContainer *wc, Direction dir) {
 	switch (dir) {
 	case TOP:
-		wc->current = 0;
-		return wc->widgets[0];
+		return first_non_label(wc);
 	case BOTTOM:
-		wc->current = wc->length - 1;
-		return wc->widgets[wc->current];
+		return last_non_label(wc);
 	}
 }
 
@@ -77,9 +101,14 @@ direct_or_contained_widget(Widget *widget, const Direction direction) {
 }
 
 static Widget *
-container_widget_next(WidgetContainer *wc) { // FIXME skip labels
+container_widget_next(WidgetContainer *wc) {
 	int idx = wc->current + 1;
 	Widget *widget = AS_WIDGET(wc);
+
+	// FIXME DRY condition
+	while (idx <= wc->length - 1 && wc->widgets[idx]->type == LABEL) {
+		idx++;
+	}
 
 	if (idx > wc->length - 1) {
 		if (widget->parent == NULL) {
@@ -95,9 +124,14 @@ container_widget_next(WidgetContainer *wc) { // FIXME skip labels
 }
 
 static Widget *
-container_widget_previous(WidgetContainer *wc) { // FIXME skip labels
+container_widget_previous(WidgetContainer *wc) {
 	int idx = wc->current - 1;
 	Widget *widget = AS_WIDGET(wc);
+
+	// FIXME DRY condition
+	while (idx >= 0 && wc->widgets[idx]->type == LABEL) {
+		idx--;
+	}
 
 	if (idx < 0) {
 		if (widget->parent == NULL) {
