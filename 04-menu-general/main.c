@@ -44,14 +44,14 @@ make_pages() {
 			widget_subpage_new("Sound", sound_options_page),
 			widget_button_new("Video"))));
 
+	Page *help_page = new_page(
+		widget_new("Help information :-)"));
+
 	return new_page(
-		AS_WIDGET(widget_container_new("Main", VERTICAL, 5,
+		AS_WIDGET(widget_container_new("Main", VERTICAL, 4,  // FIXME check
 			widget_subpage_new("New game", episode_page),
 			widget_subpage_new("Options", options_page),
-			widget_container_new("HorizExtra", HORIZONTAL, 2,
-				widget_button_new("contained1"),
-				widget_label_new("contained2")),
-			widget_new("Help"),
+			widget_subpage_new("Help", help_page),
 			widget_button_new("Exit"))));
 }
 

@@ -1,3 +1,4 @@
+#include <stdbool.h> // horizontal flag
 #include <stdio.h>
 
 #include <SDL.h>
@@ -30,6 +31,8 @@ const int LINE_HEIGHT = BASE_HEIGHT * 1.5;
 // State
 
 static int line_pos = 0;
+static bool horizontal_container = false;
+static int horizontal_pos = 0;
 
 // Internal API
 
@@ -78,7 +81,17 @@ render_string(SDL_Surface *surface, Page *page, Widget *widget, const char *stri
 
 static SDL_Rect
 get_pos_rect(const int depth) {
-	SDL_Rect pos = { INDENT + (INDENT * depth), BASE_HEIGHT + (line_pos * LINE_HEIGHT), 0, 0 };
+	const int base_x_pos = INDENT + (INDENT * depth);
+	const int y_pos = BASE_HEIGHT + (line_pos * LINE_HEIGHT);
+
+	if (horizontal_container) {
+		const int extra_x_pos = horizontal_pos * (get_widget_width(depth) / 3);
+		SDL_Rect pos = { base_x_pos + extra_x_pos, y_pos, 0, 0 };
+		horizontal_pos++;
+		return pos;
+	}
+
+	SDL_Rect pos = { base_x_pos, y_pos, 0, 0 };
 	line_pos++;
 	return pos;
 }
@@ -99,24 +112,33 @@ render_string_for_container(SDL_Surface *surface, Page *page, Widget *widget, co
 static void
 render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget) {
 	WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
-	char *string;  // FIXME free (and DRY w' others)
+	char *string; // FIXME free (and DRY w' others)
 
-	asprintf(&string, "%s %s %s\n",
-		wc->parent == NULL ? "===" : "---",
-		wc->name,
-		wc->parent == NULL ? "===" : "---");
-	render_string_for_container(screen, page, widget, string, depth);
+	horizontal_container = wc->orientation == HORIZONTAL;
+
+	if (wc->parent == NULL) {
+		asprintf(&string, "=== %s ===\n", wc->name);
+		render_string_for_container(screen, page, widget, string, depth);
+	}
 
 	for (int i = 0; i < wc->length; i++) {
-		render_widget(screen, page, depth + 1, wc->widgets[i]);
+		render_widget(
+			screen,
+			page,
+			horizontal_container ? depth : depth + 1,
+			wc->widgets[i]);
 	}
+
+	if (horizontal_container) line_pos++;
+	horizontal_container = false;
+	horizontal_pos = 0;
 }
 
 // Rendering widgets: widgets
 
 static void
 render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget) {
-	char *string;  // FIXME free (and DRY w' others)
+	char *string; // FIXME free (and DRY w' others)
 
 	// FIXME DRY with render_string_for_container
 	SDL_Surface *rendered_widget = make_widget_surface(depth);
