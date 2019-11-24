@@ -18,22 +18,47 @@
 #endif
 #endif
 
-const int size = 24;
-const int indent = 24;
-const int line_height = size * 1.5;
+// Constants
 
-static int ypos = 0;
+const int DRY_WIDTH = 640;
+const int DRY_HEIGHT = 480;
+
+const int BASE_HEIGHT = 24;
+const int INDENT = 24;
+const int LINE_HEIGHT = BASE_HEIGHT * 1.5;
+
+// State
+
+static int line_pos = 0;
 
 // Internal API
+
 static void render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget);
 static void render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget);
 static void render_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget);
-// TODO sdl one
+
+// Getting sizes of surfaces
+
+static int
+get_widget_width(const int depth) {
+	return DRY_WIDTH - depth * INDENT;
+}
+
+static int
+get_widget_height() {
+	return BASE_HEIGHT;
+}
+
+static SDL_Surface *
+make_widget_surface(depth) {
+	return SDL_CreateRGBSurface(0, get_widget_width(depth), get_widget_height(), 32, 0, 0, 0, 0);
+}
+
+// Rendering Text
 
 static void
-render_string_graphically(
-	SDL_Surface *screen, Page *page, Widget *widget, int depth, const char *string) {
-	TTF_Font *font = TTF_OpenFont(FONT, size);
+render_string(SDL_Surface *surface, Page *page, Widget *widget, const char *string) {
+	TTF_Font *font = TTF_OpenFont(FONT, BASE_HEIGHT);
 	if (font == NULL) {
 		printf("TTF loading error: %s\n", TTF_GetError());
 		return;
@@ -43,63 +68,96 @@ render_string_graphically(
 		? (SDL_Color) { 255, 255, 255 }
 		: (SDL_Color) { 0xF0, 0, 0xF0 };
 
-	SDL_Surface *text = TTF_RenderText_Blended(font, string, fg);
-	SDL_Rect pos = { indent + (indent * depth), size + (ypos * line_height), 0, 0 };
-	SDL_BlitSurface(text, NULL, screen, &pos);
-	SDL_FreeSurface(text);
-
-	ypos++;
-
-	SDL_Flip(screen);
+	SDL_Surface *text_surface = TTF_RenderText_Blended(font, string, fg);
+	SDL_BlitSurface(text_surface, NULL, surface, NULL);
+	SDL_FreeSurface(text_surface);
 	TTF_CloseFont(font);
+}
+
+// Rendering widgets: support
+
+static SDL_Rect
+get_pos_rect(const int depth) {
+	SDL_Rect pos = { INDENT + (INDENT * depth), BASE_HEIGHT + (line_pos * LINE_HEIGHT), 0, 0 };
+	line_pos++;
+	return pos;
+}
+
+// Rendering widgets: containers
+
+static void
+render_string_for_container(SDL_Surface *surface, Page *page, Widget *widget, const char *string, const int depth) {
+	// FIXME DRY with render_widgety_widget
+	SDL_Surface *rendered_string = make_widget_surface(depth);
+	SDL_FillRect(rendered_string, NULL, SDL_MapRGB(rendered_string->format, 0, 0xAA, 0));
+	render_string(rendered_string, page, widget, string);
+	SDL_Rect pos = get_pos_rect(depth);
+	SDL_BlitSurface(rendered_string, NULL, surface, &pos);
+	SDL_FreeSurface(rendered_string);
 }
 
 static void
 render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget) {
 	WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
-	char *string;
+	char *string;  // FIXME free (and DRY w' others)
 
 	asprintf(&string, "%s %s %s\n",
 		wc->parent == NULL ? "===" : "---",
 		wc->name,
 		wc->parent == NULL ? "===" : "---");
-	render_string_graphically(screen, page, widget, depth, string);
+	render_string_for_container(screen, page, widget, string, depth);
 
 	for (int i = 0; i < wc->length; i++) {
 		render_widget(screen, page, depth + 1, wc->widgets[i]);
 	}
 }
 
+// Rendering widgets: widgets
+
 static void
 render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget) {
-	char *string;
+	char *string;  // FIXME free (and DRY w' others)
+
+	// FIXME DRY with render_string_for_container
+	SDL_Surface *rendered_widget = make_widget_surface(depth);
+	SDL_FillRect(rendered_widget, NULL, SDL_MapRGB(rendered_widget->format, 0, 0, 0xAA));
 
 	switch (widget->type) {
 	case BUTTON:
 		asprintf(&string, "[%s]\n", widget->name);
+		render_string(rendered_widget, page, widget, string);
 		break;
 	case SUBPAGE:
 		asprintf(&string, "%s >\n", widget->name);
+		render_string(rendered_widget, page, widget, string);
 		break;
 	case LABEL:
 		asprintf(&string, "%s:\n", widget->name);
+		render_string(rendered_widget, page, widget, string);
 		break;
 	case TEXTBOX:
 		asprintf(&string, "_%s_\n", widget->name);
+		render_string(rendered_widget, page, widget, string);
 		break;
 	case SLIDER:
 		asprintf(&string, "~~(%s: %d, %d, %d)~~\n", widget->name,
 			(AS_WIDGET_SLIDER(widget))->value_min,
 			(AS_WIDGET_SLIDER(widget))->value,
 			(AS_WIDGET_SLIDER(widget))->value_max);
+		render_string(rendered_widget, page, widget, string);
 		break;
 	default:
 		asprintf(&string, "DEFAULT: %s\n", widget->name);
+		render_string(rendered_widget, page, widget, string);
 		break;
 	}
 
-	render_string_graphically(screen, page, widget, depth, string);
+	SDL_Rect pos = get_pos_rect(depth);
+	SDL_BlitSurface(rendered_widget, NULL, screen, &pos);
+	SDL_FreeSurface(rendered_widget);
 }
+
+// Rendering widgets: dispatch
 
 static void
 render_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget) {
@@ -110,6 +168,8 @@ render_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget) {
 	}
 }
 
+// Entry
+
 // This requires that TTF_Init() has already been called
 void
 render_page(Page *page, void *thingy) {
@@ -118,5 +178,5 @@ render_page(Page *page, void *thingy) {
 	Widget *root = page->root;
 	render_widget(screen, page, 0, root);
 
-	ypos = 0;
+	line_pos = 0;
 }
