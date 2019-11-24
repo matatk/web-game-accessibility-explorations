@@ -44,6 +44,9 @@ static void render_widget(SDL_Surface *screen, Page *page, int depth, Widget *wi
 
 static int
 get_widget_width(const int depth) {
+	if (horizontal_container) {
+		return (DRY_WIDTH - depth * INDENT) / 3;
+	}
 	return DRY_WIDTH - depth * INDENT;
 }
 
@@ -67,6 +70,7 @@ render_string(SDL_Surface *surface, Page *page, Widget *widget, const char *stri
 		return;
 	}
 
+	// FIXME DRY
 	SDL_Color fg = (widget == page->focused)
 		? (SDL_Color) { 255, 255, 255 }
 		: (SDL_Color) { 0xF0, 0, 0xF0 };
@@ -136,6 +140,38 @@ render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widg
 // Rendering widgets: widgets
 
 static void
+render_slider(SDL_Surface *surface, Page *page, WidgetSlider *slider) {
+	const int width = surface->w;
+	const int height = surface->h;
+	const float percentage =
+		(float)(slider->value - slider->value_min) / (float)(slider->value_max - slider->value_min);
+
+	// FIXME DRY
+	SDL_Color fg = (AS_WIDGET(slider) == page->focused)
+		? (SDL_Color) { 255, 255, 255 }
+		: (SDL_Color) { 0xF0, 0, 0xF0 };
+
+	printf("render_slider(): w: %d; h: %d; p: %f\n", width, height, percentage);
+
+	SDL_Rect pos_axis = { 0, height / 2, width, 1 };
+	SDL_FillRect(surface, &pos_axis, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
+
+	SDL_Rect pos_start = { 0, 0, 1, height };
+	SDL_FillRect(surface, &pos_start, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
+
+	SDL_Rect pos_middle = { width / 2, 0, 1, height };
+	SDL_FillRect(surface, &pos_middle, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
+
+	SDL_Rect pos_end = { width - 1, 0, 1, height };
+	SDL_FillRect(surface, &pos_end, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
+
+	int x_pos = width * percentage;
+	if (x_pos == width) x_pos -= 4;
+	SDL_Rect pos = { x_pos, 0, 4, height };
+	SDL_FillRect(surface, &pos, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
+}
+
+static void
 render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget) {
 	char *string; // FIXME free (and DRY w' others)
 
@@ -160,11 +196,12 @@ render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget
 		render_string(rendered_widget, page, widget, string);
 		break;
 	case SLIDER:
-		asprintf(&string, "~~(%s: %d, %d, %d)~~\n", widget->name,
+		/*asprintf(&string, "~~(%s: %d, %d, %d)~~\n", widget->name,
 			(AS_WIDGET_SLIDER(widget))->value_min,
 			(AS_WIDGET_SLIDER(widget))->value,
 			(AS_WIDGET_SLIDER(widget))->value_max);
-		render_string(rendered_widget, page, widget, string);
+		render_string(rendered_widget, page, widget, string);*/
+		render_slider(rendered_widget, page, AS_WIDGET_SLIDER(widget));
 		break;
 	default:
 		asprintf(&string, "DEFAULT: %s\n", widget->name);

@@ -31,10 +31,13 @@ make_pages() {
 				widget_text_new("ctrlColour")))));
 
 	Page *sound_options_page = new_page(
-		AS_WIDGET(widget_container_new("Sound Options", VERTICAL, 1,
-			widget_container_new("HorizVolume", HORIZONTAL, 2,
-				widget_label_new("Volume"),
-				widget_slider_new("ctrlVolume", 0, 3, 5)))));
+		AS_WIDGET(widget_container_new("Sound Options", VERTICAL, 2,
+			widget_container_new("HorizSfxVolume", HORIZONTAL, 2,
+				widget_label_new("SFX Volume"),
+				widget_slider_new("ctrlSfxVolume", 0, 3, 5)),
+			widget_container_new("HorizMusicVolume", HORIZONTAL, 2,
+				widget_label_new("Music Volume"),
+				widget_slider_new("ctrlMusicVolume", 0, 3, 5)))));
 
 	Page *options_page = new_page(
 		AS_WIDGET(widget_container_new("Options", VERTICAL, 5,
