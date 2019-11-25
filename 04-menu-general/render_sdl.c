@@ -24,14 +24,14 @@
 const int DRY_WIDTH = 640;
 const int DRY_HEIGHT = 480;
 
-const int BASE_HEIGHT = 24;
+const int LINE_HEIGHT = 24;
 const int INDENT = 24;
-const int LINE_HEIGHT = BASE_HEIGHT * 1.5;
+const int LINE_SPACING = LINE_HEIGHT * 1.5;
 
 // State
 
-static int line_pos = 0;
-static bool horizontal_container = false;
+static int vertical_pos = 0;
+static bool in_horizontal_container = false;
 static int horizontal_pos = 0;
 
 // Internal API
@@ -44,15 +44,15 @@ static void render_widget(SDL_Surface *screen, Page *page, int depth, Widget *wi
 
 static int
 get_widget_width(const int depth) {
-	if (horizontal_container) {
-		return (DRY_WIDTH - depth * INDENT) / 3;
+	if (in_horizontal_container) {
+		return (DRY_WIDTH - (depth * INDENT)) / 2;
 	}
-	return DRY_WIDTH - depth * INDENT;
+	return DRY_WIDTH - (depth * INDENT);
 }
 
 static int
 get_widget_height() {
-	return BASE_HEIGHT;
+	return LINE_HEIGHT;
 }
 
 static SDL_Surface *
@@ -60,21 +60,26 @@ make_widget_surface(depth) {
 	return SDL_CreateRGBSurface(0, get_widget_width(depth), get_widget_height(), 32, 0, 0, 0, 0);
 }
 
+// Rendering focus
+
+static SDL_Color
+get_fg_colour_based_on_focus(Page *page, Widget *widget) {
+	return (widget == page->focused)
+		? (SDL_Color) { 255, 255, 255 }
+		: (SDL_Color) { 0xF0, 0, 0xF0 };
+}
+
 // Rendering Text
 
 static void
 render_string(SDL_Surface *surface, Page *page, Widget *widget, const char *string) {
-	TTF_Font *font = TTF_OpenFont(FONT, BASE_HEIGHT);
+	TTF_Font *font = TTF_OpenFont(FONT, LINE_HEIGHT);
 	if (font == NULL) {
 		printf("TTF loading error: %s\n", TTF_GetError());
 		return;
 	}
 
-	// FIXME DRY
-	SDL_Color fg = (widget == page->focused)
-		? (SDL_Color) { 255, 255, 255 }
-		: (SDL_Color) { 0xF0, 0, 0xF0 };
-
+	SDL_Color fg = get_fg_colour_based_on_focus(page, widget);
 	SDL_Surface *text_surface = TTF_RenderText_Blended(font, string, fg);
 	SDL_BlitSurface(text_surface, NULL, surface, NULL);
 	SDL_FreeSurface(text_surface);
@@ -85,18 +90,18 @@ render_string(SDL_Surface *surface, Page *page, Widget *widget, const char *stri
 
 static SDL_Rect
 get_pos_rect(const int depth) {
-	const int base_x_pos = INDENT + (INDENT * depth);
-	const int y_pos = BASE_HEIGHT + (line_pos * LINE_HEIGHT);
+	const int x_pos = INDENT + (INDENT * depth); // FIXME harmonise????
+	const int y_pos = LINE_HEIGHT + (vertical_pos * LINE_SPACING);
 
-	if (horizontal_container) {
-		const int extra_x_pos = horizontal_pos * (get_widget_width(depth) / 3);
-		SDL_Rect pos = { base_x_pos + extra_x_pos, y_pos, 0, 0 };
+	if (in_horizontal_container) {
+		const int extra_x_pos = horizontal_pos * (get_widget_width(depth) / 2);
+		SDL_Rect pos = { x_pos + extra_x_pos, y_pos, 0, 0 };
 		horizontal_pos++;
 		return pos;
 	}
 
-	SDL_Rect pos = { base_x_pos, y_pos, 0, 0 };
-	line_pos++;
+	SDL_Rect pos = { x_pos, y_pos, 0, 0 };
+	vertical_pos++;
 	return pos;
 }
 
@@ -117,7 +122,7 @@ render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widg
 	WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
 	char *string; // FIXME free (and DRY w' others)
 
-	horizontal_container = wc->orientation == HORIZONTAL;
+	in_horizontal_container = wc->orientation == HORIZONTAL;
 
 	if (wc->parent == NULL) {
 		asprintf(&string, "=== %s ===\n", wc->name);
@@ -128,12 +133,12 @@ render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widg
 		render_widget(
 			screen,
 			page,
-			horizontal_container ? depth : depth + 1,
+			in_horizontal_container ? depth : depth + 1,
 			wc->widgets[i]);
 	}
 
-	if (horizontal_container) line_pos++;
-	horizontal_container = false;
+	if (in_horizontal_container) vertical_pos++;
+	in_horizontal_container = false;
 	horizontal_pos = 0;
 }
 
@@ -141,17 +146,13 @@ render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widg
 
 static void
 render_slider(SDL_Surface *surface, Page *page, WidgetSlider *slider) {
+	// FIXME is the positioning problem something about not incrementing something?
 	const int width = surface->w;
 	const int height = surface->h;
-	const float percentage =
-		(float)(slider->value - slider->value_min) / (float)(slider->value_max - slider->value_min);
-
-	// FIXME DRY
-	SDL_Color fg = (AS_WIDGET(slider) == page->focused)
-		? (SDL_Color) { 255, 255, 255 }
-		: (SDL_Color) { 0xF0, 0, 0xF0 };
-
+	const float percentage = (float)(slider->value - slider->value_min) / (float)(slider->value_max - slider->value_min);
 	printf("render_slider(): w: %d; h: %d; p: %f\n", width, height, percentage);
+
+	SDL_Color fg = get_fg_colour_based_on_focus(page, AS_WIDGET(slider));
 
 	SDL_Rect pos_axis = { 0, height / 2, width, 1 };
 	SDL_FillRect(surface, &pos_axis, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
@@ -165,10 +166,10 @@ render_slider(SDL_Surface *surface, Page *page, WidgetSlider *slider) {
 	SDL_Rect pos_end = { width - 1, 0, 1, height };
 	SDL_FillRect(surface, &pos_end, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
 
-	int x_pos = width * percentage;
-	if (x_pos == width) x_pos -= 4;
-	SDL_Rect pos = { x_pos, 0, 4, height };
-	SDL_FillRect(surface, &pos, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
+	int cursor_x = width * percentage;
+	if (cursor_x == width) cursor_x -= 4;
+	SDL_Rect pos_cursor = { cursor_x, 0, 4, height };
+	SDL_FillRect(surface, &pos_cursor, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
 }
 
 static void
@@ -196,11 +197,6 @@ render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget
 		render_string(rendered_widget, page, widget, string);
 		break;
 	case SLIDER:
-		/*asprintf(&string, "~~(%s: %d, %d, %d)~~\n", widget->name,
-			(AS_WIDGET_SLIDER(widget))->value_min,
-			(AS_WIDGET_SLIDER(widget))->value,
-			(AS_WIDGET_SLIDER(widget))->value_max);
-		render_string(rendered_widget, page, widget, string);*/
 		render_slider(rendered_widget, page, AS_WIDGET_SLIDER(widget));
 		break;
 	default:
@@ -235,5 +231,5 @@ render_page(Page *page, void *thingy) {
 	Widget *root = page->root;
 	render_widget(screen, page, 0, root);
 
-	line_pos = 0;
+	vertical_pos = 0;
 }
