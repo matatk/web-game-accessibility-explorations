@@ -1,4 +1,4 @@
-#include <stdbool.h> // horizontal flag
+#include <stdbool.h>
 #include <stdio.h>
 
 #include <SDL.h>
@@ -24,6 +24,7 @@
 const int DRY_WIDTH = 640;
 const int DRY_HEIGHT = 480;
 
+const int HEADER_LINE_HEIGHT = 42;
 const int LINE_HEIGHT = 24;
 const int INDENT = 24;
 const int LINE_SPACING = LINE_HEIGHT * 1.5;
@@ -52,7 +53,7 @@ get_widget_width(const int depth) {
 
 static int
 get_widget_height() {
-	return LINE_HEIGHT;
+	return vertical_pos == 0 ? HEADER_LINE_HEIGHT : LINE_HEIGHT;
 }
 
 static SDL_Surface *
@@ -64,7 +65,7 @@ make_widget_surface(depth) {
 
 static SDL_Color
 get_fg_colour_based_on_focus(Page *page, Widget *widget) {
-	return (widget == page->focused)
+	return (page != NULL && widget == page->focused)
 		? (SDL_Color) { 255, 255, 255 }
 		: (SDL_Color) { 0xF0, 0, 0xF0 };
 }
@@ -73,7 +74,7 @@ get_fg_colour_based_on_focus(Page *page, Widget *widget) {
 
 static void
 render_string(SDL_Surface *surface, Page *page, Widget *widget, const char *string) {
-	TTF_Font *font = TTF_OpenFont(FONT, LINE_HEIGHT);
+	TTF_Font *font = TTF_OpenFont(FONT, vertical_pos == 0 ? HEADER_LINE_HEIGHT : LINE_HEIGHT);
 	if (font == NULL) {
 		printf("TTF loading error: %s\n", TTF_GetError());
 		return;
@@ -91,7 +92,9 @@ render_string(SDL_Surface *surface, Page *page, Widget *widget, const char *stri
 static SDL_Rect
 get_pos_rect(const int depth) {
 	const int x_pos = INDENT + (INDENT * depth); // FIXME harmonise????
-	const int y_pos = LINE_HEIGHT + (vertical_pos * LINE_SPACING);
+	const int y_pos = vertical_pos == 0
+		? LINE_HEIGHT
+		: LINE_HEIGHT + HEADER_LINE_HEIGHT + LINE_HEIGHT + ((vertical_pos - 1) * LINE_SPACING);
 
 	if (in_horizontal_container) {
 		const int extra_x_pos = horizontal_pos * (get_widget_width(depth) / 2);
@@ -108,10 +111,10 @@ get_pos_rect(const int depth) {
 // Rendering widgets: containers
 
 static void
-render_string_for_container(SDL_Surface *surface, Page *page, Widget *widget, const char *string, const int depth) {
+render_container_header(SDL_Surface *surface, Widget *widget, const char *string, const int depth) {
 	// FIXME DRY with render_widgety_widget
 	SDL_Surface *rendered_string = make_widget_surface(depth);
-	render_string(rendered_string, page, widget, string);
+	render_string(rendered_string, NULL, widget, string);
 	SDL_Rect pos = get_pos_rect(depth);
 	SDL_BlitSurface(rendered_string, NULL, surface, &pos);
 	SDL_FreeSurface(rendered_string);
@@ -125,8 +128,8 @@ render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widg
 	in_horizontal_container = wc->orientation == HORIZONTAL;
 
 	if (wc->parent == NULL) {
-		asprintf(&string, "=== %s ===\n", wc->name);
-		render_string_for_container(screen, page, widget, string, depth);
+		asprintf(&string, "%s\n", wc->name);
+		render_container_header(screen, widget, string, depth);
 	}
 
 	for (int i = 0; i < wc->length; i++) {
@@ -175,7 +178,7 @@ static void
 render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget) {
 	char *string; // FIXME free (and DRY w' others)
 
-	// FIXME DRY with render_string_for_container
+	// FIXME DRY with render_container_header
 	SDL_Surface *rendered_widget = make_widget_surface(depth);
 
 	switch (widget->type) {
@@ -222,9 +225,9 @@ render_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget) {
 
 // Entry
 
-// This requires that TTF_Init() has already been called
 void
 render_page(Page *page, void *thingy) {
+	// This requires that TTF_Init() has already been called
 	SDL_Surface *screen = (SDL_Surface *)thingy;
 
 	Widget *root = page->root;
