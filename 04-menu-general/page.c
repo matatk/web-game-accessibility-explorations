@@ -55,14 +55,12 @@ debug_print_page_tree(Page *page) {
 static void
 move(Page *page, Widget *(*func)()) {
 	Widget *current = page->focused;
-	printf("Current focused widget: %s\n", page->focused->name);
 	WidgetContainer *current_container = AS_WIDGET_CONTAINER(current->parent);
 	if (widget_is_a(AS_WIDGET(current_container), CONTAINER)) {
 		page->focused = func(current_container);
 	} else {
-		printf("ERROR!\n");
+		printf("ERROR! Encountered a parent widget that isn't a container.\n");
 	}
-	printf("New focused widget: %s\n", page->focused->name);
 }
 
 void

@@ -146,11 +146,10 @@ render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widg
 
 static void
 render_slider(SDL_Surface *surface, Page *page, WidgetSlider *slider) {
-	// FIXME is the positioning problem something about not incrementing something?
 	const int width = surface->w;
 	const int height = surface->h;
-	const float percentage = (float)(slider->value - slider->value_min) / (float)(slider->value_max - slider->value_min);
-	printf("render_slider(): w: %d; h: %d; p: %f\n", width, height, percentage);
+	const float percentage =
+		(float)(slider->value - slider->value_min) / (float)(slider->value_max - slider->value_min);
 
 	SDL_Color fg = get_fg_colour_based_on_focus(page, AS_WIDGET(slider));
 
