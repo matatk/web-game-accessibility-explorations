@@ -44,7 +44,7 @@ page-cli: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(CLI_C)
 page-cli-fancy: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(CLI_FANCY_C)
 	$(CC) $(CFLAGS) $(SYS) $(STD_C) $(WIDGET_C) $(CLI_FANCY_C) -o $@
 
-page-sdl: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(SDL_C) $(SDL_WEB)
+page-sdl: $(STD_H) $(STD_C) $(WIDGET_H) $(WIDGET_C) $(SDL_C)
 	$(CC) $(CFLAGS) $(SYS) $(STD_C) $(WIDGET_C) $(SDL_C) \
 		`sdl-config --cflags --libs` -lSDL_ttf -o $@
 
