@@ -14,11 +14,11 @@ accessibility_setup(void);
 extern void
 accessibility_render_page_start(Page *);
 extern void
-accessibility_render_page_item(const char *, const int);
+accessibility_render_page_item(const char *, const int, const Widget *, const Widget *);  // FIXME rename
 extern void
 accessibility_render_page_done();
 extern void
-accessibility_render_current_item(Page *, int);
+accessibility_render_current_item(Widget *);  // FIXME rename
 
 // State
 
@@ -34,7 +34,7 @@ render_container_widget(Page *page, int depth, Widget *widget) {
 	WidgetContainer *wc = AS_WIDGET_CONTAINER(widget);
 	in_horizontal_container = wc->orientation == HORIZONTAL;
 
-	accessibility_render_page_item(wc->name, false);
+	accessibility_render_page_item(wc->name, CONTAINER, widget, wc->parent);
 
 	for (int i = 0; i < wc->length; i++) {
 		render_widget(
@@ -46,32 +46,7 @@ render_container_widget(Page *page, int depth, Widget *widget) {
 
 static void
 render_widgety_widget(Page *page, int depth, Widget *widget) {
-	char *string;
-
-	switch (widget->type) {
-	case BUTTON:
-		asprintf(&string, "[%s]\n", widget->name);
-		break;
-	case SUBPAGE:
-		asprintf(&string, "%s >\n", widget->name);
-		break;
-	case LABEL:
-		asprintf(&string, "%s:\n", widget->name);
-		break;
-	case TEXTBOX:
-		asprintf(&string, "_%s_\n", widget->name);
-		break;
-	case SLIDER:
-		WidgetSlider *slider = AS_WIDGET_SLIDER(widget);
-		asprintf(&string, "~~%s (%d, %d, %d)~~\n", widget->name,
-			slider->value_min, slider->value, slider->value_max);
-		break;
-	default:
-		asprintf(&string, "BASE WIDGET: %s\n", widget->name);
-		break;
-	}
-
-	accessibility_render_page_item(string, widget->type);
+	accessibility_render_page_item(widget->name, widget->type, widget, widget->parent);
 }
 
 static void
@@ -102,7 +77,7 @@ expose_page(Page *page) {
 
 void
 expose_current_item(Page *page) {
-	// accessibility_render_current_item(page, page->current);
+	accessibility_render_current_item(page->focused);
 }
 
 #endif
