@@ -1,23 +1,22 @@
 'use strict'
-let proxyArea = null
+let proxyArea
+let currentLabel
 
 mergeInto(LibraryManager.library, {  // eslint-disable-line
 	accessibility_setup: function() {
 		document.body.setAttribute('role', 'application')
 		proxyArea = document.getElementById('proxy-ui')
 		proxyArea.focus()
+		currentLabel = null
 	},
 
-	accessibility_render_page_start: function(ptrPage) {
+	accessibility_render_page_start: function() {
 		proxyArea.innerHTML = ''
 	},
 
-	accessibility_render_page_item: function(name, widgetType, widgetPtr, parentPtr) {
-		const widgetWrapper = document.createElement('div')
+	accessibility_render_item: function(name, widgetType, widgetPtr, parentPtr) {
 		const string = UTF8ToString(name, 128)  // eslint-disable-line
 		let element = null
-
-		console.log(string, widgetType, widgetPtr, parentPtr)
 
 		switch (widgetType) {
 			case 0:  // WIDGET
@@ -45,28 +44,33 @@ mergeInto(LibraryManager.library, {  // eslint-disable-line
 			case 4:  // LABEL
 				element = document.createElement('label')
 				element.innerText = string
+				currentLabel = element
 				break
 			case 5:  // TEXTBOX
 				element = document.createElement('input')
-				element.setAttribute('aria-label', string)
 				break
 			case 6:  // SLIDER
 				element = document.createElement('input')
 				element.type = 'range'
-				element.setAttribute('aria-label', string)
 				break
 		}
 
 		element.id = widgetPtr
-
 		element.setAttribute('tabindex', '-1')
-		widgetWrapper.appendChild(element)
 
-		if (parentPtr !== 0) {
-			const parentElement = document.getElementById(parentPtr)
-			parentElement.appendChild(widgetWrapper)
+		if (currentLabel === null || currentLabel === element) {
+			const widgetWrapper = document.createElement('div')
+			widgetWrapper.appendChild(element)
+
+			if (parentPtr !== 0) {
+				const parentElement = document.getElementById(parentPtr)
+				parentElement.appendChild(widgetWrapper)
+			} else {
+				proxyArea.appendChild(widgetWrapper)
+			}
 		} else {
-			proxyArea.appendChild(widgetWrapper)
+			currentLabel.appendChild(element)
+			currentLabel = null
 		}
 	},
 
@@ -74,7 +78,7 @@ mergeInto(LibraryManager.library, {  // eslint-disable-line
 		// noop
 	},
 
-	accessibility_render_current_item: function(widgetPtr) {
+	accessibility_set_focus: function(widgetPtr) {
 		document.getElementById(String(widgetPtr)).focus()
 	}
 })
