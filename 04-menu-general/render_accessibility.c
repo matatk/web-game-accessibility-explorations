@@ -14,7 +14,7 @@ accessibility_setup(void);
 extern void
 accessibility_render_page_start(Page *);
 extern void
-accessibility_render_page_item(const char *, bool);
+accessibility_render_page_item(const char *, const int);
 extern void
 accessibility_render_page_done();
 extern void
@@ -47,34 +47,31 @@ render_container_widget(Page *page, int depth, Widget *widget) {
 static void
 render_widgety_widget(Page *page, int depth, Widget *widget) {
 	char *string;
+
 	switch (widget->type) {
 	case BUTTON:
 		asprintf(&string, "[%s]\n", widget->name);
-		accessibility_render_page_item(string, false);
 		break;
 	case SUBPAGE:
 		asprintf(&string, "%s >\n", widget->name);
-		accessibility_render_page_item(string, true);
 		break;
 	case LABEL:
 		asprintf(&string, "%s:\n", widget->name);
-		accessibility_render_page_item(string, false);
 		break;
 	case TEXTBOX:
 		asprintf(&string, "_%s_\n", widget->name);
-		accessibility_render_page_item(string, false);
 		break;
 	case SLIDER:
 		WidgetSlider *slider = AS_WIDGET_SLIDER(widget);
 		asprintf(&string, "~~%s (%d, %d, %d)~~\n", widget->name,
 			slider->value_min, slider->value, slider->value_max);
-		accessibility_render_page_item(string, false);
 		break;
 	default:
 		asprintf(&string, "BASE WIDGET: %s\n", widget->name);
-		accessibility_render_page_item(string, false);
 		break;
 	}
+
+	accessibility_render_page_item(string, widget->type);
 }
 
 static void
