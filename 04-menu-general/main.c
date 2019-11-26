@@ -34,7 +34,7 @@ make_pages() {
 		AS_WIDGET(widget_container_new("Sound Options", VERTICAL, 2,
 			widget_container_new("HorizSfxVolume", HORIZONTAL, 2,
 				widget_label_new("SFX Volume"),
-				widget_slider_new("ctrlSfxVolume", 0, 3, 5)),
+				widget_slider_new("ctrlSfxVolume", 0, 4, 5)),
 			widget_container_new("HorizMusicVolume", HORIZONTAL, 2,
 				widget_label_new("Music Volume"),
 				widget_slider_new("ctrlMusicVolume", 0, 3, 5)))));
@@ -51,7 +51,7 @@ make_pages() {
 		widget_new("Help information :-)"));
 
 	return new_page(
-		AS_WIDGET(widget_container_new("Main", VERTICAL, 4,  // FIXME check
+		AS_WIDGET(widget_container_new("Main Menu", VERTICAL, 4,  // FIXME check
 			widget_subpage_new("New game", episode_page),
 			widget_subpage_new("Options", options_page),
 			widget_subpage_new("Help", help_page),

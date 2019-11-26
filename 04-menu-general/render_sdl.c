@@ -148,6 +148,21 @@ render_container_widget(SDL_Surface *screen, Page *page, int depth, Widget *widg
 // Rendering widgets: widgets
 
 static void
+render_textbox(SDL_Surface *surface, Page *page, Widget *widget) {
+	const int width = surface->w;
+	const int height = surface->h;
+
+	SDL_Color fg = get_fg_colour_based_on_focus(page, widget);
+
+	SDL_Rect pos_baseline = { 0, height - 1, width, 1 };
+	SDL_FillRect(surface, &pos_baseline, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
+
+	char *string; // FIXME free (and DRY w' others)
+	asprintf(&string, "%s\n", widget->name);
+	render_string(surface, page, widget, string);  // FIXME dupe of page
+}
+
+static void
 render_slider(SDL_Surface *surface, Page *page, WidgetSlider *slider) {
 	const int width = surface->w;
 	const int height = surface->h;
@@ -162,8 +177,10 @@ render_slider(SDL_Surface *surface, Page *page, WidgetSlider *slider) {
 	SDL_Rect pos_start = { 0, 0, 1, height };
 	SDL_FillRect(surface, &pos_start, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
 
+	/*
 	SDL_Rect pos_middle = { width / 2, 0, 1, height };
 	SDL_FillRect(surface, &pos_middle, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
+	*/
 
 	SDL_Rect pos_end = { width - 1, 0, 1, height };
 	SDL_FillRect(surface, &pos_end, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
@@ -195,15 +212,17 @@ render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget
 		render_string(rendered_widget, page, widget, string);
 		break;
 	case TEXTBOX:
-		asprintf(&string, "_%s_\n", widget->name);
-		render_string(rendered_widget, page, widget, string);
+		render_textbox(rendered_widget, page, widget);
 		break;
 	case SLIDER:
 		render_slider(rendered_widget, page, AS_WIDGET_SLIDER(widget));
 		break;
 	default:
-		asprintf(&string, "DEFAULT: %s\n", widget->name);
+		/*
+		asprintf(&string, "BASE WIDGET: %s\n", widget->name);
 		render_string(rendered_widget, page, widget, string);
+		*/
+		render_string(rendered_widget, page, widget, widget->name);
 		break;
 	}
 
