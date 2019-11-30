@@ -24,8 +24,19 @@ int quit = 0;
 // Private
 
 static void
+render_background(SDL_Surface* screen) {
+	const int starting_blue = 0;
+	const int ending_blue = 0x9D;
+	for (int i = 0; i < HEIGHT; i++) {
+		const int current_blue = starting_blue + (i / (double)HEIGHT) * (ending_blue - starting_blue);
+		SDL_Rect pos = { 0, i, WIDTH, 1 };
+		SDL_FillRect(screen, &pos, SDL_MapRGB(screen->format, 0, 0, current_blue));
+	}
+}
+
+static void
 display_current_page() {
-	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0x80));
+	render_background(screen);
 	render_page(current, screen);
 	SDL_Flip(screen);
 #ifdef __EMSCRIPTEN__
