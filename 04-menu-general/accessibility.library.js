@@ -43,11 +43,13 @@ mergeInto(LibraryManager.library, {  // eslint-disable-line
 				break
 			case 4:  // LABEL
 				element = document.createElement('label')
-				element.innerText = string
+				element.appendChild(document.createElement('span'))
+				element.firstChild.innerText = string
 				currentLabel = element
 				break
 			case 5:  // TEXTBOX
 				element = document.createElement('input')
+				element.value = string
 				break
 			case 6:  // SLIDER
 				element = document.createElement('input')
@@ -60,6 +62,7 @@ mergeInto(LibraryManager.library, {  // eslint-disable-line
 
 		if (currentLabel === null || currentLabel === element) {
 			const widgetWrapper = document.createElement('div')
+			widgetWrapper.classList.add('widget-wrapper')
 			widgetWrapper.appendChild(element)
 
 			if (parentPtr !== 0) {

@@ -26,3 +26,15 @@ button {
 #canvas, #proxy-ui {
 	border-radius: 0.5em;
 }
+
+.widget-wrapper {
+	padding-bottom: 0.5em;
+}
+
+.widget-wrapper label {
+	display: flex;
+}
+
+.widget-wrapper label * {
+	flex-grow: 1;
+}

@@ -25,10 +25,10 @@ make_pages() {
 		AS_WIDGET(widget_container_new("Player Options", VERTICAL, 2,
 			widget_container_new("HorizPlayerName", HORIZONTAL, 2,
 				widget_label_new("Name"),
-				widget_text_new("ctrlName")),
-			widget_container_new("HorizTeamColour", HORIZONTAL, 2,
-				widget_label_new("Colour"),
-				widget_text_new("ctrlColour")))));
+				widget_text_new("Player 42")),
+			widget_container_new("HorizTeamName", HORIZONTAL, 2,
+				widget_label_new("Team"),
+				widget_text_new("Space Marines")))));
 
 	Page *sound_options_page = new_page(
 		AS_WIDGET(widget_container_new("Sound Options", VERTICAL, 2,

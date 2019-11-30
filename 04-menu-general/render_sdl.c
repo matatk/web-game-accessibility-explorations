@@ -177,11 +177,6 @@ render_slider(SDL_Surface *surface, Page *page, WidgetSlider *slider) {
 	SDL_Rect pos_start = { 0, 0, 1, height };
 	SDL_FillRect(surface, &pos_start, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
 
-	/*
-	SDL_Rect pos_middle = { width / 2, 0, 1, height };
-	SDL_FillRect(surface, &pos_middle, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
-	*/
-
 	SDL_Rect pos_end = { width - 1, 0, 1, height };
 	SDL_FillRect(surface, &pos_end, SDL_MapRGB(surface->format, fg.r, fg.g, fg.b));
 
@@ -218,10 +213,6 @@ render_widgety_widget(SDL_Surface *screen, Page *page, int depth, Widget *widget
 		render_slider(rendered_widget, page, AS_WIDGET_SLIDER(widget));
 		break;
 	default:
-		/*
-		asprintf(&string, "BASE WIDGET: %s\n", widget->name);
-		render_string(rendered_widget, page, widget, string);
-		*/
 		render_string(rendered_widget, page, widget, widget->name);
 		break;
 	}
