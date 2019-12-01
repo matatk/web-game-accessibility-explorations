@@ -6,9 +6,15 @@
 		<link rel='stylesheet' href='page-sdl.css' />
 	</head>
 	<body>
-		<div id='side-by-side'>
-			<canvas id='canvas'></canvas>
-			<div id='proxy-ui'></div>
+		<div class="flexy">
+			<div role="region" aria-labelledby="game-header" class="flexy flexy-column">
+				<h1 id="game-header">Game<span class="header-small"> (usually full-screen)</span></h1>
+				<canvas id='canvas'></canvas>
+			</div>
+			<div role="region" aria-labelledby="proxy-header" class="flexy flexy-column flexy-grow spacer limit-child-widths">
+				<h1 id="proxy-header">Proxy UI<span class="header-small"> (usually hidden)</span></h1>
+				<div id='proxy-ui' class="flexy-grow"></div>
+			</div>
 		</div>
 		<script>
 var Module = {

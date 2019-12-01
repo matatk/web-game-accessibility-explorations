@@ -1,31 +1,75 @@
+:root {
+	--screen-width: 640px;
+}
+
+/* Sizing and focus */
+
 * {
 	box-sizing: border-box;
 }
 
-*:focus {
+:focus {
 	outline: 0.25em solid #007e00;
+	outline-offset: 0.15em;
 }
 
 button {
+	font-size: inherit;
+}
+
+/* Page layout */
+
+.flexy {
+	display: flex;
+}
+
+.flexy-column {
+	flex-direction: column;
+}
+
+.flexy-grow {
+	flex-grow: 1;
+}
+
+.spacer > * {
+	margin-left: 1em;
+}
+
+.limit-child-widths > * {
+	max-width: var(--screen-width);
+}
+
+/* Headings */
+
+h1 {
+	text-align: center;
 	margin: 0.25em;
 }
 
-#side-by-side {
-	display: flex;
-	margin-bottom: 1em;
+.header-small {
+	font-size: 0.75em;
+	color: #767676;
+}
+
+/* Main areas */
+
+#canvas {
+	width: var(--screen-width);
+	height: 480px;
+	margin: auto;
 }
 
 #proxy-ui {
 	border: 1px solid black;
 	background: #eee;
-	margin-left: 1em;
-	flex-grow: 1;
 	padding: 1em;
 }
 
 #canvas, #proxy-ui {
 	border-radius: 0.5em;
 }
+
+/* Widget layout */
 
 .widget-wrapper {
 	padding-bottom: 0.5em;
