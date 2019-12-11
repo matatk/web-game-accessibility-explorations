@@ -1,0 +1,11 @@
+AlignTrailingComments: true
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AlwaysBreakAfterReturnType: TopLevelDefinitions
+BasedOnStyle: WebKit
+BreakBeforeBraces: Attach
+PointerAlignment: Right
+TabWidth: 4
+UseTab: Always

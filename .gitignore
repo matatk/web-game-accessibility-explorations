@@ -13,3 +13,8 @@ menu-cli
 menu-cli-fancy
 menu-sdl
 !menu-sdl.html
+page-cli
+page-cli-fancy
+page-sdl
+!page-sdl.html
+compile_commands.json
