@@ -17,6 +17,8 @@ accessibility_render_page_start();
 extern void
 accessibility_render_item(const char *, const int, const Widget *, const Widget *);
 extern void
+accessibility_render_slider_params(const Widget *, const int, const int, const int);
+extern void
 accessibility_render_page_done();
 extern void
 accessibility_set_focus(Widget *);
@@ -52,6 +54,11 @@ render_widgety_widget(Page *page, int depth, Widget *widget) {
 		accessibility_render_item(textbox->value, widget->type, widget, widget->parent);
 	} else {
 		accessibility_render_item(widget->name, widget->type, widget, widget->parent);
+		if (widget_is_a(widget, SLIDER)) {
+			WidgetSlider *slider = AS_WIDGET_SLIDER(widget);
+			accessibility_render_slider_params(
+				widget, slider->value_min, slider->value_max, slider->value);
+		}
 	}
 }
 

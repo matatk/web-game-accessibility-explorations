@@ -77,6 +77,14 @@ mergeInto(LibraryManager.library, {  // eslint-disable-line
 		}
 	},
 
+	accessibility_render_slider_params: function(widgetPtr, min, max, value) {
+		// Called just after the slider is rendered
+		const slider = document.getElementById(widgetPtr)
+		slider.min = min
+		slider.max = max
+		slider.value = value
+	},
+
 	accessibility_render_page_done: function() {
 		// noop
 	},
