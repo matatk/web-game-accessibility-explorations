@@ -51,6 +51,16 @@ h1 {
 	color: #767676;
 }
 
+key, #proxy-ui {
+	border: 1px solid black;
+	background: #eee;
+}
+
+key {
+	border-radius: 0.25em;
+	padding: 0.15em;
+}
+
 /* Main areas */
 
 #canvas {
@@ -60,8 +70,6 @@ h1 {
 }
 
 #proxy-ui {
-	border: 1px solid black;
-	background: #eee;
 	padding: 1em;
 }
 

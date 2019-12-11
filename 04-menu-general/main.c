@@ -12,23 +12,20 @@
 
 Page *
 make_pages() {
-	Page *episode_two = new_page(
-		widget_new("Episode Two"));
-
 	Page *episode_page = new_page(
 		AS_WIDGET(widget_container_new("Episode", VERTICAL, 3,
 			widget_button_new("Big pile of great dread"),
-			widget_subpage_new("The floors look swell", episode_two),
+			widget_button_new("The floors look swell"),
 			widget_button_new("Some Pearnod"))));
 
 	Page *player_options_page = new_page(
 		AS_WIDGET(widget_container_new("Player Options", VERTICAL, 2,
 			widget_container_new("HorizPlayerName", HORIZONTAL, 2,
 				widget_label_new("Name"),
-				widget_text_new("Player 42")),
+				widget_text_new("Options.Player.Name")),
 			widget_container_new("HorizTeamName", HORIZONTAL, 2,
 				widget_label_new("Team"),
-				widget_text_new("Space Marines")))));
+				widget_text_new("Options.Player.Team")))));
 
 	Page *sound_options_page = new_page(
 		AS_WIDGET(widget_container_new("Sound Options", VERTICAL, 2,
@@ -47,14 +44,11 @@ make_pages() {
 			widget_subpage_new("Sound", sound_options_page),
 			widget_button_new("Video"))));
 
-	Page *help_page = new_page(
-		widget_new("Help information :-)"));
-
 	return new_page(
-		AS_WIDGET(widget_container_new("Main Menu", VERTICAL, 4,  // FIXME check
+		AS_WIDGET(widget_container_new("Main Menu", VERTICAL, 4,
 			widget_subpage_new("New game", episode_page),
 			widget_subpage_new("Options", options_page),
-			widget_subpage_new("Help", help_page),
+			widget_button_new("Help"),
 			widget_button_new("Exit"))));
 }
 

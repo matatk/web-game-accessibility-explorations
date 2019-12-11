@@ -10,8 +10,23 @@ text_widget_to_string(const Widget *widget, const int depth) {
 	return string;
 }
 
+static char
+text_widget_get(WidgetText* textbox) {
+	return textbox->value[0];
+}
+
+static void
+text_widget_add(WidgetText* textbox, char input) {
+	textbox->value[0] = input;
+}
+
 static const WidgetMethods text_base_vtable = {
 	.to_string = text_widget_to_string
+};
+
+static const WidgetTextMethods text_extra_vtable = {
+	.get = text_widget_get,
+	.add = text_widget_add
 };
 
 // Public
@@ -28,4 +43,16 @@ widget_text_constructor(WidgetText *new, const char *name) {
 	widget_constructor(AS_WIDGET(new), name);
 	new->type = TEXTBOX;
 	new->vtable = &text_base_vtable;
+
+	new->text_vtable = &text_extra_vtable;
+}
+
+char *
+widget_text_get(WidgetText *textbox) {
+	return textbox->text_vtable->get(textbox);
+}
+
+void
+widget_text_add(WidgetText *textbox, char input) {
+	textbox->text_vtable->add(textbox, input);
 }

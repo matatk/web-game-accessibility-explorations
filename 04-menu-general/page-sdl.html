@@ -2,7 +2,7 @@
 <html lang='en'>
 	<head>
 		<meta charset='UTF-8'>
-		<title></title>
+		<title>Web Game Accessible UI Example</title>
 		<link rel='stylesheet' href='page-sdl.css' />
 	</head>
 	<body>
@@ -10,6 +10,8 @@
 			<div role="region" aria-labelledby="game-header" class="flexy flexy-column">
 				<h1 id="game-header">Game<span class="header-small"> (usually full-screen)</span></h1>
 				<canvas id='canvas'></canvas>
+				<p>Use <key>&uarr;</key>/<key>&darr;</key> to move between menu items; <key>&rarr;</key> to enter a sub-menu.</p>
+				<p>The buttons won't do anything; this is just an example menu.</p>
 			</div>
 			<div role="region" aria-labelledby="proxy-header" class="flexy flexy-column flexy-grow spacer limit-child-widths">
 				<h1 id="proxy-header">Proxy UI<span class="header-small"> (usually hidden)</span></h1>
