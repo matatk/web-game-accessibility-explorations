@@ -1,7 +1,7 @@
-?????????????
-====
+Generalised Widgets
+===================
 
-Here are several different programs that exemplify a game page. There are a few native programs (that don't interface with a screen-reader) and one web-based version (which does).
+This example takes the idea of the previous menu example and generalises it, so that there are different types of widgets, including input widgets. Each separate game UI screen is referred to as a 'page'.
 
 The native programs are:
 
@@ -9,12 +9,9 @@ The native programs are:
  * `page-cli-fancy`: as above, but produces more ornate output (it was created to test the separation of rendering from the page structure).
  * `page-sdl`: a graphical version of the representative game page.
 
-The web scenario is based on the native SDL one, with an extra layer of code added (in both C and JavaScript) that creates DOM elements to act as proxies for the non-semantic entities in the game's code. A screen-reader will announce these controls as the user interacts with the game.
+As with the previous example, the web scenario is based on the native SDL one, with an extra layer of code added (in both C and JavaScript) that creates DOM elements to act as proxies for the non-semantic entities in the game's code. A screen-reader will announce these controls as the user interacts with the game.
 
-Design notes
-------------
-
-?????
+**Note:** only the web version accepts user input currently.
 
 Install
 -------
@@ -40,8 +37,8 @@ Run
  * **Native:** either `./page-cli`, `./page-cli-fancy` or `./page-sdl`
  * **Web:** `make serve`, open the given URL
 
-Learnings
----------
+Reference info used during development
+--------------------------------------
 
  * https://www.cs.rit.edu/~ats/books/ooc.pdf
  * [Object-oriented techniques in C](https://dmitryfrank.com/articles/oop_in_c)

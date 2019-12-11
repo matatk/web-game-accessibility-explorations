@@ -7,6 +7,7 @@
 #include "widget.h"
 #include "widgetcontainer.h"
 #include "widgetslider.h"
+#include "widgettextbox.h"
 
 // Our custom JavaScript library functions
 extern void
@@ -46,7 +47,12 @@ render_container_widget(Page *page, int depth, Widget *widget) {
 
 static void
 render_widgety_widget(Page *page, int depth, Widget *widget) {
-	accessibility_render_item(widget->name, widget->type, widget, widget->parent);
+	if (widget_is_a(widget, TEXTBOX)) {
+		WidgetText *textbox = AS_WIDGET_TEXTBOX(widget);
+		accessibility_render_item(textbox->value, widget->type, widget, widget->parent);
+	} else {
+		accessibility_render_item(widget->name, widget->type, widget, widget->parent);
+	}
 }
 
 static void

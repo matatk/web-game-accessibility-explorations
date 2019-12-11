@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "widgettextbox.h"
 
@@ -10,14 +11,23 @@ text_widget_to_string(const Widget *widget, const int depth) {
 	return string;
 }
 
-static char
-text_widget_get(WidgetText* textbox) {
-	return textbox->value[0];
+static char *
+text_widget_get(WidgetText *textbox) {
+	return textbox->value;
 }
 
 static void
-text_widget_add(WidgetText* textbox, char input) {
-	textbox->value[0] = input;
+text_widget_add(WidgetText *textbox, char input) {
+	int length = strlen(textbox->value);
+	if (length < MAX_TEXTBOX_VALUE_LENGTH) {
+		textbox->value[length] = input;
+	}
+}
+
+static void
+text_widget_del(WidgetText *textbox) {
+	int length = strlen(textbox->value);
+	textbox->value[length - 1] = '\0';
 }
 
 static const WidgetMethods text_base_vtable = {
@@ -26,7 +36,8 @@ static const WidgetMethods text_base_vtable = {
 
 static const WidgetTextMethods text_extra_vtable = {
 	.get = text_widget_get,
-	.add = text_widget_add
+	.add = text_widget_add,
+	.del = text_widget_del
 };
 
 // Public
@@ -55,4 +66,9 @@ widget_text_get(WidgetText *textbox) {
 void
 widget_text_add(WidgetText *textbox, char input) {
 	textbox->text_vtable->add(textbox, input);
+}
+
+void
+widget_text_del(WidgetText *textbox) {
+	textbox->text_vtable->del(textbox);
 }

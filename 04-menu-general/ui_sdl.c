@@ -37,6 +37,25 @@ render_background(SDL_Surface *screen) {
 }
 
 static void
+handle_textbox_input(WidgetText *textbox, SDL_Event event) {
+	if (event.key.keysym.sym == SDLK_BACKSPACE) {
+		widget_text_del(textbox);
+	} else {
+		char input;
+
+		// Thanks to http://lazyfoo.net/SDL_tutorials/lesson23/index.php
+		if (event.key.keysym.unicode == (Uint16)' '
+			|| ((event.key.keysym.unicode >= (Uint16)'0') && (event.key.keysym.unicode <= (Uint16)'9'))
+			|| ((event.key.keysym.unicode >= (Uint16)'A') && (event.key.keysym.unicode <= (Uint16)'Z'))
+			|| ((event.key.keysym.unicode >= (Uint16)'a') && (event.key.keysym.unicode <= (Uint16)'z'))) {
+			input = (char)event.key.keysym.unicode;
+		}
+
+		widget_text_add(textbox, input);
+	}
+}
+
+static void
 display_current_page() {
 	render_background(screen);
 	render_page(current, screen);
@@ -84,31 +103,7 @@ one_iter() {
 			default:
 				if (widget_is_a(current->focused, TEXTBOX)) {
 					WidgetText *textbox = AS_WIDGET_TEXTBOX(current->focused);
-					int length = strlen(textbox->value);
-					char input;
-
-					//If the key is a space
-					if (event.key.keysym.unicode == (Uint16)' ') {
-						//Append the character
-						input = (char)event.key.keysym.unicode;
-					}
-					//If the key is a number
-					else if ((event.key.keysym.unicode >= (Uint16)'0') && (event.key.keysym.unicode <= (Uint16)'9')) {
-						//Append the character
-						input = (char)event.key.keysym.unicode;
-					}
-					//If the key is a uppercase letter
-					else if ((event.key.keysym.unicode >= (Uint16)'A') && (event.key.keysym.unicode <= (Uint16)'Z')) {
-						//Append the character
-						input = (char)event.key.keysym.unicode;
-					}
-					//If the key is a lowercase letter
-					else if ((event.key.keysym.unicode >= (Uint16)'a') && (event.key.keysym.unicode <= (Uint16)'z')) {
-						//Append the character
-						input = (char)event.key.keysym.unicode;
-					}
-
-					widget_text_add(textbox, input);
+					handle_textbox_input(textbox, event);
 				}
 				break;
 			}
