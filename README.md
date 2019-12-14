@@ -3,7 +3,7 @@ Web Game Accessibility Explorations
 
 Exploring the possibilities for providing semantic information from games compiled for the web to players' assistive technologies.
 
-**[Live demo of a general menu and widget set](http://matatk.agrip.org.uk/web-game-accessibility-explorations/page-sdl.html)**—use the up/down arrow keys to move within a menu, right arrow key to enter a submenu. If you are focused on a slider, you can use left/right arrows to change the value. If you are focused on a textbox, you can type into it. When running a screen-reader, the controls and inputs will be announced.
+**You may want to check out the [live demo of a general menu and widget set](http://matatk.agrip.org.uk/web-game-accessibility-explorations/page-sdl.html).** (The code for that is in the `04-menu-general` directory.)
 
 Pre-requisites
 --------------
