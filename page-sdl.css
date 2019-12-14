@@ -67,6 +67,7 @@ key {
 	width: var(--screen-width);
 	height: 480px;
 	margin: auto;
+	background-color: #00009d;
 }
 
 #proxy-ui {
