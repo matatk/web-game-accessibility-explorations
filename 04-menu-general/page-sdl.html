@@ -10,8 +10,6 @@
 			<div role="region" aria-labelledby="game-header" class="flexy flexy-column">
 				<h1 id="game-header">Game<span class="header-small"> (usually full-screen)</span></h1>
 				<canvas id='canvas'></canvas>
-				<p>Use <key>&uarr;</key>/<key>&darr;</key> to move between menu items; <key>&rarr;</key> to enter a sub-menu.</p>
-				<p>The buttons won't do anything; this is just an example menu.</p>
 			</div>
 			<div role="region" aria-labelledby="proxy-header" class="flexy flexy-column flexy-grow spacer limit-child-widths">
 				<h1 id="proxy-header">Proxy UI<span class="header-small"> (usually hidden)</span></h1>
@@ -22,6 +20,25 @@
 var Module = {
 	canvas: document.getElementById('canvas')
 }
+
+alert(`Demo of game UI accessibility (works with a screen reader)
+
+This demo simulates the UI of a game, which would normally run full-screen, and
+take over the keyboard and mouse (however, in this case, the game UI is shown
+side-by-side with the proxy accessible UI created for it). Normal screen-reader
+shortcut keys won't work, but by using the arrow keys to interact with the
+game, you will still find that the UI are announced.
+
+Use the up/down arrow keys to move between menu items.
+
+Use the right arrow key to enter a menu (there's no 'back' function at the
+moment).
+
+Use the left/right arrow keys when focused on a slider to adjust the slider.
+
+Type letters/numbers/spaces into a textbox when it has the focus.
+
+For more information, refer to the README.`)
 		</script>
 		<script src='page-sdl.js'></script>
 	</body>
